@@ -20,7 +20,6 @@ public class Judge {
             case ArrowLeft:
                 if (player.isInventoryMode()) {
                 } else {
-                    System.out.println("<" + playerCoord.getX() + " " + playerCoord.getY() + " " + map.getWidth());
                     if (playerCoord.getX() > 0) {
                         map.getCell(playerCoord).setUnit(null);
                         diff.addNewCoordinate(playerCoord);
@@ -33,7 +32,6 @@ public class Judge {
             case ArrowRight:
                 if (player.isInventoryMode()) {
                 } else {
-                    System.out.println(">" + playerCoord.getX() + " " + playerCoord.getY() + " " + map.getWidth());
                     if (playerCoord.getX() < map.getWidth() - 1) {
                         map.getCell(playerCoord).setUnit(null);
                         diff.addNewCoordinate(playerCoord);
@@ -46,7 +44,6 @@ public class Judge {
             case ArrowDown:
                 if (player.isInventoryMode()) {
                 } else {
-                    System.out.println("v" + playerCoord.getX() + " " + playerCoord.getY() + " " + map.getHeight());
                     if (playerCoord.getY() < map.getHeight() - 1) {
                         map.getCell(playerCoord).setUnit(null);
                         diff.addNewCoordinate(playerCoord);
@@ -59,7 +56,6 @@ public class Judge {
             case ArrowUp:
                 if (player.isInventoryMode()) {
                 } else {
-                    System.out.println("^" + playerCoord.getX() + " " + playerCoord.getY() + " " + map.getHeight());
                     if (playerCoord.getY() > 0) {
                         map.getCell(playerCoord).setUnit(null);
                         diff.addNewCoordinate(playerCoord);
