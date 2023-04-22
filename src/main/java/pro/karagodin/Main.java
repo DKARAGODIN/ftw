@@ -15,27 +15,22 @@ public class Main {
 
     private static final int MAX_COL = 239;
     private static final int MAX_ROW = 67;
-    private static final int GUI_VERTICAL_LINE_COL = MAX_COL - 25;
 
     private static int hero_col = MAX_COL / 2;
     private static int hero_row = MAX_ROW / 2;
     private static final TextCharacter HERO_CHAR = TextCharacter.fromCharacter('@', TextColor.ANSI.RED, TextColor.ANSI.GREEN)[0];
     private static final TextCharacter BLACK_CHAR = TextCharacter.fromCharacter(' ', TextColor.ANSI.BLACK, TextColor.ANSI.BLACK)[0];
-    private static final TextCharacter VERTICAL_RED_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
-
 
     public static void main(String[] args) throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         try (Screen screen = terminalFactory.createScreen()) {
             screen.startScreen();
+
             printWelcomeMessage(screen);
-
             printGUI(screen);
-
 
             screen.setCharacter(hero_col, hero_row, HERO_CHAR);
             screen.refresh(Screen.RefreshType.COMPLETE);
-
 
 screenLoop: while (true) {
                 KeyStroke key = screen.pollInput();
@@ -76,9 +71,24 @@ screenLoop: while (true) {
     }
 
     private static void printGUI(Screen screen) {
+        final int GUI_VERTICAL_LINE_COL = MAX_COL - 25;
+        final int GUI_HORISONTAL_LINE_ROW = MAX_ROW - 15;
+        final TextCharacter VERTICAL_RED_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
+        final TextCharacter HORISONTAL_RED_LINE_CHAR = TextCharacter.fromCharacter('-', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
+
         for (int i = 0; i <= MAX_ROW; i++) {
             screen.setCharacter(GUI_VERTICAL_LINE_COL, i, VERTICAL_RED_LINE_CHAR);
         }
+        for (int i = GUI_VERTICAL_LINE_COL + 1; i <= MAX_COL; i++) {
+            screen.setCharacter(i, GUI_HORISONTAL_LINE_ROW, HORISONTAL_RED_LINE_CHAR);
+        }
+        TextGraphics textGraphics = screen.newTextGraphics();
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+1, "Controls");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+2, "arrows - move your hero");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+3, "space - make some action");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+4, "i - change inventory");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+5, "q - quit the game");
+
     }
 
     private static void printWelcomeMessage(Screen screen) throws InterruptedException, IOException {
