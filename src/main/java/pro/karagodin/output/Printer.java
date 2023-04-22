@@ -19,57 +19,20 @@ public class Printer {
     private static final TextCharacter HERO_CHAR = TextCharacter.fromCharacter('@', TextColor.ANSI.RED, TextColor.ANSI.GREEN)[0];
     private static final TextCharacter BLACK_CHAR = TextCharacter.fromCharacter(' ', TextColor.ANSI.BLACK, TextColor.ANSI.BLACK)[0];
 
-    public void startTheGame() {
+    private Screen screen;
+
+    public void init() throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
-        try (Screen screen = terminalFactory.createScreen()) {
-            screen.startScreen();
+        Screen screen = terminalFactory.createScreen();
+        this.screen = screen;
+        screen.startScreen();
 
-            printWelcomeMessage(screen);
-            printGUI(screen);
-            printHeroInfo(screen);
-
-            screen.setCharacter(hero_col, hero_row, HERO_CHAR);
-            screen.refresh(Screen.RefreshType.COMPLETE);
-
-            screenLoop: while (true) {
-                KeyStroke key = screen.pollInput();
-                if (key != null) {
-                    switch (key.getKeyType()) {
-                        case ArrowLeft -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_col--;
-                        }
-                        case ArrowRight -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_col++;
-                        }
-                        case ArrowDown -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_row++;
-                        }
-                        case ArrowUp -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_row--;
-                        }
-                        case Character -> {
-                            if (key.getCharacter() == 'q')
-                                break screenLoop;
-                        }
-                    }
-                    screen.setCharacter(hero_col, hero_row, HERO_CHAR);
-                    screen.refresh(Screen.RefreshType.DELTA);
-                }
-                Thread.sleep(10);
-            }
-
-            screen.stopScreen();
-        }
-        catch(IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        printWelcomeMessage(screen);
     }
 
-    private void printHeroInfo(Screen screen) {
+
+
+    public void printHeroInfo() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
 
         TextGraphics textGraphics = screen.newTextGraphics();
@@ -99,9 +62,10 @@ public class Printer {
             screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_2, HORIZONTAL_RED_LINE_CHAR);
             screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_3, HORIZONTAL_RED_LINE_CHAR);
         }
+        screen.refresh();
     }
 
-    private void printGUI(Screen screen) {
+    public void printGUI() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
         final int GUI_HORIZONTAL_LINE_ROW = MAX_ROW - 15;
         final TextCharacter VERTICAL_RED_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
@@ -128,9 +92,11 @@ public class Printer {
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+3, "space - make some action");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+4, "i - change inventory");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+5, "q - quit the game");
+
+        screen.refresh();
     }
 
-    private void printWelcomeMessage(Screen screen) throws InterruptedException, IOException {
+    private void printWelcomeMessage(Screen screen) throws IOException {
         TextGraphics textGraphics = screen.newTextGraphics();
         textGraphics.putString(15,11, "Please maximise the window to go FOR THE WIN!");
         screen.refresh();
@@ -138,8 +104,16 @@ public class Printer {
             TerminalSize newTerminalSize = screen.doResizeIfNecessary();
             if (newTerminalSize != null && newTerminalSize.getColumns() >= MAX_COL && newTerminalSize.getRows() >= MAX_ROW)
                 break;
-            Thread.sleep(50);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
         screen.clear();
+    }
+
+    public KeyStroke pressedKey() throws IOException {
+        return screen.pollInput();
     }
 }

@@ -1,10 +1,12 @@
 package pro.karagodin;
 
-import pro.karagodin.output.Printer;
+import pro.karagodin.game_engine.Game;
+
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        Printer printer = new Printer();
-        printer.startTheGame();
+    public static void main(String[] args) throws IOException {
+        Game game = new Game();
+        game.start();
     }
 }
