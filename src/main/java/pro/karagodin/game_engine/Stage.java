@@ -24,7 +24,7 @@ public class Stage {
         this.printer = printer;
         this.judge = new Judge();
         this.player = player;
-        this.map = new Map(195, 60, player);
+        this.map = new Map(60, 195, player);
         this.timeline = new Timeline(this.map);
     }
 

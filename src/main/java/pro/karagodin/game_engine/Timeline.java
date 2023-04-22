@@ -30,9 +30,9 @@ public class Timeline {
 
     public Timeline(Map map) {
         mobsWithTimes = new PriorityQueue<>();
-        for (int x = 0; x < map.getHeight(); x++) {
-            for (int y = 0; y < map.getWidth(); y++) {
-                Mob mob = map.getCell(x, y).getUnit();
+        for (int x = 0; x < map.getWidth(); x++) {
+            for (int y = 0; y < map.getHeight(); y++) {
+                Mob mob = map.getCell(new Coordinate(x, y)).getUnit();
                 if (mob != null) {
                     mobsWithTimes.add(new MobInfo(mob, new Coordinate(x, y), new TimeMoment()));
                 }

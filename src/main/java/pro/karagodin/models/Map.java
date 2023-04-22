@@ -5,32 +5,25 @@ import pro.karagodin.game_engine.Coordinate;
 public class Map {
     protected Cell[][] cells;
 
-    /*public Map() {
-    }*/
-
     public Map(int height, int width, Player player) {
-        cells = new Cell[height][width];
-        for (int x = 0; x < height; x++) {
-            for (int y = 0; y < width; y++) {
+        cells = new Cell[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 cells[x][y] = new Cell();
             }
         }
         cells[97][30].unit = player;
     }
 
-    public Cell getCell(int row, int column) {
-        return cells[row][column];
-    }
-
     public Cell getCell(Coordinate coord) {
         return cells[coord.getX()][coord.getY()];
     }
 
-    public int getHeight() {
+    public int getWidth() {
         return cells.length;
     }
 
-    public int getWidth() {
+    public int getHeight() {
         return cells[0].length;
     }
 }

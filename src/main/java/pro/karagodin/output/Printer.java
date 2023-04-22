@@ -35,7 +35,7 @@ public class Printer {
         printWelcomeMessage(screen);
     }
 
-    public void updateCoordinates(Map map, MapDiff diff) {
+    public void updateCoordinates(Map map, MapDiff diff) throws IOException {
         for (Coordinate coord : diff.getUpdatedCoordinatesInMap()) {
             if (map.getCell(coord).getUnit() == null) {
                 screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter(' '));
@@ -43,6 +43,7 @@ public class Printer {
                 screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter('@'));
             }
         }
+        screen.refresh(Screen.RefreshType.DELTA);
     }
 
     public void printHeroInfo() throws IOException {
