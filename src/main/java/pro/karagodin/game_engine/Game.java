@@ -1,6 +1,5 @@
 package pro.karagodin.game_engine;
 
-import com.googlecode.lanterna.input.KeyStroke;
 import pro.karagodin.output.Printer;
 
 import java.io.IOException;
@@ -16,6 +15,7 @@ public class Game {
 
     public void start() throws IOException {
         printer.init(); // aka menu
+
         while (true) {
             stage = new Stage(printer); // must be generator
             stage.start();

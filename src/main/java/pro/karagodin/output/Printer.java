@@ -25,101 +25,16 @@ public class Printer {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         try (Screen screen = terminalFactory.createScreen()) {
             this.screen = screen;
-
-            printWelcomeMessage(screen);
-            /*printGUI(screen);
-            printHeroInfo(screen);
-
-            screen.setCharacter(hero_col, hero_row, HERO_CHAR);
-            screen.refresh(Screen.RefreshType.COMPLETE);*/
-
-            /*screenLoop: while (true) {
-                KeyStroke key = screen.pollInput();
-                if (key != null) {
-                    switch (key.getKeyType()) {
-                        case ArrowLeft -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_col--;
-                        }
-                        case ArrowRight -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_col++;
-                        }
-                        case ArrowDown -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_row++;
-                        }
-                        case ArrowUp -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_row--;
-                        }
-                        case Character -> {
-                            if (key.getCharacter() == 'q')
-                                break screenLoop;
-                        }
-                    }
-                    screen.setCharacter(hero_col, hero_row, HERO_CHAR);
-                    screen.refresh(Screen.RefreshType.DELTA);
-                }
-                Thread.sleep(10);
-            }*/
-
-            //screen.stopScreen();
-        }
-        catch(IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void startTheGame() {
-        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
-        try (Screen screen = terminalFactory.createScreen()) {
             screen.startScreen();
 
             printWelcomeMessage(screen);
-            printGUI(screen);
-            printHeroInfo(screen);
 
-            screen.setCharacter(hero_col, hero_row, HERO_CHAR);
-            screen.refresh(Screen.RefreshType.COMPLETE);
-
-            screenLoop: while (true) {
-                KeyStroke key = screen.pollInput();
-                if (key != null) {
-                    switch (key.getKeyType()) {
-                        case ArrowLeft -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_col--;
-                        }
-                        case ArrowRight -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_col++;
-                        }
-                        case ArrowDown -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_row++;
-                        }
-                        case ArrowUp -> {
-                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
-                            hero_row--;
-                        }
-                        case Character -> {
-                            if (key.getCharacter() == 'q')
-                                break screenLoop;
-                        }
-                    }
-                    screen.setCharacter(hero_col, hero_row, HERO_CHAR);
-                    screen.refresh(Screen.RefreshType.DELTA);
-                }
-                Thread.sleep(10);
-            }
-
-            screen.stopScreen();
         }
         catch(IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 
     private void printHeroInfo(Screen screen) {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
