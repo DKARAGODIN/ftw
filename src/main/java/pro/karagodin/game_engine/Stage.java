@@ -24,6 +24,7 @@ public class Stage {
     }
 
     public boolean start() throws IOException {
+        printAllMap();
         while (!judge.isStageOver()) {
             if (timeline.getDeltaTimeForAction() > 0) {
                 try {
@@ -39,6 +40,16 @@ public class Stage {
             }
         }
         return judge.isGameOver();
+    }
+
+    private void printAllMap() throws IOException {
+        MapDiff diff = new MapDiff();
+        for (int x = 0; x < map.getWidth(); x++) {
+            for (int y = 0; y < map.getHeight(); y++) {
+                diff.addNewCoordinate(new Coordinate(x, y));
+            }
+        }
+        printer.updateCoordinates(map, diff);
     }
 
     public static class StageEnd {
