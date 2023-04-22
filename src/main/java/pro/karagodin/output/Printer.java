@@ -7,6 +7,7 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import pro.karagodin.models.Player;
 
 import java.io.IOException;
 
@@ -137,5 +138,16 @@ public class Printer {
 
     public KeyStroke pressedKey() throws IOException {
         return screen.pollInput();
+    }
+
+    public void printPlayer(Player player) {
+    }
+
+    public void quitGame() {
+        try {
+            this.screen.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

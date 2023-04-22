@@ -25,7 +25,11 @@ public class Game {
         while (true) {
             stage = new Stage(printer, player); // must be generator
 
-            stage.start();
+            Stage.StageEnd stageEnd = stage.start();
+            if (stageEnd.quitGame) {
+                printer.quitGame();
+                break;
+            }
         }
     }
 }

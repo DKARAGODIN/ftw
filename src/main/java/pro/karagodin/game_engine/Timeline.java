@@ -1,7 +1,5 @@
 package pro.karagodin.game_engine;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 import pro.karagodin.time.TimeMoment;
@@ -22,7 +20,7 @@ public class Timeline {
         }
 
         @Override
-        public int compareTo(@NotNull MobInfo mobInfo) {
+        public int compareTo(MobInfo mobInfo) {
             return actionTime.compareTo(mobInfo.actionTime);
         }
     }
@@ -42,7 +40,7 @@ public class Timeline {
         }
     }
 
-    public @Nullable Coordinate getMobForDoingAction() {
+    public Coordinate getMobForDoingAction() {
         MobInfo info = mobsWithTimes.peek();
         if (info.actionTime.deltaWithCurrentTime() > 0) {
             return null;
