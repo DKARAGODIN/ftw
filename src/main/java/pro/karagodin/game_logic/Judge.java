@@ -1,8 +1,8 @@
 package pro.karagodin.game_logic;
 
 import com.googlecode.lanterna.input.KeyStroke;
-import pro.karagodin.Pair;
 import pro.karagodin.game_engine.Coordinate;
+import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
@@ -12,7 +12,7 @@ public class Judge {
      *
      * @param key - not null;
      */
-    public Pair<MapDiff, Coordinate> doPlayerAction(KeyStroke key, Coordinate playerCoord, Map map) {
+    public GameDiff doPlayerAction(KeyStroke key, Coordinate playerCoord, Map map) {
         Player player = (Player)map.getCell(playerCoord).getUnit();
         MapDiff diff = new MapDiff();
         Coordinate newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY());
@@ -79,6 +79,6 @@ public class Judge {
             }
             break;
         }
-        return new Pair<>(diff, newPlayerCoord);
+        return new GameDiff(diff, newPlayerCoord);
     }
 }
