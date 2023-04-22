@@ -1,6 +1,7 @@
 package pro.karagodin.game_engine;
 
 import com.googlecode.lanterna.input.KeyStroke;
+import pro.karagodin.Pair;
 import pro.karagodin.game_logic.Judge;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
@@ -23,7 +24,7 @@ public class Stage {
         this.printer = printer;
         this.judge = new Judge();
         this.player = player;
-        this.map = new Map();
+        this.map = new Map(195, 60, player);
         this.timeline = new Timeline(this.map);
     }
 
@@ -37,20 +38,12 @@ public class Stage {
                 Coordinate mobCoord = timeline.getMobForDoingAction();
                 KeyStroke key = printer.pressedKey();
                 if (key != null) {
-                    MapDiff diff = judge.doPlayerAction(key, mobCoord, map);
-                    printer.updateCoordinates(map, diff);
+                    Pair<MapDiff, Coordinate> diffAndCoord = judge.doPlayerAction(key, mobCoord, map);
+                    printer.updateCoordinates(map, diffAndCoord.first);
+                    mobCoord = diffAndCoord.second;
                 }
-                //Mob mob = map.getCell(mobCoord).getUnit();
+                timeline.addUpdatedMob(map.getCell(mobCoord).getUnit(), mobCoord);
             }
-            /*KeyStroke key = printer.pressedKey();
-            if (key != null) {
-                judge.doPlayerAction(key, player);
-                printer.printPlayer(player);
-            }
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-            }*/
         }
     }
 

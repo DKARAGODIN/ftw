@@ -1,6 +1,7 @@
 package pro.karagodin.game_logic;
 
 import com.googlecode.lanterna.input.KeyStroke;
+import pro.karagodin.Pair;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.models.Map;
@@ -11,9 +12,10 @@ public class Judge {
      *
      * @param key - not null;
      */
-    public MapDiff doPlayerAction(KeyStroke key, Coordinate playerCoord, Map map) {
+    public Pair<MapDiff, Coordinate> doPlayerAction(KeyStroke key, Coordinate playerCoord, Map map) {
         Player player = (Player)map.getCell(playerCoord).getUnit();
         MapDiff diff = new MapDiff();
+        Coordinate newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY());
         switch (key.getKeyType()) {
             case ArrowLeft:
                 if (player.isInventoryMode()) {
@@ -21,7 +23,7 @@ public class Judge {
                     if (playerCoord.getY() > 0) {
                         map.getCell(playerCoord).setUnit(null);
                         diff.addNewCoordinate(playerCoord);
-                        Coordinate newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY() - 1);
+                        newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY() - 1);
                         map.getCell(newPlayerCoord).setUnit(player);
                         diff.addNewCoordinate(newPlayerCoord);
                     }
@@ -33,7 +35,7 @@ public class Judge {
                     if (playerCoord.getY() < map.getWidth() - 1) {
                         map.getCell(playerCoord).setUnit(null);
                         diff.addNewCoordinate(playerCoord);
-                        Coordinate newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY() + 1);
+                        newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY() + 1);
                         map.getCell(newPlayerCoord).setUnit(player);
                         diff.addNewCoordinate(newPlayerCoord);
                     }
@@ -45,7 +47,7 @@ public class Judge {
                     if (playerCoord.getX() > map.getHeight() - 1) {
                         map.getCell(playerCoord).setUnit(null);
                         diff.addNewCoordinate(playerCoord);
-                        Coordinate newPlayerCoord = new Coordinate(playerCoord.getX() + 1, playerCoord.getY());
+                        newPlayerCoord = new Coordinate(playerCoord.getX() + 1, playerCoord.getY());
                         map.getCell(newPlayerCoord).setUnit(player);
                         diff.addNewCoordinate(newPlayerCoord);
                     }
@@ -57,7 +59,7 @@ public class Judge {
                     if (playerCoord.getX() > 0) {
                         map.getCell(playerCoord).setUnit(null);
                         diff.addNewCoordinate(playerCoord);
-                        Coordinate newPlayerCoord = new Coordinate(playerCoord.getX() - 1, playerCoord.getY());
+                        newPlayerCoord = new Coordinate(playerCoord.getX() - 1, playerCoord.getY());
                         map.getCell(newPlayerCoord).setUnit(player);
                         diff.addNewCoordinate(newPlayerCoord);
                     }
@@ -73,6 +75,6 @@ public class Judge {
             }
             break;
         }
-        return diff;
+        return new Pair<>(diff, newPlayerCoord);
     }
 }

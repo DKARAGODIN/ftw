@@ -16,6 +16,7 @@ public class Mob {
     public Mob(double hp, int maxHp) {
         this.hp = hp;
         this.maxHp = maxHp;
+        this.pace = new TimeInterval(100);
     }
 
     public double getHp() {

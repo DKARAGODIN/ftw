@@ -7,6 +7,7 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
@@ -35,7 +36,13 @@ public class Printer {
     }
 
     public void updateCoordinates(Map map, MapDiff diff) {
-
+        for (Coordinate coord : diff.getUpdatedCoordinatesInMap()) {
+            if (map.getCell(coord).getUnit() == null) {
+                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter(' '));
+            } else {
+                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter('@'));
+            }
+        }
     }
 
     public void printHeroInfo() throws IOException {

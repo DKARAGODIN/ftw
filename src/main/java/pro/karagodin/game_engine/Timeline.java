@@ -38,6 +38,7 @@ public class Timeline {
                 }
             }
         }
+        System.out.println(mobsWithTimes.size());
     }
 
     public Coordinate getMobForDoingAction() {
