@@ -30,8 +30,6 @@ public class Printer {
         printWelcomeMessage(screen);
     }
 
-
-
     public void printHeroInfo() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
 
@@ -49,18 +47,42 @@ public class Printer {
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,10, "100 (0) - Stamina (Stamina modifier)");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,11, "50 (0) - Speed (speed modifier)");
 
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,13, "Hero Items");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,13, "Hero equipped items");
 
-        final TextCharacter VERTICAL_RED_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.GREEN, TextColor.ANSI.BLACK)[0];
-        final TextCharacter HORIZONTAL_RED_LINE_CHAR = TextCharacter.fromCharacter('-', TextColor.ANSI.GREEN, TextColor.ANSI.BLACK)[0];
+        final TextCharacter VERTICAL_GREEN_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.GREEN, TextColor.ANSI.BLACK)[0];
+        final TextCharacter HORIZONTAL_GREEN_LINE_CHAR = TextCharacter.fromCharacter('-', TextColor.ANSI.GREEN, TextColor.ANSI.BLACK)[0];
 
-        final int GUI_HORIZONTAL_LINE_ROW_1 = 14;
-        final int GUI_HORIZONTAL_LINE_ROW_2 = 18;
-        final int GUI_HORIZONTAL_LINE_ROW_3 = 22;
-        for (int i = GUI_VERTICAL_LINE_COL + 1; i <= MAX_COL; i++) {
-            screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_1, HORIZONTAL_RED_LINE_CHAR);
-            screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_2, HORIZONTAL_RED_LINE_CHAR);
-            screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_3, HORIZONTAL_RED_LINE_CHAR);
+        for (int i = GUI_VERTICAL_LINE_COL + 1; i <= 226; i++) {
+            screen.setCharacter(i, 14, HORIZONTAL_GREEN_LINE_CHAR);
+            screen.setCharacter(i, 18, HORIZONTAL_GREEN_LINE_CHAR);
+            screen.setCharacter(i, 22, HORIZONTAL_GREEN_LINE_CHAR);
+        }
+
+        for (int i = 0; i <=5; i++) {
+            int s = 196 + i * 6;
+            for (int j = 0; j <= 2; j++) {
+                int k = 15 + j;
+                int l = 19 + j;
+                screen.setCharacter(s, k, VERTICAL_GREEN_LINE_CHAR);
+                screen.setCharacter(s, l, VERTICAL_GREEN_LINE_CHAR);
+            }
+        }
+
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,23, "Hero stashed items");
+        for (int i = 0; i <=5; i++) {
+            int s = 196 + i * 6;
+            for (int j = 0; j <= 3; j++) {
+                for (int k = 0; k <= 4; k++) {
+                    int l = 25 + j + k * 4;
+                    screen.setCharacter(s, l, VERTICAL_GREEN_LINE_CHAR);
+                }
+            }
+        }
+        for (int i = GUI_VERTICAL_LINE_COL + 1; i <= 226; i++) {
+            for (int j = 0; j <= 5; j++) {
+                int k = 24 + j * 4;
+                screen.setCharacter(i, k, HORIZONTAL_GREEN_LINE_CHAR);
+            }
         }
         screen.refresh();
     }
