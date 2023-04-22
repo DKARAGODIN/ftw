@@ -191,8 +191,8 @@ public class Printer {
         }
 
         //Select one
-        int x = player.getInventory().getColumn();
-        int y = player.getInventory().getRow();
+        int x = player.getInventory().getX();
+        int y = player.getInventory().getY();
         if (y > 1) {
 
         } else {

@@ -19,6 +19,7 @@ public class Judge {
         switch (key.getKeyType()) {
             case ArrowLeft:
                 if (player.isInventoryMode()) {
+
                 } else {
                     if (playerCoord.getX() > 0) {
                         map.getCell(playerCoord).setUnit(null);
@@ -69,7 +70,10 @@ public class Judge {
                 switch (key.getCharacter()) {
                     case 'q':
                     case 'i':
-                        player.setInventoryMode(true);
+                        player.setInventoryMode(!player.isInventoryMode());
+                        if (player.isInventoryMode()) {
+                            player.getInventory().setCoordinates(0, 0);
+                        }
                     break;
                 }
             }

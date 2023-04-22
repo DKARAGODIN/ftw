@@ -3,6 +3,7 @@ package pro.karagodin.game_engine;
 public class GameDiff {
     private MapDiff mapDiff;
     private Coordinate newPlayerCoordinate;
+    private boolean inventoryMode;
 
     public GameDiff(MapDiff mapDiff, Coordinate newPlayerCoordinate) {
         this.mapDiff = mapDiff;
