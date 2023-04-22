@@ -1,16 +1,12 @@
 package pro.karagodin.game_engine;
 
 import com.googlecode.lanterna.input.KeyStroke;
-import pro.karagodin.Pair;
 import pro.karagodin.game_logic.Judge;
 import pro.karagodin.models.Map;
-import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
 
 import java.io.IOException;
-
-import static java.lang.Math.max;
 
 public class Stage {
 
@@ -38,9 +34,9 @@ public class Stage {
                 Coordinate mobCoord = timeline.getMobForDoingAction();
                 KeyStroke key = printer.pressedKey();
                 if (key != null) {
-                    Pair<MapDiff, Coordinate> diffAndCoord = judge.doPlayerAction(key, mobCoord, map);
-                    printer.updateCoordinates(map, diffAndCoord.first);
-                    mobCoord = diffAndCoord.second;
+                    GameDiff gameDiff = judge.doPlayerAction(key, mobCoord, map);
+                    printer.updateCoordinates(map, gameDiff.getMapDiff());
+                    mobCoord = gameDiff.getNewPlayerCoordinate();
                 }
                 timeline.addUpdatedMob(map.getCell(mobCoord).getUnit(), mobCoord);
             }

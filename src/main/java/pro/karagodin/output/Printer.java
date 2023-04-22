@@ -156,20 +156,46 @@ public class Printer {
 
     public void printPlayer(Player player) throws IOException {
         if (player.isInventoryMode()) {
-            refreshInvenrotyCells(player);
+            refreshInventoryCells(player);
         } else {
             System.out.println(false);
         }
         screen.refresh(Screen.RefreshType.DELTA);
     }
 
-    private void refreshInvenrotyCells(Player player) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                int x = 197 + i;
-                int y = 15 + j;
-                screen.setCharacter(x, y, GREY_EMPTY_CHAR);
+    private void refreshInventoryCells(Player player) {
+        //Make all black first
+        for (int a = 0; a < 5; a++) {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 3; j++) {
+                    int x = 197 + i + a * 6;
+                    int y = 15 + j;
+                    screen.setCharacter(x, y, GREY_EMPTY_CHAR);
+
+                    y = 19 + j;
+                    screen.setCharacter(x, y, GREY_EMPTY_CHAR);
+                }
             }
+        }
+        for (int a = 0; a < 5; a++) {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 3; j++) {
+                    for (int k = 0; k < 5; k++) {
+                        int x = 197 + i + a * 6;
+                        int y = 25 + j + k * 4;
+                        screen.setCharacter(x, y, GREY_EMPTY_CHAR);
+                    }
+                }
+            }
+        }
+
+        //Select one
+        int x = player.getInventory().getColumn();
+        int y = player.getInventory().getRow();
+        if (y > 1) {
+
+        } else {
+
         }
     }
 
