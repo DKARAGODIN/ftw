@@ -1,12 +1,16 @@
 package pro.karagodin.models;
 
+import pro.karagodin.time.TimeInterval;
+
 public class Mob {
     protected double hp;
     protected int maxHp;
+    protected TimeInterval pace;
 
     public Mob(int maxHp) {
         this.hp = maxHp;
         this.maxHp = maxHp;
+        this.pace = new TimeInterval(100);
     }
 
     public Mob(double hp, int maxHp) {
@@ -28,6 +32,14 @@ public class Mob {
 
     public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
+    }
+
+    public TimeInterval getPace() {
+        return pace;
+    }
+
+    public void setPace(TimeInterval pace) {
+        this.pace = pace;
     }
 
 }
