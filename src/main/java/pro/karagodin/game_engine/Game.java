@@ -16,8 +16,12 @@ public class Game {
     public void start() throws IOException {
         printer.init(); // aka menu
 
+        printer.printGUI();
+        printer.printHeroInfo();
+
         while (true) {
             stage = new Stage(printer); // must be generator
+
             stage.start();
         }
     }

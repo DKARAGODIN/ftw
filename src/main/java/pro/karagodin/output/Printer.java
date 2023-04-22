@@ -21,22 +21,18 @@ public class Printer {
 
     private Screen screen;
 
-    public void init() {
+    public void init() throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
-        try (Screen screen = terminalFactory.createScreen()) {
-            this.screen = screen;
-            screen.startScreen();
+        Screen screen = terminalFactory.createScreen();
+        this.screen = screen;
+        screen.startScreen();
 
-            printWelcomeMessage(screen);
-
-        }
-        catch(IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        printWelcomeMessage(screen);
     }
 
 
-    private void printHeroInfo(Screen screen) {
+
+    public void printHeroInfo() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
 
         TextGraphics textGraphics = screen.newTextGraphics();
@@ -66,9 +62,10 @@ public class Printer {
             screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_2, HORIZONTAL_RED_LINE_CHAR);
             screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_3, HORIZONTAL_RED_LINE_CHAR);
         }
+        screen.refresh();
     }
 
-    private void printGUI(Screen screen) {
+    public void printGUI() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
         final int GUI_HORIZONTAL_LINE_ROW = MAX_ROW - 15;
         final TextCharacter VERTICAL_RED_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
@@ -95,9 +92,11 @@ public class Printer {
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+3, "space - make some action");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+4, "i - change inventory");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+5, "q - quit the game");
+
+        screen.refresh();
     }
 
-    private void printWelcomeMessage(Screen screen) throws InterruptedException, IOException {
+    private void printWelcomeMessage(Screen screen) throws IOException {
         TextGraphics textGraphics = screen.newTextGraphics();
         textGraphics.putString(15,11, "Please maximise the window to go FOR THE WIN!");
         screen.refresh();
@@ -105,7 +104,11 @@ public class Printer {
             TerminalSize newTerminalSize = screen.doResizeIfNecessary();
             if (newTerminalSize != null && newTerminalSize.getColumns() >= MAX_COL && newTerminalSize.getRows() >= MAX_ROW)
                 break;
-            Thread.sleep(50);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
         screen.clear();
     }
