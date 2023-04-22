@@ -7,6 +7,8 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import pro.karagodin.game_engine.MapDiff;
+import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 
 import java.io.IOException;
@@ -30,6 +32,10 @@ public class Printer {
         screen.startScreen();
 
         printWelcomeMessage(screen);
+    }
+
+    public void updateCoordinates(Map map, MapDiff diff) {
+
     }
 
     public void printHeroInfo() throws IOException {
