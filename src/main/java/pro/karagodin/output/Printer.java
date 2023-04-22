@@ -11,8 +11,8 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import java.io.IOException;
 
 public class Printer {
-    private static final int MAX_COL = 239;
-    private static final int MAX_ROW = 67;
+    private static final int MAX_COL = 230;
+    private static final int MAX_ROW = 60;
 
     private static int hero_col = MAX_COL / 2;
     private static int hero_row = MAX_ROW / 2;
@@ -87,26 +87,38 @@ public class Printer {
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,11, "50 (0) - Speed (speed modifier)");
 
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,13, "Hero Items");
+
+        final TextCharacter VERTICAL_RED_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.GREEN, TextColor.ANSI.BLACK)[0];
+        final TextCharacter HORIZONTAL_RED_LINE_CHAR = TextCharacter.fromCharacter('-', TextColor.ANSI.GREEN, TextColor.ANSI.BLACK)[0];
+
+        final int GUI_HORIZONTAL_LINE_ROW_1 = 14;
+        final int GUI_HORIZONTAL_LINE_ROW_2 = 18;
+        final int GUI_HORIZONTAL_LINE_ROW_3 = 22;
+        for (int i = GUI_VERTICAL_LINE_COL + 1; i <= MAX_COL; i++) {
+            screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_1, HORIZONTAL_RED_LINE_CHAR);
+            screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_2, HORIZONTAL_RED_LINE_CHAR);
+            screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW_3, HORIZONTAL_RED_LINE_CHAR);
+        }
     }
 
     private void printGUI(Screen screen) {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
-        final int GUI_HORISONTAL_LINE_ROW = MAX_ROW - 15;
+        final int GUI_HORIZONTAL_LINE_ROW = MAX_ROW - 15;
         final TextCharacter VERTICAL_RED_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
-        final TextCharacter HORISONTAL_RED_LINE_CHAR = TextCharacter.fromCharacter('-', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
+        final TextCharacter HORIZONTAL_RED_LINE_CHAR = TextCharacter.fromCharacter('-', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
 
         for (int i = 0; i <= MAX_ROW; i++) {
             screen.setCharacter(GUI_VERTICAL_LINE_COL, i, VERTICAL_RED_LINE_CHAR);
         }
         for (int i = GUI_VERTICAL_LINE_COL + 1; i <= MAX_COL; i++) {
-            screen.setCharacter(i, GUI_HORISONTAL_LINE_ROW, HORISONTAL_RED_LINE_CHAR);
+            screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW, HORIZONTAL_RED_LINE_CHAR);
         }
         TextGraphics textGraphics = screen.newTextGraphics();
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+1, "Controls");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+2, "arrows - move your hero");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+3, "space - make some action");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+4, "i - change inventory");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORISONTAL_LINE_ROW+5, "q - quit the game");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+1, "Controls");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+2, "arrows - move your hero");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+3, "space - make some action");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+4, "i - change inventory");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+5, "q - quit the game");
 
     }
 
@@ -116,7 +128,7 @@ public class Printer {
         screen.refresh();
         while (true) {
             TerminalSize newTerminalSize = screen.doResizeIfNecessary();
-            if (newTerminalSize != null && newTerminalSize.getColumns() == MAX_COL + 1 && newTerminalSize.getRows() == MAX_ROW+1)
+            if (newTerminalSize != null && newTerminalSize.getColumns() >= MAX_COL + 1 && newTerminalSize.getRows() >= MAX_ROW+1)
                 break;
             Thread.sleep(50);
         }
