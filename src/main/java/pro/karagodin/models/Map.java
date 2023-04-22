@@ -3,6 +3,9 @@ package pro.karagodin.models;
 public class Map {
     protected Cell[][] cells;
 
+    public Map() {
+    }
+
     public Map(int height, int width) {
         cells = new Cell[height][width];
     }
