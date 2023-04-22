@@ -28,7 +28,7 @@ public class Stage {
         while (true) {
             if (timeline.getDeltaTimeForAction() > 0) {
                 try {
-                    Thread.sleep(Math.max(0, timeline.getDeltaTimeForAction()));
+                    Thread.sleep(10);
                 } catch (InterruptedException ignore) {}
             } else {
                 Coordinate mobCoord = timeline.getMobForDoingAction();
@@ -39,6 +39,9 @@ public class Stage {
                     mobCoord = gameDiff.getNewPlayerCoordinate();
                 }
                 timeline.addUpdatedMob(map.getCell(mobCoord).getUnit(), mobCoord);
+                while (key != null) {
+                    key = printer.pressedKey();
+                }
             }
         }
     }
