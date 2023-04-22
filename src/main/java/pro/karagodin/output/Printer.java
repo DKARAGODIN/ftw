@@ -108,18 +108,26 @@ public class Printer {
         final TextCharacter HORIZONTAL_RED_LINE_CHAR = TextCharacter.fromCharacter('-', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
 
         for (int i = 0; i <= MAX_ROW; i++) {
+            //Gui vertical line
             screen.setCharacter(GUI_VERTICAL_LINE_COL, i, VERTICAL_RED_LINE_CHAR);
+            //Total right screen border
+            screen.setCharacter(MAX_COL, i, VERTICAL_RED_LINE_CHAR);
         }
+        // Total Bottom screen border
+        for (int i = 0; i < MAX_COL; i++) {
+            screen.setCharacter(i, MAX_ROW, HORIZONTAL_RED_LINE_CHAR);
+        }
+        // Controls line
         for (int i = GUI_VERTICAL_LINE_COL + 1; i <= MAX_COL; i++) {
             screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW, HORIZONTAL_RED_LINE_CHAR);
         }
+
         TextGraphics textGraphics = screen.newTextGraphics();
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+1, "Controls");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+2, "arrows - move your hero");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+3, "space - make some action");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+4, "i - change inventory");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+5, "q - quit the game");
-
     }
 
     private void printWelcomeMessage(Screen screen) throws InterruptedException, IOException {
@@ -128,7 +136,7 @@ public class Printer {
         screen.refresh();
         while (true) {
             TerminalSize newTerminalSize = screen.doResizeIfNecessary();
-            if (newTerminalSize != null && newTerminalSize.getColumns() >= MAX_COL + 1 && newTerminalSize.getRows() >= MAX_ROW+1)
+            if (newTerminalSize != null && newTerminalSize.getColumns() >= MAX_COL && newTerminalSize.getRows() >= MAX_ROW)
                 break;
             Thread.sleep(50);
         }
