@@ -1,81 +1,83 @@
 package pro.karagodin.game_logic;
 
-import com.googlecode.lanterna.input.KeyStroke;
+import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.game_engine.MobWithPosition;
+import pro.karagodin.models.Cell;
 import pro.karagodin.models.Map;
+import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
 
 public class Judge {
-    public GameDiff doPlayerAction(KeyStroke key, MobWithPosition playerAndCoord, Map map) {
-        MapDiff diff = new MapDiff();
-        Player player = (Player)playerAndCoord.getMob();
-        Coordinate newPlayerCoord = playerAndCoord.getPosition();
-        switch (key.getKeyType()) {
-            case ArrowLeft:
-                if (player.isInventoryMode()) {
 
-                } else {
-                    if (playerAndCoord.getPosition().getX() > 0) {
-                        map.getCell(playerAndCoord.getPosition()).setUnit(null);
-                        diff.addNewCoordinate(playerAndCoord.getPosition());
-                        newPlayerCoord = new Coordinate(playerAndCoord.getPosition().getX() - 1, playerAndCoord.getPosition().getY());
-                        map.getCell(newPlayerCoord).setUnit(player);
-                        diff.addNewCoordinate(newPlayerCoord);
+    private Player player;
+
+    public Judge(Player player) {
+        this.player = player;
+    }
+
+    public GameDiff doAction(Action action, MobWithPosition mobAndCoord, Map map) {
+        switch (action) {
+            case MoveLeft:
+                if (mobAndCoord.getPosition().getX() > 0) {
+                    Coordinate newMobCoord = new Coordinate(mobAndCoord.getPosition().getX() - 1, mobAndCoord.getPosition().getY());
+                    if (canDoMovement(map, newMobCoord)) {
+                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
-            case ArrowRight:
-                if (player.isInventoryMode()) {
-                } else {
-                    if (playerAndCoord.getPosition().getX() < map.getWidth() - 1) {
-                        map.getCell(playerAndCoord.getPosition()).setUnit(null);
-                        diff.addNewCoordinate(playerAndCoord.getPosition());
-                        newPlayerCoord = new Coordinate(playerAndCoord.getPosition().getX() + 1, playerAndCoord.getPosition().getY());
-                        map.getCell(newPlayerCoord).setUnit(player);
-                        diff.addNewCoordinate(newPlayerCoord);
+            case MoveRight:
+                if (mobAndCoord.getPosition().getX() < map.getWidth() - 1) {
+                    Coordinate newMobCoord = new Coordinate(mobAndCoord.getPosition().getX() + 1, mobAndCoord.getPosition().getY());
+                    if (canDoMovement(map, newMobCoord)) {
+                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
-            case ArrowDown:
-                if (player.isInventoryMode()) {
-                } else {
-                    if (playerAndCoord.getPosition().getY() < map.getHeight() - 1) {
-                        map.getCell(playerAndCoord.getPosition()).setUnit(null);
-                        diff.addNewCoordinate(playerAndCoord.getPosition());
-                        newPlayerCoord = new Coordinate(playerAndCoord.getPosition().getX(), playerAndCoord.getPosition().getY() + 1);
-                        map.getCell(newPlayerCoord).setUnit(player);
-                        diff.addNewCoordinate(newPlayerCoord);
+            case MoveDown:
+                if (mobAndCoord.getPosition().getY() < map.getHeight() - 1) {
+                    Coordinate newMobCoord = new Coordinate(mobAndCoord.getPosition().getX(), mobAndCoord.getPosition().getY() + 1);
+                    if (canDoMovement(map, newMobCoord)) {
+                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
-            case ArrowUp:
-                if (player.isInventoryMode()) {
-                } else {
-                    if (playerAndCoord.getPosition().getY() > 0) {
-                        map.getCell(playerAndCoord.getPosition()).setUnit(null);
-                        diff.addNewCoordinate(playerAndCoord.getPosition());
-                        newPlayerCoord = new Coordinate(playerAndCoord.getPosition().getX(), playerAndCoord.getPosition().getY() - 1);
-                        map.getCell(newPlayerCoord).setUnit(player);
-                        diff.addNewCoordinate(newPlayerCoord);
+            case MoveUp:
+                if (mobAndCoord.getPosition().getY() > 0) {
+                    Coordinate newMobCoord = new Coordinate(mobAndCoord.getPosition().getX(), mobAndCoord.getPosition().getY() - 1);
+                    if (canDoMovement(map, newMobCoord)) {
+                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
-            case Character: {
-                switch (key.getCharacter()) {
-                    case 'q':
-                    case 'i':
-                        player.setInventoryMode(!player.isInventoryMode());
-                        if (player.isInventoryMode()) {
-                            player.getInventory().setCoordinates(0, 0);
-                        }
-                    break;
-                }
-            }
-            break;
+            default:
+                break;
         }
-        return new GameDiff(diff, new MobWithPosition(map, newPlayerCoord));
+        return new GameDiff(mobAndCoord);
+    }
+
+    public boolean isStageOver() {
+        return !player.doesPlayerWantToPlay();
+    }
+
+    public boolean isGameOver() {
+        return !player.doesPlayerWantToPlay();
+    }
+
+    private boolean canDoMovement(Map map, Coordinate position) {
+        Cell nextMobCell = map.getCell(position);
+        return nextMobCell.getWall() == null && nextMobCell.getUnit() == null;
+    }
+
+    private GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {
+        Mob mob = map.getCell(beginPosition).getUnit();
+        map.getCell(beginPosition).setUnit(null);
+        map.getCell(endPosition).setUnit(mob);
+        MapDiff diff = new MapDiff();
+        diff.addNewCoordinate(beginPosition);
+        diff.addNewCoordinate(endPosition);
+        return new GameDiff(diff, new MobWithPosition(map, endPosition));
     }
 }

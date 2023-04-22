@@ -1,5 +1,6 @@
 package pro.karagodin.game_engine;
 
+import pro.karagodin.ai_system.Action;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 
@@ -19,5 +20,9 @@ public class MobWithPosition {
 
     public Coordinate getPosition() {
         return position;
+    }
+
+    public Action getNextAction(Map map) {
+        return mob.getStrategy().getNextAction(this, map);
     }
 }

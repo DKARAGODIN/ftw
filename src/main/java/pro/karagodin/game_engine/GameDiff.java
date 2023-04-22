@@ -5,6 +5,11 @@ public class GameDiff {
     private MobWithPosition newMobPosition;
     private boolean inventoryMode;
 
+    public GameDiff(MobWithPosition oldMobPosition) {
+        this.mapDiff = new MapDiff();
+        this.newMobPosition = oldMobPosition;
+    }
+
     public GameDiff(MapDiff mapDiff, MobWithPosition newMobPosition) {
         this.mapDiff = mapDiff;
         this.newMobPosition = newMobPosition;

@@ -1,6 +1,7 @@
 package pro.karagodin.game_engine;
 
 import com.googlecode.lanterna.input.KeyStroke;
+import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_logic.Judge;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
@@ -10,40 +11,34 @@ import java.io.IOException;
 
 public class Stage {
 
-    private Printer printer;
-    private Judge judge;
-    private Player player;
-    private Map map;
-    private Timeline timeline;
+    private final Printer printer;
+    private final Judge judge;
+    private final Map map;
+    private final Timeline timeline;
 
     public Stage(Printer printer, Player player) {
         this.printer = printer;
-        this.judge = new Judge();
-        this.player = player;
+        this.judge = new Judge(player);
         this.map = new Map(60, 195, player);
         this.timeline = new Timeline(this.map);
     }
 
-    public StageEnd start() throws IOException {
-        while (true) {
+    public boolean start() throws IOException {
+        while (!judge.isStageOver()) {
             if (timeline.getDeltaTimeForAction() > 0) {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException ignore) {}
             } else {
                 MobWithPosition mobAndCoord = timeline.getMobForDoingAction();
-                KeyStroke key = printer.pressedKey();
-                if (key != null) {
-                    GameDiff gameDiff = judge.doPlayerAction(key, mobAndCoord, map);
-                    printer.updateCoordinates(map, gameDiff.getMapDiff());
-                    mobAndCoord = gameDiff.getNewMobPosition();
-                }
+                Action mobAction = mobAndCoord.getNextAction(map);
+                GameDiff gameDiff = judge.doAction(mobAction, mobAndCoord, map);
+                printer.updateCoordinates(map, gameDiff.getMapDiff());
+                mobAndCoord = gameDiff.getNewMobPosition();
                 timeline.addUpdatedMob(mobAndCoord);
-                while (key != null) {
-                    key = printer.pressedKey();
-                }
             }
         }
+        return judge.isGameOver();
     }
 
     public static class StageEnd {

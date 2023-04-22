@@ -1,18 +1,19 @@
 package pro.karagodin.models;
 
+import pro.karagodin.ai_system.PlayerStrategy;
+import pro.karagodin.output.Printer;
+import pro.karagodin.time.TimeInterval;
+
 public class Player extends Mob {
 
     private int level = 1;
     private int xp = 0;
     private Inventory inventory = new Inventory();
     private boolean inventoryMode = false;
+    private boolean wantsToContinuePlaying = true;
 
-    public Player(int maxHp) {
-        super(maxHp);
-    }
-
-    public Player(double hp, int maxHp) {
-        super(hp, maxHp);
+    public Player(int hp, int maxHp, TimeInterval pace, Printer printer) {
+        super(hp, maxHp, pace, new PlayerStrategy(printer));
     }
 
     public int getLevel() {
@@ -41,5 +42,13 @@ public class Player extends Mob {
 
     public void setInventoryMode(boolean inventoryMode) {
         this.inventoryMode = inventoryMode;
+    }
+
+    public boolean doesPlayerWantToPlay() {
+        return wantsToContinuePlaying;
+    }
+
+    public void quitFromGame() {
+        wantsToContinuePlaying = false;
     }
 }

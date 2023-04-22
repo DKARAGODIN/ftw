@@ -1,6 +1,8 @@
 package pro.karagodin.models;
 
+import pro.karagodin.ai_system.RoamStrategy;
 import pro.karagodin.game_engine.Coordinate;
+import pro.karagodin.time.TimeInterval;
 
 public class Map {
     protected Cell[][] cells;
@@ -13,6 +15,7 @@ public class Map {
             }
         }
         cells[97][30].unit = player;
+        cells[110][19].unit = new Mob(100, 100, new TimeInterval(140), new RoamStrategy());
     }
 
     public Cell getCell(Coordinate coord) {
