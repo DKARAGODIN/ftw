@@ -19,6 +19,58 @@ public class Printer {
     private static final TextCharacter HERO_CHAR = TextCharacter.fromCharacter('@', TextColor.ANSI.RED, TextColor.ANSI.GREEN)[0];
     private static final TextCharacter BLACK_CHAR = TextCharacter.fromCharacter(' ', TextColor.ANSI.BLACK, TextColor.ANSI.BLACK)[0];
 
+    private Screen screen;
+
+    public void init() {
+        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
+        try (Screen screen = terminalFactory.createScreen()) {
+            this.screen = screen;
+
+            printWelcomeMessage(screen);
+            /*printGUI(screen);
+            printHeroInfo(screen);
+
+            screen.setCharacter(hero_col, hero_row, HERO_CHAR);
+            screen.refresh(Screen.RefreshType.COMPLETE);*/
+
+            /*screenLoop: while (true) {
+                KeyStroke key = screen.pollInput();
+                if (key != null) {
+                    switch (key.getKeyType()) {
+                        case ArrowLeft -> {
+                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
+                            hero_col--;
+                        }
+                        case ArrowRight -> {
+                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
+                            hero_col++;
+                        }
+                        case ArrowDown -> {
+                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
+                            hero_row++;
+                        }
+                        case ArrowUp -> {
+                            screen.setCharacter(hero_col, hero_row, BLACK_CHAR);
+                            hero_row--;
+                        }
+                        case Character -> {
+                            if (key.getCharacter() == 'q')
+                                break screenLoop;
+                        }
+                    }
+                    screen.setCharacter(hero_col, hero_row, HERO_CHAR);
+                    screen.refresh(Screen.RefreshType.DELTA);
+                }
+                Thread.sleep(10);
+            }*/
+
+            //screen.stopScreen();
+        }
+        catch(IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void startTheGame() {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         try (Screen screen = terminalFactory.createScreen()) {
@@ -141,5 +193,9 @@ public class Printer {
             Thread.sleep(50);
         }
         screen.clear();
+    }
+
+    public KeyStroke pressedKey() throws IOException {
+        return screen.pollInput();
     }
 }
