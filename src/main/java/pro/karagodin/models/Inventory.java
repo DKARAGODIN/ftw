@@ -6,8 +6,8 @@ import java.util.List;
 public class Inventory {
     private List<Item> equippedItems = new ArrayList<>();
     private List<Item> backpackItems = new ArrayList<>();
-    private int row = 0;
-    private int column = 0;
+    private int y = 0;
+    private int x = 0;
 
     public List<Item> getEquippedItems() {
         return equippedItems;
@@ -41,24 +41,30 @@ public class Inventory {
         backpackItems.add(item);
     }
 
-    public int getRow() {
-        return row;
+    public int getY() {
+        return y;
     }
 
-    public void setRow(int row) {
-        this.row = row;
+    public void setY(int row) {
+        if (row > 4)
+            throw new IllegalArgumentException("Inventory coordinates error");
+
+        this.y = row;
     }
 
-    public int getColumn() {
-        return column;
+    public int getX() {
+        return x;
     }
 
-    public void setColumn(int column) {
-        this.column = column;
+    public void setX(int column) {
+        if (column > 6)
+            throw new IllegalArgumentException("Inventory coordinates error");
+
+        this.x = column;
     }
 
-    public void setCoordinates (int row, int column) {
-        this.row = row;
-        this.column = column;
+    public void setCoordinates (int x, int y) {
+        setX(x);
+        setY(y);
     }
 }
