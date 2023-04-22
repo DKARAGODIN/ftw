@@ -2,12 +2,12 @@ package pro.karagodin.game_engine;
 
 public class GameDiff {
     private MapDiff mapDiff;
-    private Coordinate newPlayerCoordinate;
+    private MobWithPosition newMobPosition;
     private boolean inventoryMode;
 
-    public GameDiff(MapDiff mapDiff, Coordinate newPlayerCoordinate) {
+    public GameDiff(MapDiff mapDiff, MobWithPosition newMobPosition) {
         this.mapDiff = mapDiff;
-        this.newPlayerCoordinate = newPlayerCoordinate;
+        this.newMobPosition = newMobPosition;
     }
 
     public MapDiff getMapDiff() {
@@ -18,11 +18,11 @@ public class GameDiff {
         this.mapDiff = mapDiff;
     }
 
-    public Coordinate getNewPlayerCoordinate() {
-        return newPlayerCoordinate;
+    public MobWithPosition getNewMobPosition() {
+        return newMobPosition;
     }
 
-    public void setNewPlayerCoordinate(Coordinate newPlayerCoordinate) {
-        this.newPlayerCoordinate = newPlayerCoordinate;
+    public void setNewMobPosition(MobWithPosition newMobPosition) {
+        this.newMobPosition = newMobPosition;
     }
 }

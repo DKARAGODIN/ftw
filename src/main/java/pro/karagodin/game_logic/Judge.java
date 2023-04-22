@@ -4,27 +4,24 @@ import com.googlecode.lanterna.input.KeyStroke;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_engine.MapDiff;
+import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 
 public class Judge {
-    /**
-     *
-     * @param key - not null;
-     */
-    public GameDiff doPlayerAction(KeyStroke key, Coordinate playerCoord, Map map) {
-        Player player = (Player)map.getCell(playerCoord).getUnit();
+    public GameDiff doPlayerAction(KeyStroke key, MobWithPosition playerAndCoord, Map map) {
         MapDiff diff = new MapDiff();
-        Coordinate newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY());
+        Player player = (Player)playerAndCoord.getMob();
+        Coordinate newPlayerCoord = playerAndCoord.getPosition();
         switch (key.getKeyType()) {
             case ArrowLeft:
                 if (player.isInventoryMode()) {
 
                 } else {
-                    if (playerCoord.getX() > 0) {
-                        map.getCell(playerCoord).setUnit(null);
-                        diff.addNewCoordinate(playerCoord);
-                        newPlayerCoord = new Coordinate(playerCoord.getX() - 1, playerCoord.getY());
+                    if (playerAndCoord.getPosition().getX() > 0) {
+                        map.getCell(playerAndCoord.getPosition()).setUnit(null);
+                        diff.addNewCoordinate(playerAndCoord.getPosition());
+                        newPlayerCoord = new Coordinate(playerAndCoord.getPosition().getX() - 1, playerAndCoord.getPosition().getY());
                         map.getCell(newPlayerCoord).setUnit(player);
                         diff.addNewCoordinate(newPlayerCoord);
                     }
@@ -33,10 +30,10 @@ public class Judge {
             case ArrowRight:
                 if (player.isInventoryMode()) {
                 } else {
-                    if (playerCoord.getX() < map.getWidth() - 1) {
-                        map.getCell(playerCoord).setUnit(null);
-                        diff.addNewCoordinate(playerCoord);
-                        newPlayerCoord = new Coordinate(playerCoord.getX() + 1, playerCoord.getY());
+                    if (playerAndCoord.getPosition().getX() < map.getWidth() - 1) {
+                        map.getCell(playerAndCoord.getPosition()).setUnit(null);
+                        diff.addNewCoordinate(playerAndCoord.getPosition());
+                        newPlayerCoord = new Coordinate(playerAndCoord.getPosition().getX() + 1, playerAndCoord.getPosition().getY());
                         map.getCell(newPlayerCoord).setUnit(player);
                         diff.addNewCoordinate(newPlayerCoord);
                     }
@@ -45,10 +42,10 @@ public class Judge {
             case ArrowDown:
                 if (player.isInventoryMode()) {
                 } else {
-                    if (playerCoord.getY() < map.getHeight() - 1) {
-                        map.getCell(playerCoord).setUnit(null);
-                        diff.addNewCoordinate(playerCoord);
-                        newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY() + 1);
+                    if (playerAndCoord.getPosition().getY() < map.getHeight() - 1) {
+                        map.getCell(playerAndCoord.getPosition()).setUnit(null);
+                        diff.addNewCoordinate(playerAndCoord.getPosition());
+                        newPlayerCoord = new Coordinate(playerAndCoord.getPosition().getX(), playerAndCoord.getPosition().getY() + 1);
                         map.getCell(newPlayerCoord).setUnit(player);
                         diff.addNewCoordinate(newPlayerCoord);
                     }
@@ -57,10 +54,10 @@ public class Judge {
             case ArrowUp:
                 if (player.isInventoryMode()) {
                 } else {
-                    if (playerCoord.getY() > 0) {
-                        map.getCell(playerCoord).setUnit(null);
-                        diff.addNewCoordinate(playerCoord);
-                        newPlayerCoord = new Coordinate(playerCoord.getX(), playerCoord.getY() - 1);
+                    if (playerAndCoord.getPosition().getY() > 0) {
+                        map.getCell(playerAndCoord.getPosition()).setUnit(null);
+                        diff.addNewCoordinate(playerAndCoord.getPosition());
+                        newPlayerCoord = new Coordinate(playerAndCoord.getPosition().getX(), playerAndCoord.getPosition().getY() - 1);
                         map.getCell(newPlayerCoord).setUnit(player);
                         diff.addNewCoordinate(newPlayerCoord);
                     }
@@ -79,6 +76,6 @@ public class Judge {
             }
             break;
         }
-        return new GameDiff(diff, newPlayerCoord);
+        return new GameDiff(diff, new MobWithPosition(map, newPlayerCoord));
     }
 }

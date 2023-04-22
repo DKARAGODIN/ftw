@@ -9,13 +9,11 @@ import java.util.PriorityQueue;
 public class Timeline {
 
     private static class MobInfo implements Comparable<MobInfo> {
-        public Mob mob;
-        public Coordinate coord;
+        public MobWithPosition mobAndCoord;
         public TimeMoment actionTime;
 
-        public MobInfo(Mob mob, Coordinate coord, TimeMoment actionTime) {
-            this.mob = mob;
-            this.coord = coord;
+        public MobInfo(MobWithPosition mobAndCoord, TimeMoment actionTime) {
+            this.mobAndCoord = mobAndCoord;
             this.actionTime = actionTime;
         }
 
@@ -32,26 +30,26 @@ public class Timeline {
         mobsWithTimes = new PriorityQueue<>();
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
-                Mob mob = map.getCell(new Coordinate(x, y)).getUnit();
-                if (mob != null) {
-                    mobsWithTimes.add(new MobInfo(mob, new Coordinate(x, y), new TimeMoment()));
+                MobWithPosition mobAndCoord = new MobWithPosition(map, new Coordinate(x, y));
+                if (mobAndCoord.getMob() != null) {
+                    mobsWithTimes.add(new MobInfo(mobAndCoord, new TimeMoment()));
                 }
             }
         }
     }
 
-    public Coordinate getMobForDoingAction() {
+    public MobWithPosition getMobForDoingAction() {
         MobInfo info = mobsWithTimes.peek();
         if (info.actionTime.deltaWithCurrentTime() > 0) {
             return null;
         }
         mobsWithTimes.poll();
-        nextTimeForLastMob = info.actionTime.after(info.mob.getPace());
-        return info.coord;
+        nextTimeForLastMob = info.actionTime.after(info.mobAndCoord.getMob().getPace());
+        return info.mobAndCoord;
     }
 
-    public void addUpdatedMob(Mob mob, Coordinate coord) {
-        mobsWithTimes.add(new MobInfo(mob, coord, nextTimeForLastMob));
+    public void addUpdatedMob(MobWithPosition mobAndCoord) {
+        mobsWithTimes.add(new MobInfo(mobAndCoord, nextTimeForLastMob));
     }
 
     public long getDeltaTimeForAction() {

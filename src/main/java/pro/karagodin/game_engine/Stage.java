@@ -31,14 +31,14 @@ public class Stage {
                     Thread.sleep(10);
                 } catch (InterruptedException ignore) {}
             } else {
-                Coordinate mobCoord = timeline.getMobForDoingAction();
+                MobWithPosition mobAndCoord = timeline.getMobForDoingAction();
                 KeyStroke key = printer.pressedKey();
                 if (key != null) {
-                    GameDiff gameDiff = judge.doPlayerAction(key, mobCoord, map);
+                    GameDiff gameDiff = judge.doPlayerAction(key, mobAndCoord, map);
                     printer.updateCoordinates(map, gameDiff.getMapDiff());
-                    mobCoord = gameDiff.getNewPlayerCoordinate();
+                    mobAndCoord = gameDiff.getNewMobPosition();
                 }
-                timeline.addUpdatedMob(map.getCell(mobCoord).getUnit(), mobCoord);
+                timeline.addUpdatedMob(mobAndCoord);
                 while (key != null) {
                     key = printer.pressedKey();
                 }
