@@ -3,27 +3,32 @@ package pro.karagodin.models;
 import java.util.Objects;
 
 public class Cell {
-    private int x;
-    private int y;
+    protected Mob unit;
+    protected Wall wall;
+    protected Floor floor;
 
-    public Cell(int x, int y) {
-        this.x = x;
-        this.y = y;
+
+    public Mob getUnit() {
+        return unit;
     }
 
-    public int getX() {
-        return x;
+    public void setUnit(Mob unit) {
+        this.unit = unit;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public Wall getWall() {
+        return wall;
     }
 
-    public int getY() {
-        return y;
+    public void setWall(Wall wall) {
+        this.wall = wall;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Floor floor) {
+        this.floor = floor;
     }
 }

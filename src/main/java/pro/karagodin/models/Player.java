@@ -1,12 +1,12 @@
 package pro.karagodin.models;
 
 public class Player extends Mob {
-    public Player(int maxHp, Cell position) {
-        super(maxHp, position);
+    public Player(int maxHp) {
+        super(maxHp);
     }
 
-    public Player(double hp, int maxHp, Cell position) {
-        super(hp, maxHp, position);
+    public Player(double hp, int maxHp) {
+        super(hp, maxHp);
     }
 
     protected int level = 1;

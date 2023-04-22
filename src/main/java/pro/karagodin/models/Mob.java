@@ -3,18 +3,15 @@ package pro.karagodin.models;
 public class Mob {
     protected double hp;
     protected int maxHp;
-    protected Cell position;
 
-    public Mob(int maxHp, Cell position) {
+    public Mob(int maxHp) {
         this.hp = maxHp;
         this.maxHp = maxHp;
-        this.position = position;
     }
 
-    public Mob(double hp, int maxHp, Cell position) {
+    public Mob(double hp, int maxHp) {
         this.hp = hp;
         this.maxHp = maxHp;
-        this.position = position;
     }
 
     public double getHp() {
@@ -33,11 +30,4 @@ public class Mob {
         this.maxHp = maxHp;
     }
 
-    public Cell getPosition() {
-        return position;
-    }
-
-    public void setPosition(Cell position) {
-        this.position = position;
-    }
 }

@@ -7,9 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class CellTest {
     @Test
     void testConstructor() {
-        Cell cell = new Cell(1, 2);
-        assertEquals(cell.getX(), 1);
-        assertEquals(cell.getY(), 2);
+        Cell cell = new Cell();
+        assertNull(cell.getFloor());
+        assertNull(cell.getUnit());
+        assertNull(cell.getWall());
     }
 
 }
