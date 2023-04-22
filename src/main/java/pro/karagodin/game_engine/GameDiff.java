@@ -9,6 +9,8 @@ public class GameDiff {
     private int inventory_x;
     private int inventory_y;
     private boolean inventoryMode;
+    private boolean exitInventoryMode;
+    private boolean quitGame;
 
     public GameDiff(MapDiff mapDiff, Coordinate newPlayerCoordinate) {
         this.mapDiff = mapDiff;
@@ -69,5 +71,21 @@ public class GameDiff {
 
     public void setInventory_y(int inventory_y) {
         this.inventory_y = inventory_y;
+    }
+
+    public boolean isExitInventoryMode() {
+        return exitInventoryMode;
+    }
+
+    public void setExitInventoryMode(boolean exitInventoryMode) {
+        this.exitInventoryMode = exitInventoryMode;
+    }
+
+    public boolean isQuitGame() {
+        return quitGame;
+    }
+
+    public void setQuitGame(boolean quitGame) {
+        this.quitGame = quitGame;
     }
 }

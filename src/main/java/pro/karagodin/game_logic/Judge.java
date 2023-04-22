@@ -8,10 +8,6 @@ import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 
 public class Judge {
-    /**
-     *
-     * @param key - not null;
-     */
     public GameDiff doPlayerAction(KeyStroke key, Coordinate playerCoord, Map map) {
         Player player = (Player)map.getCell(playerCoord).getUnit();
         MapDiff diff = new MapDiff();
@@ -119,13 +115,32 @@ public class Judge {
                 break;
             case Character: {
                 switch (key.getCharacter()) {
-                    case 'q':
+                    case 'q': {
+                        GameDiff gameDiff = new GameDiff(diff, newPlayerCoord);
+                        gameDiff.setQuitGame(true);
+                        return gameDiff;
+                    }
                     case 'i':
                         player.setInventoryMode(!player.isInventoryMode());
                         if (player.isInventoryMode()) {
+                            //Enable inventory Mode
                             player.getInventory().setCoordinates(0, 0);
+                            GameDiff gameDiff = new GameDiff(diff, newPlayerCoord);
+                            gameDiff.setInventoryMode(true);
+
+                            return gameDiff;
+                        } else {
+                            //Disable inventory Mode
+                            GameDiff gameDiff = new GameDiff(diff, newPlayerCoord);
+                            gameDiff.setInventoryMode(true);
+                            gameDiff.setExitInventoryMode(true);
+
+                            int x = player.getInventory().getX();
+                            int y = player.getInventory().getY();
+                            gameDiff.setInventory_x(x);
+                            gameDiff.setInventory_y(y);
+                            return gameDiff;
                         }
-                    break;
                 }
             }
             break;
