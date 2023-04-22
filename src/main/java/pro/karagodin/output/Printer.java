@@ -18,7 +18,8 @@ public class Printer {
     private static int hero_col = MAX_COL / 2;
     private static int hero_row = MAX_ROW / 2;
     private static final TextCharacter HERO_CHAR = TextCharacter.fromCharacter('@', TextColor.ANSI.RED, TextColor.ANSI.GREEN)[0];
-    private static final TextCharacter BLACK_CHAR = TextCharacter.fromCharacter(' ', TextColor.ANSI.BLACK, TextColor.ANSI.BLACK)[0];
+    private static final TextCharacter BLACK_EMPTY_CHAR = TextCharacter.fromCharacter(' ', TextColor.ANSI.BLACK, TextColor.ANSI.BLACK)[0];
+    private static final TextCharacter GREY_EMPTY_CHAR = TextCharacter.fromCharacter(' ', TextColor.ANSI.BLACK, TextColor.ANSI.WHITE)[0];
 
     private Screen screen;
 
@@ -85,7 +86,7 @@ public class Printer {
                 screen.setCharacter(i, k, HORIZONTAL_GREEN_LINE_CHAR);
             }
         }
-        screen.refresh();
+        screen.refresh(Screen.RefreshType.DELTA);
     }
 
     public void printGUI() throws IOException {
@@ -116,7 +117,7 @@ public class Printer {
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+4, "i - change inventory");
         textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+5, "q - quit the game");
 
-        screen.refresh();
+        screen.refresh(Screen.RefreshType.DELTA);
     }
 
     private void printWelcomeMessage(Screen screen) throws IOException {
@@ -140,7 +141,23 @@ public class Printer {
         return screen.pollInput();
     }
 
-    public void printPlayer(Player player) {
+    public void printPlayer(Player player) throws IOException {
+        if (player.isInventoryMode()) {
+            refreshInvenrotyCells(player);
+        } else {
+            System.out.println(false);
+        }
+        screen.refresh(Screen.RefreshType.DELTA);
+    }
+
+    private void refreshInvenrotyCells(Player player) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int x = 197 + i;
+                int y = 15 + j;
+                screen.setCharacter(x, y, GREY_EMPTY_CHAR);
+            }
+        }
     }
 
     public void quitGame() {

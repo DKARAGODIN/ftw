@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
-    protected List<Item> equippedItems = new ArrayList<>();
-    protected List<Item> backpackItems = new ArrayList<>();
+    private List<Item> equippedItems = new ArrayList<>();
+    private List<Item> backpackItems = new ArrayList<>();
+    private int row = 0;
+    private int column = 0;
 
     public List<Item> getEquippedItems() {
         return equippedItems;
@@ -37,5 +39,26 @@ public class Inventory {
         }
         equippedItems.remove(item);
         backpackItems.add(item);
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public void setCoordinates (int row, int column) {
+        this.row = row;
+        this.column = column;
     }
 }
