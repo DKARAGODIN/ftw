@@ -35,7 +35,10 @@ public class Stage {
                 KeyStroke key = printer.pressedKey();
                 if (key != null) {
                     GameDiff gameDiff = judge.doPlayerAction(key, mobCoord, map);
-                    printer.updateCoordinates(map, gameDiff.getMapDiff());
+                    if (gameDiff.isQuitGame())
+                        return new StageEnd(true, false);
+
+                    printer.applyGameDiff(map, gameDiff);
                     mobCoord = gameDiff.getNewPlayerCoordinate();
                 }
                 timeline.addUpdatedMob(map.getCell(mobCoord).getUnit(), mobCoord);

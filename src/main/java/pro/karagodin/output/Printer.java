@@ -8,9 +8,8 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import pro.karagodin.game_engine.Coordinate;
-import pro.karagodin.game_engine.MapDiff;
+import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.models.Map;
-import pro.karagodin.models.Player;
 
 import java.io.IOException;
 
@@ -35,15 +34,48 @@ public class Printer {
         printWelcomeMessage(screen);
     }
 
-    public void updateCoordinates(Map map, MapDiff diff) throws IOException {
-        for (Coordinate coord : diff.getUpdatedCoordinatesInMap()) {
-            if (map.getCell(coord).getUnit() == null) {
-                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter(' '));
+    public void applyGameDiff(Map map, GameDiff gameDiff) throws IOException {
+        if (gameDiff.isInventoryMode()){
+            int x = gameDiff.getInventory_x();
+            int y = gameDiff.getInventory_y();
+            int prev_x = gameDiff.getInventory_prev_x();
+            int prev_y = gameDiff.getInventory_prev_y();
+            if (gameDiff.isExitInventoryMode()) {
+                applyInventoryDiff(x, y, BLACK_EMPTY_CHAR);
             } else {
-                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter('@'));
+                applyInventoryDiff(prev_x, prev_y, BLACK_EMPTY_CHAR);
+                applyInventoryDiff(x, y, GREY_EMPTY_CHAR);
+            }
+        } else {
+            for (Coordinate coord : gameDiff.getMapDiff().getUpdatedCoordinatesInMap()) {
+                if (map.getCell(coord).getUnit() == null) {
+                    screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter(' '));
+                } else {
+                    screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter('@'));
+                }
             }
         }
         screen.refresh(Screen.RefreshType.DELTA);
+    }
+
+    private void applyInventoryDiff(int x, int y, TextCharacter c) {
+        if (y <= 1) {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 3; j++) {
+                    int real_x = 197 + i + x * 6;
+                    int real_y = 15 + j + y * 4;
+                    screen.setCharacter(real_x, real_y, c);
+                }
+            }
+        } else {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 3; j++) {
+                    int real_x = 197 + i + x * 6;
+                    int real_y = 17 + j + y * 4;
+                    screen.setCharacter(real_x, real_y, c);
+                }
+            }
+        }
     }
 
     public void printHeroInfo() throws IOException {
@@ -153,51 +185,6 @@ public class Printer {
 
     public KeyStroke pressedKey() throws IOException {
         return screen.pollInput();
-    }
-
-    public void printPlayer(Player player) throws IOException {
-        if (player.isInventoryMode()) {
-            refreshInventoryCells(player);
-        } else {
-            System.out.println(false);
-        }
-        screen.refresh(Screen.RefreshType.DELTA);
-    }
-
-    private void refreshInventoryCells(Player player) {
-        //Make all black first
-        for (int a = 0; a < 5; a++) {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 3; j++) {
-                    int x = 197 + i + a * 6;
-                    int y = 15 + j;
-                    screen.setCharacter(x, y, GREY_EMPTY_CHAR);
-
-                    y = 19 + j;
-                    screen.setCharacter(x, y, GREY_EMPTY_CHAR);
-                }
-            }
-        }
-        for (int a = 0; a < 5; a++) {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 3; j++) {
-                    for (int k = 0; k < 5; k++) {
-                        int x = 197 + i + a * 6;
-                        int y = 25 + j + k * 4;
-                        screen.setCharacter(x, y, GREY_EMPTY_CHAR);
-                    }
-                }
-            }
-        }
-
-        //Select one
-        int x = player.getInventory().getX();
-        int y = player.getInventory().getY();
-        if (y > 1) {
-
-        } else {
-
-        }
     }
 
     public void quitGame() {

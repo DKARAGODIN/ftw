@@ -46,7 +46,7 @@ public class Inventory {
     }
 
     public void setY(int row) {
-        if (row > 4)
+        if (row > 6)
             throw new IllegalArgumentException("Inventory coordinates error");
 
         this.y = row;
@@ -57,7 +57,7 @@ public class Inventory {
     }
 
     public void setX(int column) {
-        if (column > 6)
+        if (column > 4)
             throw new IllegalArgumentException("Inventory coordinates error");
 
         this.x = column;
