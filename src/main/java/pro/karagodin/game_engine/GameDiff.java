@@ -3,7 +3,6 @@ package pro.karagodin.game_engine;
 public class GameDiff {
     private MapDiff mapDiff;
     private MobWithPosition newMobPosition;
-    private boolean inventoryMode;
 
     public GameDiff(MobWithPosition oldMobPosition) {
         this.mapDiff = new MapDiff();

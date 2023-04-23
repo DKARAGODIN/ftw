@@ -1,5 +1,7 @@
 package pro.karagodin.models;
 
+import pro.karagodin.game_engine.Coordinate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class Inventory {
     }
 
     public void setY(int row) {
-        if (row > 4)
+        if (row > 6)
             throw new IllegalArgumentException("Inventory coordinates error");
 
         this.y = row;
@@ -57,7 +59,7 @@ public class Inventory {
     }
 
     public void setX(int column) {
-        if (column > 6)
+        if (column > 4)
             throw new IllegalArgumentException("Inventory coordinates error");
 
         this.x = column;
@@ -66,5 +68,13 @@ public class Inventory {
     public void setCoordinates (int x, int y) {
         setX(x);
         setY(y);
+    }
+
+    public Coordinate getCoordinate() {
+        return new Coordinate(x, y);
+    }
+
+    public void setCoordinate(Coordinate newCoordinate) {
+        setCoordinates(newCoordinate.getX(), newCoordinate.getY());
     }
 }

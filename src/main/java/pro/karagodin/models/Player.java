@@ -36,7 +36,7 @@ public class Player extends Mob {
         return inventory;
     }
 
-    public boolean isInventoryMode() {
+    public boolean inInventoryMode() {
         return inventoryMode;
     }
 

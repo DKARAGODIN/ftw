@@ -4,6 +4,8 @@ import pro.karagodin.ai_system.Action;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 
+import java.io.IOException;
+
 public class MobWithPosition {
 
     private final Mob mob;
@@ -22,7 +24,7 @@ public class MobWithPosition {
         return position;
     }
 
-    public Action getNextAction(Map map) {
+    public Action getNextAction(Map map) throws IOException {
         return mob.getStrategy().getNextAction(this, map);
     }
 }

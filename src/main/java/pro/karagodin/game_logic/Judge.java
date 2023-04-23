@@ -12,7 +12,7 @@ import pro.karagodin.models.Player;
 
 public class Judge {
 
-    private Player player;
+    private final Player player;
 
     public Judge(Player player) {
         this.player = player;
@@ -22,7 +22,7 @@ public class Judge {
         switch (action) {
             case MoveLeft:
                 if (mobAndCoord.getPosition().getX() > 0) {
-                    Coordinate newMobCoord = new Coordinate(mobAndCoord.getPosition().getX() - 1, mobAndCoord.getPosition().getY());
+                    Coordinate newMobCoord = mobAndCoord.getPosition().withX(x -> x - 1);
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     }
@@ -30,7 +30,7 @@ public class Judge {
                 break;
             case MoveRight:
                 if (mobAndCoord.getPosition().getX() < map.getWidth() - 1) {
-                    Coordinate newMobCoord = new Coordinate(mobAndCoord.getPosition().getX() + 1, mobAndCoord.getPosition().getY());
+                    Coordinate newMobCoord = mobAndCoord.getPosition().withX(x -> x + 1);
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     }
@@ -38,7 +38,7 @@ public class Judge {
                 break;
             case MoveDown:
                 if (mobAndCoord.getPosition().getY() < map.getHeight() - 1) {
-                    Coordinate newMobCoord = new Coordinate(mobAndCoord.getPosition().getX(), mobAndCoord.getPosition().getY() + 1);
+                    Coordinate newMobCoord = mobAndCoord.getPosition().withY(y -> y + 1);
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     }
@@ -46,7 +46,7 @@ public class Judge {
                 break;
             case MoveUp:
                 if (mobAndCoord.getPosition().getY() > 0) {
-                    Coordinate newMobCoord = new Coordinate(mobAndCoord.getPosition().getX(), mobAndCoord.getPosition().getY() - 1);
+                    Coordinate newMobCoord = mobAndCoord.getPosition().withY(y -> y - 1);
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     }
