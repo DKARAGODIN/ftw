@@ -1,9 +1,17 @@
 package pro.karagodin.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import pro.karagodin.ai_system.PlayerStrategy;
 import pro.karagodin.output.Printer;
 import pro.karagodin.time.TimeInterval;
 
+
+/**
+ * A game object that handled by users
+ */
+@Setter
+@Getter
 public class Player extends Mob {
 
     private int level = 1;
@@ -11,41 +19,10 @@ public class Player extends Mob {
     private Inventory inventory = new Inventory();
     private boolean inventoryMode = false;
     private boolean wantsToContinuePlaying = true;
+    private char view = '@';
 
     public Player(int hp, int maxHp, TimeInterval pace, Printer printer) {
         super(hp, maxHp, pace, new PlayerStrategy(printer));
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getXp() {
-        return xp;
-    }
-
-    public void setXp(int xp) {
-        this.xp = xp;
-    }
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public boolean inInventoryMode() {
-        return inventoryMode;
-    }
-
-    public void setInventoryMode(boolean inventoryMode) {
-        this.inventoryMode = inventoryMode;
-    }
-
-    public boolean doesPlayerWantToPlay() {
-        return wantsToContinuePlaying;
     }
 
     public void quitFromGame() {

@@ -37,11 +37,8 @@ public class Printer {
 
     public void updateCoordinates(Map map, MapDiff diff) throws IOException {
         for (Coordinate coord : diff.getUpdatedCoordinatesInMap()) {
-            if (map.getCell(coord).getUnit() == null) {
-                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter(' '));
-            } else {
-                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter('@'));
-            }
+            var cell = map.getCell(coord);
+                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter(cell.getView()));
         }
         screen.refresh(Screen.RefreshType.DELTA);
     }
@@ -132,7 +129,14 @@ public class Printer {
         }
         screen.refresh(Screen.RefreshType.DELTA);
     }
-
+    public void printMap(Map map){
+        for (int x  = 0; x < map.getWidth(); x++) {
+            for (int y = 0 ; y < map.getHeight(); y++){
+                var coord = new Coordinate(x, y);
+                screen.setCharacter(x, y, new TextCharacter(map.getCell(coord).getView()));
+            }
+        }
+    }
     public void printGUI() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
         final int GUI_HORIZONTAL_LINE_ROW = MAX_ROW - 15;

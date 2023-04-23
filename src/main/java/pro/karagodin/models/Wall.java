@@ -1,5 +1,10 @@
 package pro.karagodin.models;
 
-public class Wall {
+import pro.karagodin.output.CIDrowable;
+
+public class Wall implements CIDrowable {
+    public char getView(){
+        return '#';
+    }
 
 }

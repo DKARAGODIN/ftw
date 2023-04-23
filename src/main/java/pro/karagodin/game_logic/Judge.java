@@ -59,11 +59,11 @@ public class Judge {
     }
 
     public boolean isStageOver() {
-        return !player.doesPlayerWantToPlay();
+        return !player.isWantsToContinuePlaying();
     }
 
     public boolean isGameOver() {
-        return !player.doesPlayerWantToPlay();
+        return !player.isWantsToContinuePlaying();
     }
 
     private boolean canDoMovement(Map map, Coordinate position) {

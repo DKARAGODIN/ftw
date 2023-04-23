@@ -1,12 +1,16 @@
 package pro.karagodin.models;
 
-import pro.karagodin.ai_system.Action;
+import lombok.Getter;
+import lombok.Setter;
 import pro.karagodin.ai_system.Strategy;
-import pro.karagodin.game_engine.Coordinate;
-import pro.karagodin.game_engine.MobWithPosition;
+import pro.karagodin.output.CIDrowable;
 import pro.karagodin.time.TimeInterval;
-
-public class Mob {
+/**
+  A game object that can move around and affect gameplay
+ */
+@Setter
+@Getter
+public class Mob implements CIDrowable {
     protected int hp;
     protected int maxHp;
     protected TimeInterval pace;
@@ -18,36 +22,8 @@ public class Mob {
         this.pace = pace;
         this.strategy = strategy;
     }
-
-    public double getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int getMaxHp() {
-        return maxHp;
-    }
-
-    public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
-    }
-
-    public TimeInterval getPace() {
-        return pace;
-    }
-
-    public void setPace(TimeInterval pace) {
-        this.pace = pace;
-    }
-
-    public Strategy getStrategy() {
-        return strategy;
-    }
-
-    public void setStrategy(Strategy newStrategy) {
-        this.strategy = newStrategy;
+    private char view = 'A';
+    public char getView(){
+        return view;
     }
 }

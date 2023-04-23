@@ -21,7 +21,7 @@ public class PlayerStrategy implements Strategy {
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) throws IOException {
         Player player = (Player) mobAndCoord.getMob();
         char key = getPressedKey();
-        if (player.inInventoryMode()) {
+        if (player.isInventoryMode()) {
             Coordinate oldInventoryCoord, newInventoryCoord;
             switch (key) {
                 case '^':

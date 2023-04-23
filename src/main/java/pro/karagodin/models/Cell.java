@@ -1,34 +1,29 @@
 package pro.karagodin.models;
 
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import pro.karagodin.output.CIDrowable;
 
-public class Cell {
-    protected Mob unit;
-    protected Wall wall;
+/**
+ * Map cell, stores information about all objects on it
+ */
+@Getter
+@Setter
+public class Cell implements CIDrowable {
+    protected Mob unit = null;
+    protected Wall wall = null;
     protected Floor floor;
 
-
-    public Mob getUnit() {
-        return unit;
+    public Cell(){
+        floor = new Floor();
     }
 
-    public void setUnit(Mob unit) {
-        this.unit = unit;
-    }
-
-    public Wall getWall() {
-        return wall;
-    }
-
-    public void setWall(Wall wall) {
-        this.wall = wall;
-    }
-
-    public Floor getFloor() {
-        return floor;
-    }
-
-    public void setFloor(Floor floor) {
-        this.floor = floor;
+    @Override
+    public char getView() {
+        if(unit != null)
+            return unit.getView();
+        if(floor.getItem() != null)
+            return floor.getItem().getView();
+        return ' ';
     }
 }
