@@ -1,29 +1,29 @@
 package pro.karagodin.models;
 
+import pro.karagodin.ai_system.Action;
+import pro.karagodin.ai_system.Strategy;
+import pro.karagodin.game_engine.Coordinate;
+import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.time.TimeInterval;
 
 public class Mob {
-    protected double hp;
+    protected int hp;
     protected int maxHp;
     protected TimeInterval pace;
+    protected Strategy strategy;
 
-    public Mob(int maxHp) {
-        this.hp = maxHp;
-        this.maxHp = maxHp;
-        this.pace = new TimeInterval(100);
-    }
-
-    public Mob(double hp, int maxHp) {
+    public Mob(int hp, int maxHp, TimeInterval pace, Strategy strategy) {
         this.hp = hp;
         this.maxHp = maxHp;
-        this.pace = new TimeInterval(100);
+        this.pace = pace;
+        this.strategy = strategy;
     }
 
     public double getHp() {
         return hp;
     }
 
-    public void setHp(double hp) {
+    public void setHp(int hp) {
         this.hp = hp;
     }
 
@@ -43,4 +43,11 @@ public class Mob {
         this.pace = pace;
     }
 
+    public Strategy getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(Strategy newStrategy) {
+        this.strategy = newStrategy;
+    }
 }

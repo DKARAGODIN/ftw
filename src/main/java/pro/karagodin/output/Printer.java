@@ -9,6 +9,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.GameDiff;
+import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.models.Map;
 
 import java.io.IOException;
@@ -34,26 +35,23 @@ public class Printer {
         printWelcomeMessage(screen);
     }
 
-    public void applyGameDiff(Map map, GameDiff gameDiff) throws IOException {
-        if (gameDiff.isInventoryMode()){
-            int x = gameDiff.getInventory_x();
-            int y = gameDiff.getInventory_y();
-            int prev_x = gameDiff.getInventory_prev_x();
-            int prev_y = gameDiff.getInventory_prev_y();
-            if (gameDiff.isExitInventoryMode()) {
-                applyInventoryDiff(x, y, BLACK_EMPTY_CHAR);
+    public void updateCoordinates(Map map, MapDiff diff) throws IOException {
+        for (Coordinate coord : diff.getUpdatedCoordinatesInMap()) {
+            if (map.getCell(coord).getUnit() == null) {
+                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter(' '));
             } else {
-                applyInventoryDiff(prev_x, prev_y, BLACK_EMPTY_CHAR);
-                applyInventoryDiff(x, y, GREY_EMPTY_CHAR);
+                screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter('@'));
             }
-        } else {
-            for (Coordinate coord : gameDiff.getMapDiff().getUpdatedCoordinatesInMap()) {
-                if (map.getCell(coord).getUnit() == null) {
-                    screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter(' '));
-                } else {
-                    screen.setCharacter(coord.getX(), coord.getY(), new TextCharacter('@'));
-                }
-            }
+        }
+        screen.refresh(Screen.RefreshType.DELTA);
+    }
+
+    public void updateInventory(Coordinate newPosition, Coordinate oldPosition) throws IOException {
+        if (oldPosition != null) {
+            applyInventoryDiff(oldPosition.getX(), oldPosition.getY(), BLACK_EMPTY_CHAR);
+        }
+        if (newPosition != null) {
+            applyInventoryDiff(newPosition.getX(), newPosition.getY(), GREY_EMPTY_CHAR);
         }
         screen.refresh(Screen.RefreshType.DELTA);
     }

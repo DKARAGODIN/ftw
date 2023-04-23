@@ -1,5 +1,7 @@
 package pro.karagodin.game_engine;
 
+import java.util.function.UnaryOperator;
+
 public class Coordinate {
     private int cX;
     private int cY;
@@ -23,5 +25,13 @@ public class Coordinate {
 
     public void setY(int y) {
         cY = y;
+    }
+
+    public Coordinate withX(UnaryOperator<Integer> fX) {
+        return new Coordinate(fX.apply(cX), cY);
+    }
+
+    public Coordinate withY(UnaryOperator<Integer> fY) {
+        return new Coordinate(cX, fY.apply(cY));
     }
 }

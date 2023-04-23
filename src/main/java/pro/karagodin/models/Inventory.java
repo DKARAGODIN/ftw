@@ -1,5 +1,7 @@
 package pro.karagodin.models;
 
+import pro.karagodin.game_engine.Coordinate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,5 +68,13 @@ public class Inventory {
     public void setCoordinates (int x, int y) {
         setX(x);
         setY(y);
+    }
+
+    public Coordinate getCoordinate() {
+        return new Coordinate(x, y);
+    }
+
+    public void setCoordinate(Coordinate newCoordinate) {
+        setCoordinates(newCoordinate.getX(), newCoordinate.getY());
     }
 }
