@@ -20,16 +20,15 @@ public class Printer {
 
     private static int hero_col = MAX_COL / 2;
     private static int hero_row = MAX_ROW / 2;
-    private static final TextCharacter HERO_CHAR = TextCharacter.fromCharacter('@', TextColor.ANSI.RED, TextColor.ANSI.GREEN)[0];
-    private static final TextCharacter BLACK_EMPTY_CHAR = TextCharacter.fromCharacter(' ', TextColor.ANSI.BLACK, TextColor.ANSI.BLACK)[0];
-    private static final TextCharacter GREY_EMPTY_CHAR = TextCharacter.fromCharacter(' ', TextColor.ANSI.BLACK, TextColor.ANSI.WHITE)[0];
 
     private Screen screen;
+    private InventoryPrinter inventoryPrinter;
 
     public void init() throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Screen screen = terminalFactory.createScreen();
         this.screen = screen;
+        this.inventoryPrinter = new InventoryPrinter(screen, null, null);
         screen.startScreen();
 
         printWelcomeMessage(screen);
@@ -44,34 +43,9 @@ public class Printer {
     }
 
     public void updateInventory(Coordinate newPosition, Coordinate oldPosition) throws IOException {
-        if (oldPosition != null) {
-            applyInventoryDiff(oldPosition.getX(), oldPosition.getY(), BLACK_EMPTY_CHAR);
-        }
-        if (newPosition != null) {
-            applyInventoryDiff(newPosition.getX(), newPosition.getY(), GREY_EMPTY_CHAR);
-        }
-        screen.refresh(Screen.RefreshType.DELTA);
+        inventoryPrinter.updateInventory(newPosition, oldPosition);
     }
 
-    private void applyInventoryDiff(int x, int y, TextCharacter c) {
-        if (y <= 1) {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 3; j++) {
-                    int real_x = 197 + i + x * 6;
-                    int real_y = 15 + j + y * 4;
-                    screen.setCharacter(real_x, real_y, c);
-                }
-            }
-        } else {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 3; j++) {
-                    int real_x = 197 + i + x * 6;
-                    int real_y = 17 + j + y * 4;
-                    screen.setCharacter(real_x, real_y, c);
-                }
-            }
-        }
-    }
 
     public void printHeroInfo() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
