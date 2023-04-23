@@ -1,5 +1,6 @@
 package pro.karagodin.game_logic;
 
+import org.jetbrains.annotations.Nullable;
 import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.GameDiff;
@@ -18,6 +19,7 @@ public class Judge {
         this.player = player;
     }
 
+    @Nullable
     public GameDiff doAction(Action action, MobWithPosition mobAndCoord, Map map) {
         switch (action) {
             case MoveLeft:
@@ -52,10 +54,30 @@ public class Judge {
                     }
                 }
                 break;
+            case InteractWithObjectOnFloor:
+                return tryPickItem(mobAndCoord, map);
             default:
                 break;
         }
         return new GameDiff(mobAndCoord);
+    }
+
+    private GameDiff tryPickItem(MobWithPosition mobAndCoord, Map map) {
+        var cell = map.getCell(mobAndCoord.getPosition());
+        if (cell.getFloor().hasItem())
+            return pickItem(mobAndCoord, map, cell);
+        return null;
+    }
+
+    private GameDiff pickItem(MobWithPosition mobAndCoord, Map map, Cell cell) {
+        var player = (Player) mobAndCoord.getMob();
+        var inv = player.getInventory();
+        var item = cell.getFloor().pickItem();
+        inv.addItemToBackpack(item);
+
+        var mapDiff = new MapDiff();
+        mapDiff.addNewCoordinate(mobAndCoord.getPosition());
+        return new GameDiff(mapDiff, mobAndCoord);
     }
 
     public boolean isStageOver() {

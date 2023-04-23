@@ -37,8 +37,10 @@ public class Stage {
                 MobWithPosition mobAndCoord = timeline.getMobForDoingAction();
                 Action mobAction = mobAndCoord.getNextAction(map);
                 GameDiff gameDiff = judge.doAction(mobAction, mobAndCoord, map);
-                printer.updateCoordinates(map, gameDiff.getMapDiff());
-                mobAndCoord = gameDiff.getNewMobPosition();
+                if(gameDiff != null) {
+                    printer.updateCoordinates(map, gameDiff.getMapDiff());
+                    mobAndCoord = gameDiff.getNewMobPosition();
+                }
                 timeline.addUpdatedMob(mobAndCoord);
             }
         }

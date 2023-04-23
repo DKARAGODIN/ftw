@@ -14,6 +14,10 @@ public class Floor {
         return pickedItem;
     }
 
+    public boolean hasItem() {
+        return item != null;
+    }
+
     public void setItem(Item item) {
         this.item = item;
     }
