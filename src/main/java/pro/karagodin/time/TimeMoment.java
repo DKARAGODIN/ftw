@@ -1,7 +1,5 @@
 package pro.karagodin.time;
 
-import org.jetbrains.annotations.NotNull;
-
 public class TimeMoment implements Comparable<TimeMoment> {
     private long timeInMs;
 
@@ -22,7 +20,7 @@ public class TimeMoment implements Comparable<TimeMoment> {
     }
 
     @Override
-    public int compareTo(@NotNull TimeMoment timeMoment) {
+    public int compareTo(TimeMoment timeMoment) {
         return (int)(this.timeInMs - timeMoment.timeInMs);
     }
 }
