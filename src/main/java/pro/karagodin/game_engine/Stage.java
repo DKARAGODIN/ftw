@@ -39,6 +39,8 @@ public class Stage {
                 GameDiff gameDiff = judge.doAction(mobAction, mobAndCoord, map);
                 if(gameDiff != null) {
                     printer.updateCoordinates(map, gameDiff.getMapDiff());
+                    if(gameDiff.isInventoryChanged())
+                        printer.refreshInventory();
                     mobAndCoord = gameDiff.getNewMobPosition();
                 }
                 timeline.addUpdatedMob(mobAndCoord);

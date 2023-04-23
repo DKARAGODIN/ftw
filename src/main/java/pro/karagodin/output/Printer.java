@@ -9,6 +9,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MapDiff;
+import pro.karagodin.models.Inventory;
 import pro.karagodin.models.Map;
 
 import java.io.IOException;
@@ -23,11 +24,11 @@ public class Printer {
     private Screen screen;
     private InventoryPrinter inventoryPrinter;
 
-    public void init() throws IOException {
+    public void init(Inventory inventory) throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Screen screen = terminalFactory.createScreen();
         this.screen = screen;
-        this.inventoryPrinter = new InventoryPrinter(screen, new Coordinate(MAX_COL - 34, 13));
+        this.inventoryPrinter = new InventoryPrinter(screen, new Coordinate(MAX_COL - 34, 13), inventory);
         screen.startScreen();
 
         printWelcomeMessage(screen);
@@ -43,8 +44,12 @@ public class Printer {
 
     public void moveCellFocus(Coordinate newPosition, Coordinate oldPosition) throws IOException {
         inventoryPrinter.moveCellFocus(newPosition, oldPosition);
+        screen.refresh(Screen.RefreshType.DELTA);
     }
 
+    public void refreshInventory() throws IOException {
+        inventoryPrinter.refreshCells();
+    }
 
     public void printHeroInfo() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;

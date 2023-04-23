@@ -77,7 +77,7 @@ public class Judge {
 
         var mapDiff = new MapDiff();
         mapDiff.addNewCoordinate(mobAndCoord.getPosition());
-        return new GameDiff(mapDiff, mobAndCoord);
+        return new GameDiff(mapDiff, mobAndCoord, true);
     }
 
     public boolean isStageOver() {

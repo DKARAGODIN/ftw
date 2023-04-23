@@ -4,8 +4,11 @@ import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
 import pro.karagodin.game_engine.Coordinate;
+import pro.karagodin.models.Inventory;
+import pro.karagodin.models.Item;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class InventoryPrinter {
@@ -16,12 +19,15 @@ public class InventoryPrinter {
     private static final int UNEQUIPPED_CELL_ROWS = 5;
     private final Screen screen;
     private final Coordinate equippedTitle, stashedTitle;
-    private final Coordinate equippedTable, stashedTable;
+    private final Coordinate equippedTable;
+    private final Inventory inventory;
+    private final Coordinate stashedTable;
 
-    public InventoryPrinter(Screen screen, Coordinate lu) {
+    public InventoryPrinter(Screen screen, Coordinate lu, Inventory inventory) {
         this.screen = screen;
         this.equippedTitle = new Coordinate(lu.getX(), lu.getY());
         this.equippedTable = new Coordinate(lu.getX(), lu.getY() + 1);
+        this.inventory = inventory;
         var equippedTableHeight = EQUIPPED_CELL_ROWS * (CELL_HEIGHT + 1) + 1;
         this.stashedTitle = new Coordinate(lu.getX(), lu.getY() + 1 + equippedTableHeight);
         this.stashedTable = new Coordinate(lu.getX(), lu.getY() + 1 + equippedTableHeight + 1);
@@ -34,38 +40,55 @@ public class InventoryPrinter {
         if (newPosition != null) {
             fillCell(newPosition.getX(), newPosition.getY(), CHARACTERS.GREY_EMPTY);
         }
-        screen.refresh(Screen.RefreshType.DELTA);
+        refreshCells();
     }
 
     public void printInventoryGUI(TextGraphics textGraphics) {
         textGraphics.putString(equippedTitle.getX(), equippedTitle.getY(), "Hero equipped items");
-        drawTable(equippedTable.getX(), equippedTable.getY(), EQUIPPED_CELL_ROWS);
+        drawTableGUI(equippedTable.getX(), equippedTable.getY(), EQUIPPED_CELL_ROWS);
 
         textGraphics.putString(stashedTitle.getX(), stashedTitle.getY(), "Hero stashed items");
-        drawTable(stashedTable.getX(), stashedTable.getY(), UNEQUIPPED_CELL_ROWS);
+        drawTableGUI(stashedTable.getX(), stashedTable.getY(), UNEQUIPPED_CELL_ROWS);
     }
 
-    private void drawTable(int startX, int startY, int rows) {
+    public void refreshCells() throws IOException {
+        drawItemsInTable(equippedTable, CELLS_COLS, inventory.getEquippedItems());
+        drawItemsInTable(stashedTable, CELLS_COLS, inventory.getBackpackItems());
+    }
+
+    private void drawItemsInTable(Coordinate table, int cols, List<Item> items) {
+        for (int i = 0; i < items.size(); i++) {
+            int row = i / cols;
+            int col = i % cols;
+            drawItemInCell(table.getX() + 1 + col * (CELL_WIDTH + 1), table.getY() + 1 + row * (CELL_HEIGHT + 1), items.get(i));
+        }
+    }
+
+    private void drawItemInCell(int startX, int startY, Item item) {
+        screen.setCharacter(startX + CELL_WIDTH / 2, startY + CELL_HEIGHT / 2, new TextCharacter(item.getView()));
+    }
+
+    private void drawTableGUI(int startX, int startY, int rows) {
         for (int i = 0; i <= CELLS_COLS; i++)
-            drawCol(startX + i * (CELL_WIDTH + 1), startY, rows * (CELL_HEIGHT + 1) + 1);
+            drawColGUI(startX + i * (CELL_WIDTH + 1), startY, rows * (CELL_HEIGHT + 1) + 1);
 
         for (int i = 0; i <= rows; i++)
-            drawRow(startX, startY + i * (CELL_HEIGHT + 1), CELLS_COLS * (CELL_WIDTH + 1) + 1);
+            drawRowGUI(startX, startY + i * (CELL_HEIGHT + 1), CELLS_COLS * (CELL_WIDTH + 1) + 1);
     }
 
-    private void drawRow(int startX, int startY, int size) {
+    private void drawRowGUI(int startX, int startY, int size) {
         for (int x = 0; x < size; x++)
             screen.setCharacter(startX + x, startY, CHARACTERS.HORIZONTAL_GREEN_LINE);
     }
 
-    private void drawCol(int startX, int startY, int size) {
+    private void drawColGUI(int startX, int startY, int size) {
         for (int y = 0; y < size; y++)
             screen.setCharacter(startX, startY + y, CHARACTERS.VERTICAL_GREEN_LINE);
     }
 
     private void fillCell(int col, int row, TextCharacter c) {
         Coordinate startPoint = row < EQUIPPED_CELL_ROWS ? equippedTable : stashedTable;
-        if(row >= EQUIPPED_CELL_ROWS)
+        if (row >= EQUIPPED_CELL_ROWS)
             row -= EQUIPPED_CELL_ROWS;
         int x = startPoint.getX() + 1 + col * (CELL_WIDTH + 1);
         int y = startPoint.getY() + 1 + row * (CELL_HEIGHT + 1);
@@ -77,4 +100,6 @@ public class InventoryPrinter {
             for (int y = 0; y < height; y++)
                 screen.setCharacter(startX + x, startY + y, c);
     }
+
+
 }
