@@ -27,30 +27,30 @@ public class PlayerStrategy implements Strategy {
                 case '^':
                     oldInventoryCoord = player.getInventory().getCoordinate();
                     newInventoryCoord = oldInventoryCoord.withY(y -> y == 0 ? 6 : y - 1);
-                    printer.updateInventory(newInventoryCoord, oldInventoryCoord);
+                    printer.moveCellFocus(newInventoryCoord, oldInventoryCoord);
                     player.getInventory().setCoordinate(newInventoryCoord);
                     break;
                 case 'v':
                     oldInventoryCoord = player.getInventory().getCoordinate();
                     newInventoryCoord = oldInventoryCoord.withY(y -> y == 6 ? 0 : y + 1);
-                    printer.updateInventory(newInventoryCoord, oldInventoryCoord);
+                    printer.moveCellFocus(newInventoryCoord, oldInventoryCoord);
                     player.getInventory().setCoordinate(newInventoryCoord);
                     break;
                 case '<':
                     oldInventoryCoord = player.getInventory().getCoordinate();
                     newInventoryCoord = oldInventoryCoord.withX(x -> x == 0 ? 4 : x - 1);
-                    printer.updateInventory(newInventoryCoord, oldInventoryCoord);
+                    printer.moveCellFocus(newInventoryCoord, oldInventoryCoord);
                     player.getInventory().setCoordinate(newInventoryCoord);
                     break;
                 case '>':
                     oldInventoryCoord = player.getInventory().getCoordinate();
                     newInventoryCoord = oldInventoryCoord.withX(x -> x == 4 ? 0 : x + 1);
-                    printer.updateInventory(newInventoryCoord, oldInventoryCoord);
+                    printer.moveCellFocus(newInventoryCoord, oldInventoryCoord);
                     player.getInventory().setCoordinate(newInventoryCoord);
                     break;
                 case 'i':
                     player.setInventoryMode(false);
-                    printer.updateInventory(null, player.getInventory().getCoordinate());
+                    printer.moveCellFocus(null, player.getInventory().getCoordinate());
             }
             return Action.DoNothing;
         } else {
@@ -65,7 +65,7 @@ public class PlayerStrategy implements Strategy {
                     return Action.MoveRight;
                 case 'i':
                     player.setInventoryMode(true);
-                    printer.updateInventory(new Coordinate(0, 0), null);
+                    printer.moveCellFocus(new Coordinate(0, 0), null);
                     player.getInventory().setCoordinates(0, 0);
                     return Action.DoNothing;
                 case 'q':
