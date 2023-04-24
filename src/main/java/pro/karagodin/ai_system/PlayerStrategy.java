@@ -2,6 +2,7 @@ package pro.karagodin.ai_system;
 
 import java.io.IOException;
 
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
@@ -105,5 +106,10 @@ public class PlayerStrategy implements Strategy {
             default:
                 return 0;
         }
+    }
+
+    @Override
+    public TextColor getForeground() {
+        return TextColor.ANSI.RED;
     }
 }

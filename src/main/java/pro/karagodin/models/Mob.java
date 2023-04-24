@@ -3,9 +3,13 @@ package pro.karagodin.models;
 import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
+import pro.karagodin.ai_system.Action;
 import pro.karagodin.ai_system.Strategy;
+import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.output.CIDrowable;
 import pro.karagodin.time.TimeInterval;
+
+import java.io.IOException;
 
 /**
   A game object that can move around and affect gameplay
@@ -28,16 +32,22 @@ public class Mob implements CIDrowable {
     }
 
     public char getView() {
-        return view;
+        return strategy.getView() != 0 ? strategy.getView() : view;
     }
 
     @Override
     public TextColor getForeground() {
-        return color;
+        return strategy.getForeground() != null ? strategy.getForeground() : color;
     }
 
     @Override
     public TextColor getBackground() {
         return null;
+    }
+
+    public Action getNextAction(MobWithPosition mobWithPosition, Map map) throws IOException {
+        Action action = strategy.getNextAction(mobWithPosition, map);
+        strategy = strategy.nextStrategy();
+        return action;
     }
 }

@@ -25,6 +25,6 @@ public class MobWithPosition {
     }
 
     public Action getNextAction(Map map) throws IOException {
-        return mob.getStrategy().getNextAction(this, map);
+        return mob.getNextAction(this, map);
     }
 }

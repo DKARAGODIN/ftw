@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import pro.karagodin.ai_system.RoamStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.*;
+import pro.karagodin.time.TimeInterval;
 
 public class MapGenerator {
 
@@ -33,8 +35,8 @@ public class MapGenerator {
         }
     }
 
-    public static void placePlayer(Map map, Player player) {
-        map.getCell(getFreeCellPosition(map)).setUnit(player);
+    public static void placeMob(Map map, Mob mob) {
+        map.getCell(getFreeCellPosition(map)).setUnit(mob);
     }
 
     public static Map genEmptytMap() {
@@ -43,12 +45,13 @@ public class MapGenerator {
 
     public static Map genDefaultMap(int level, Player player) {
         var map = new Map(60, 195);
-        placeWalls(map, 4000);
+        placeWalls(map, 3000);
         var items = new ArrayList<Item>();
         items.add(ItemGenerator.generateDefence(level));
         items.add(ItemGenerator.generateHealth(level));
         placeItems(map, items);
-        placePlayer(map, player);
+        placeMob(map, player);
+        placeMob(map, new Mob(100, 100, new TimeInterval(50), new RoamStrategy()));
         return map;
     }
 }

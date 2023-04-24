@@ -24,7 +24,6 @@ public class Player extends Mob {
     public Player(int hp, int maxHp, TimeInterval pace, Printer printer) {
         super(hp, maxHp, pace, new PlayerStrategy(printer));
         this.view = '@';
-        this.color = TextColor.ANSI.RED;
     }
 
     public void quitFromGame() {
