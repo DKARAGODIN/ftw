@@ -19,8 +19,8 @@ public class Stage {
     public Stage(Printer printer, Player player) {
         this.printer = printer;
         this.judge = new Judge(player);
-        this.map = MapGenerator.genDefaultMap(1);
-        map.setPlayer(player, new Coordinate(97, 10));
+        this.map = MapGenerator.genDefaultMap(1, player);
+        //map.setPlayer(player, new Coordinate(97, 10));
         this.timeline = new Timeline(this.map);
     }
 

@@ -24,8 +24,10 @@ public class Cell implements CIDrowable {
     public char getView() {
         if (unit != null)
             return unit.getView();
-        if (floor.getItem() != null)
+        if (floor.hasItem())
             return floor.getItem().getView();
+        if (wall != null)
+            return wall.getView();
         return ' ';
     }
 
@@ -35,13 +37,13 @@ public class Cell implements CIDrowable {
             return unit.getForeground();
         if (floor.hasItem())
             return floor.getItem().getForeground();
+        if (wall != null)
+            return wall.getForeground();
         return TextColor.ANSI.WHITE;
     }
 
     @Override
     public TextColor getBackground() {
-        if (wall != null)
-            return wall.getBackground();
         return floor.getBackground();
     }
 

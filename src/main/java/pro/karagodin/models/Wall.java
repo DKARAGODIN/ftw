@@ -6,16 +6,16 @@ import pro.karagodin.output.CIDrowable;
 public class Wall implements CIDrowable {
 
     public char getView() {
-        return ' ';
+        return '█';
     }
 
     @Override
     public TextColor getForeground() {
-        return null;
+        return TextColor.ANSI.WHITE;
     }
 
     @Override
     public TextColor getBackground() {
-        return TextColor.ANSI.WHITE;
+        return null;
     }
 }
