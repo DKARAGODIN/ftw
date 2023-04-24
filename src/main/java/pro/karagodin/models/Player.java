@@ -1,6 +1,5 @@
 package pro.karagodin.models;
 
-import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
 import pro.karagodin.ai_system.PlayerStrategy;

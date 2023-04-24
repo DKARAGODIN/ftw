@@ -6,7 +6,11 @@ import java.util.Random;
 
 import pro.karagodin.ai_system.RoamStrategy;
 import pro.karagodin.game_engine.Coordinate;
-import pro.karagodin.models.*;
+import pro.karagodin.models.Item;
+import pro.karagodin.models.Map;
+import pro.karagodin.models.Mob;
+import pro.karagodin.models.Player;
+import pro.karagodin.models.Wall;
 import pro.karagodin.time.TimeInterval;
 
 public class MapGenerator {

@@ -1,11 +1,7 @@
 package pro.karagodin.ai_system;
 
-import pro.karagodin.game_engine.MobWithPosition;
-import pro.karagodin.models.Map;
 import pro.karagodin.time.TimeInterval;
 import pro.karagodin.time.TimeMoment;
-
-import java.io.IOException;
 
 public class ConfusedStrategy extends RoamStrategy {
 

@@ -3,9 +3,6 @@ package pro.karagodin.ai_system;
 import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
-import pro.karagodin.time.TimeMoment;
-
-import java.io.IOException;
 
 public class PushStrategy implements Strategy {
 

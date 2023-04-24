@@ -1,5 +1,7 @@
 package pro.karagodin.models;
 
+import java.io.IOException;
+
 import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,8 +10,6 @@ import pro.karagodin.ai_system.Strategy;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.output.CIDrowable;
 import pro.karagodin.time.TimeInterval;
-
-import java.io.IOException;
 
 /**
   A game object that can move around and affect gameplay
