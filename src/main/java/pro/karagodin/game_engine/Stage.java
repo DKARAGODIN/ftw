@@ -31,7 +31,7 @@ public class Stage {
             printer.printMap(map);
             if (timeline.getDeltaTimeForAction() > 0) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(Math.max(0, timeline.getDeltaTimeForAction()));
                 } catch (InterruptedException ignore) {}
             } else {
                 MobWithPosition mobAndCoord = timeline.getMobForDoingAction();
