@@ -1,10 +1,10 @@
 package pro.karagodin.game_engine;
 
+import java.io.IOException;
+
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
 import pro.karagodin.time.TimeInterval;
-
-import java.io.IOException;
 
 public class Game {
 

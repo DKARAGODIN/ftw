@@ -1,14 +1,13 @@
 package pro.karagodin.game_engine;
 
-import com.googlecode.lanterna.input.KeyStroke;
+import java.io.IOException;
+
 import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_logic.Judge;
 import pro.karagodin.generators.MapGenerator;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
-
-import java.io.IOException;
 
 public class Stage {
 
@@ -31,15 +30,17 @@ public class Stage {
             if (timeline.getDeltaTimeForAction() > 0) {
                 try {
                     Thread.sleep(Math.max(0, timeline.getDeltaTimeForAction()));
-                } catch (InterruptedException ignore) {}
+                } catch (InterruptedException ignore) {
+                }
             } else {
                 MobWithPosition mobAndCoord = timeline.getMobForDoingAction();
                 Action mobAction = mobAndCoord.getNextAction(map);
                 GameDiff gameDiff = judge.doAction(mobAction, mobAndCoord, map);
-                if(gameDiff != null) {
+                if (gameDiff != null) {
                     printer.updateCoordinates(map, gameDiff.getMapDiff());
-                    if(gameDiff.isInventoryChanged())
+                    if (gameDiff.isInventoryChanged()) {
                         printer.refreshInventory();
+                    }
                     mobAndCoord = gameDiff.getNewMobPosition();
                 }
                 timeline.addUpdatedMob(mobAndCoord);
@@ -47,18 +48,4 @@ public class Stage {
         }
         return judge.isGameOver();
     }
-
-    public static class StageEnd {
-        public boolean quitGame = false;
-        public boolean nextStage = false;
-
-        public StageEnd(boolean quitGame, boolean nextStage) {
-            this.quitGame = quitGame;
-            this.nextStage = nextStage;
-        }
-
-        public StageEnd() {
-        }
-    }
-
 }

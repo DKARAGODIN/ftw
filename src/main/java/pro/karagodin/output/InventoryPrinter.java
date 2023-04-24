@@ -1,14 +1,14 @@
 package pro.karagodin.output;
 
+import java.io.IOException;
+import java.util.List;
+
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Inventory;
 import pro.karagodin.models.Item;
-
-import java.io.IOException;
-import java.util.List;
 
 
 public class InventoryPrinter {

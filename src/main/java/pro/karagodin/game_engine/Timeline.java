@@ -1,10 +1,9 @@
 package pro.karagodin.game_engine;
 
-import pro.karagodin.models.Map;
-import pro.karagodin.models.Mob;
-import pro.karagodin.time.TimeMoment;
-
 import java.util.PriorityQueue;
+
+import pro.karagodin.models.Map;
+import pro.karagodin.time.TimeMoment;
 
 public class Timeline {
 

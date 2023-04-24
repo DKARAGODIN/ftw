@@ -16,15 +16,15 @@ public class Cell implements CIDrowable {
     protected Wall wall = null;
     protected Floor floor;
 
-    public Cell(){
+    public Cell() {
         floor = new Floor();
     }
 
     @Override
     public char getView() {
-        if(unit != null)
+        if (unit != null)
             return unit.getView();
-        if(floor.getItem() != null)
+        if (floor.getItem() != null)
             return floor.getItem().getView();
         return ' ';
     }

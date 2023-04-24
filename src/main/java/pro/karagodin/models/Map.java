@@ -17,7 +17,8 @@ public class Map {
             }
         }
     }
-    public void setPlayer(Player player, Coordinate playerPlace){
+
+    public void setPlayer(Player player, Coordinate playerPlace) {
         cells[playerPlace.getX()][playerPlace.getY()].unit = player;
     }
 

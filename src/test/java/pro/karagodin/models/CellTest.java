@@ -8,7 +8,7 @@ class CellTest {
     @Test
     void testConstructor() {
         Cell cell = new Cell();
-        assertNull(cell.getFloor());
+        assertNotNull(cell.getFloor());
         assertNull(cell.getUnit());
         assertNull(cell.getWall());
     }

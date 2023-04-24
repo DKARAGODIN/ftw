@@ -1,9 +1,9 @@
 package pro.karagodin.models;
 
-import pro.karagodin.game_engine.Coordinate;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import pro.karagodin.game_engine.Coordinate;
 
 public class Inventory {
     private List<Item> equippedItems = new ArrayList<>();
@@ -65,7 +65,7 @@ public class Inventory {
         this.x = column;
     }
 
-    public void setCoordinates (int x, int y) {
+    public void setCoordinates(int x, int y) {
         setX(x);
         setY(y);
     }

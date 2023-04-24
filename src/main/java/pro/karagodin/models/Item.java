@@ -14,7 +14,8 @@ public class Item implements CIDrowable {
     protected int hpIncrement = 0;
     protected int attackIncrement = 0;
     protected char view = '?';
-    public char getView(){
+
+    public char getView() {
         return view;
     }
 

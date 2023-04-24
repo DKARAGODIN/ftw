@@ -1,5 +1,7 @@
 package pro.karagodin.output;
 
+import java.io.IOException;
+
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
@@ -12,7 +14,6 @@ import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.models.Inventory;
 import pro.karagodin.models.Map;
 
-import java.io.IOException;
 
 public class Printer {
     private static final int MAX_COL = 230;
@@ -55,31 +56,33 @@ public class Printer {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
 
         TextGraphics textGraphics = screen.newTextGraphics();
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,0, "Game stats");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,1, "0 - current stage");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,0, "Game stats");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,1, "0 - current stage");
 
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,3, "Hero stats");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,4, "1 (1000) - LVL (XP to next LVL)");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,5, "0 (0) - XP (XP modifier)");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,6, "100 (0) - HP (HPS)");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,7, "1 - Attack");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,8, "1 - Defense");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,9, "5-10 - Damage");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,10, "100 (0) - Stamina (Stamina modifier)");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,11, "50 (0) - Speed (speed modifier)");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,3, "Hero stats");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,4, "1 (1000) - LVL (XP to next LVL)");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,5, "0 (0) - XP (XP modifier)");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,6, "100 (0) - HP (HPS)");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,7, "1 - Attack");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,8, "1 - Defense");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,9, "5-10 - Damage");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,10, "100 (0) - Stamina (Stamina modifier)");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,11, "50 (0) - Speed (speed modifier)");
 
         inventoryPrinter.printInventoryGUI(textGraphics);
 
         screen.refresh(Screen.RefreshType.DELTA);
     }
-    public void printMap(Map map){
+
+    public void printMap(Map map) {
         for (int x  = 0; x < map.getWidth(); x++) {
-            for (int y = 0 ; y < map.getHeight(); y++){
+            for (int y = 0; y < map.getHeight(); y++) {
                 var coord = new Coordinate(x, y);
                 screen.setCharacter(x, y, map.getCell(coord).asCharacter());
             }
         }
     }
+
     public void printGUI() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
         final int GUI_HORIZONTAL_LINE_ROW = MAX_ROW - 15;
@@ -102,11 +105,11 @@ public class Printer {
         }
 
         TextGraphics textGraphics = screen.newTextGraphics();
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+1, "Controls");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+2, "arrows - move your hero");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+3, "space - make some action");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+4, "i - change inventory");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL+1,GUI_HORIZONTAL_LINE_ROW+5, "q - quit the game");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 1, "Controls");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 2, "arrows - move your hero");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 3, "space - make some action");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 4, "i - change inventory");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 5, "q - quit the game");
 
         screen.refresh(Screen.RefreshType.DELTA);
     }

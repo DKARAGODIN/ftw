@@ -4,7 +4,8 @@ import com.googlecode.lanterna.TextColor;
 import pro.karagodin.output.CIDrowable;
 
 public class Wall implements CIDrowable {
-    public char getView(){
+
+    public char getView() {
         return ' ';
     }
 
@@ -17,5 +18,4 @@ public class Wall implements CIDrowable {
     public TextColor getBackground() {
         return TextColor.ANSI.WHITE;
     }
-
 }

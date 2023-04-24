@@ -6,6 +6,7 @@ import lombok.Setter;
 import pro.karagodin.ai_system.Strategy;
 import pro.karagodin.output.CIDrowable;
 import pro.karagodin.time.TimeInterval;
+
 /**
   A game object that can move around and affect gameplay
  */
@@ -16,6 +17,8 @@ public class Mob implements CIDrowable {
     protected int maxHp;
     protected TimeInterval pace;
     protected Strategy strategy;
+    protected char view = 'A';
+    protected TextColor color = TextColor.ANSI.WHITE;
 
     public Mob(int hp, int maxHp, TimeInterval pace, Strategy strategy) {
         this.hp = hp;
@@ -23,9 +26,8 @@ public class Mob implements CIDrowable {
         this.pace = pace;
         this.strategy = strategy;
     }
-    protected char view = 'A';
-    protected TextColor color = TextColor.ANSI.WHITE;
-    public char getView(){
+
+    public char getView() {
         return view;
     }
 
