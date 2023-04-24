@@ -1,10 +1,12 @@
 package pro.karagodin.time;
 
+import java.util.Date;
+
 public class TimeMoment implements Comparable<TimeMoment> {
     private long timeInMs;
 
     public TimeMoment() {
-        timeInMs = new Timer().getCurrentTime();
+        timeInMs = new Date().getTime();
     }
 
     private TimeMoment(long time) {
@@ -16,7 +18,7 @@ public class TimeMoment implements Comparable<TimeMoment> {
     }
 
     public long deltaWithCurrentTime() {
-        return timeInMs - new Timer().getCurrentTime();
+        return timeInMs - new Date().getTime();
     }
 
     @Override
