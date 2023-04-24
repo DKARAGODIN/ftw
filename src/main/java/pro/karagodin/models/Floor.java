@@ -1,6 +1,9 @@
 package pro.karagodin.models;
 
-public class Floor {
+import com.googlecode.lanterna.TextColor;
+import pro.karagodin.output.CIDrowable;
+
+public class Floor implements CIDrowable {
     protected Item item;
 
     public Item getItem() {
@@ -20,5 +23,20 @@ public class Floor {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    @Override
+    public char getView() {
+        return 0;
+    }
+
+    @Override
+    public TextColor getForeground() {
+        return null;
+    }
+
+    @Override
+    public TextColor getBackground() {
+        return TextColor.ANSI.BLACK;
     }
 }

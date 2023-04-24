@@ -1,5 +1,6 @@
 package pro.karagodin.models;
 
+import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
 import pro.karagodin.ai_system.Strategy;
@@ -22,8 +23,19 @@ public class Mob implements CIDrowable {
         this.pace = pace;
         this.strategy = strategy;
     }
-    private char view = 'A';
+    protected char view = 'A';
+    protected TextColor color = TextColor.ANSI.WHITE;
     public char getView(){
         return view;
+    }
+
+    @Override
+    public TextColor getForeground() {
+        return color;
+    }
+
+    @Override
+    public TextColor getBackground() {
+        return null;
     }
 }

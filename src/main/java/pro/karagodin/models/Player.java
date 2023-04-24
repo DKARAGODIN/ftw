@@ -1,5 +1,6 @@
 package pro.karagodin.models;
 
+import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
 import pro.karagodin.ai_system.PlayerStrategy;
@@ -19,10 +20,11 @@ public class Player extends Mob {
     private Inventory inventory = new Inventory();
     private boolean inventoryMode = false;
     private boolean wantsToContinuePlaying = true;
-    private char view = '@';
 
     public Player(int hp, int maxHp, TimeInterval pace, Printer printer) {
         super(hp, maxHp, pace, new PlayerStrategy(printer));
+        this.view = '@';
+        this.color = TextColor.ANSI.RED;
     }
 
     public void quitFromGame() {

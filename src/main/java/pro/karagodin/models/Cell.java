@@ -1,5 +1,7 @@
 package pro.karagodin.models;
 
+import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
 import pro.karagodin.output.CIDrowable;
@@ -25,5 +27,25 @@ public class Cell implements CIDrowable {
         if(floor.getItem() != null)
             return floor.getItem().getView();
         return ' ';
+    }
+
+    @Override
+    public TextColor getForeground() {
+        if (unit != null)
+            return unit.getForeground();
+        if (floor.hasItem())
+            return floor.getItem().getForeground();
+        return TextColor.ANSI.WHITE;
+    }
+
+    @Override
+    public TextColor getBackground() {
+        if (wall != null)
+            return wall.getBackground();
+        return floor.getBackground();
+    }
+
+    public TextCharacter asCharacter() {
+        return new TextCharacter(getView(), getForeground(), getBackground());
     }
 }
