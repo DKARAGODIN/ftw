@@ -15,9 +15,11 @@ import pro.karagodin.models.Player;
 public class Judge {
 
     private final Player player;
+    private final CombatSystem combatSystem;
 
     public Judge(Player player) {
         this.player = player;
+        this.combatSystem = new CombatSystem();
     }
 
     @Nullable
@@ -28,6 +30,8 @@ public class Judge {
                     Coordinate newMobCoord = mobAndCoord.getPosition().withX(x -> x - 1);
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
+                    } else if (isAttack(map, newMobCoord)) {
+                        doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
@@ -36,6 +40,8 @@ public class Judge {
                     Coordinate newMobCoord = mobAndCoord.getPosition().withX(x -> x + 1);
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
+                    } else if (isAttack(map, newMobCoord)) {
+                        doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
@@ -44,6 +50,8 @@ public class Judge {
                     Coordinate newMobCoord = mobAndCoord.getPosition().withY(y -> y + 1);
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
+                    } else if (isAttack(map, newMobCoord)) {
+                        doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
@@ -52,6 +60,8 @@ public class Judge {
                     Coordinate newMobCoord = mobAndCoord.getPosition().withY(y -> y - 1);
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
+                    } else if (isAttack(map, newMobCoord)) {
+                        doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
@@ -92,6 +102,15 @@ public class Judge {
     private boolean canDoMovement(Map map, Coordinate position) {
         Cell nextMobCell = map.getCell(position);
         return nextMobCell.getWall() == null && nextMobCell.getUnit() == null;
+    }
+
+    private boolean isAttack(Map map, Coordinate position) {
+        Cell nextMobCell = map.getCell(position);
+        return nextMobCell.getUnit() != null;
+    }
+
+    private void doAttack(Map map, Coordinate attackerPosition, Coordinate attackedPosition) {
+        combatSystem.attack(map.getCell(attackerPosition).getUnit(), map.getCell(attackedPosition).getUnit());
     }
 
     private GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {

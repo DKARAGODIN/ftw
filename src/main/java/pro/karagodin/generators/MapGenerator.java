@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import pro.karagodin.ai_system.ConfusedEffect;
 import pro.karagodin.ai_system.RoamStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Item;
@@ -55,7 +56,7 @@ public class MapGenerator {
         items.add(ItemGenerator.generateHealth(level));
         placeItems(map, items);
         placeMob(map, player);
-        placeMob(map, new Mob(100, 100, new TimeInterval(50), new RoamStrategy()));
+        placeMob(map, new Mob(100, 100, new TimeInterval(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeInterval(3000))))));
         return map;
     }
 }
