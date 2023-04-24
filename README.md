@@ -132,6 +132,35 @@
 ## Диаграмма классов
 ![](/img/class_diagram.jpg)
 
+## Сборка и запуск
+
+Приложение поддерживает все платформы где реализована JVM. Для сборки необходим Maven 3.2+ и JDK 17+.
+
+Для сборки и запуска
+```Windows
+mvn clean package
+javaw -jar .\target\ftw.jar
+```
+```Linux
+mvn clean package
+java -jar ./target/ftw.jar
+```
+Для запуска только тестов
+```
+mvn clean test
+```
+
+Для анализа покрытия кода тестами
+```
+mvn clean test
+mvn jacoco:report -f pom.xml
+# Открыть в браузере файл target/site/jacoco/index.html
+```
+Для запуска линтера и поиска багов
+```
+mvn clean verify
+```
+
 # Команда разработчиков
 * Бачище Ольга
 * Карагодин Дмитрий
