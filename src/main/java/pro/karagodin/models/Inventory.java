@@ -6,6 +6,10 @@ import java.util.List;
 import pro.karagodin.game_engine.Coordinate;
 
 public class Inventory {
+
+    public static final int MAX_EQUIPPED_ITEMS = 10;
+    public static final int MAX_STASHED_ITEMS = 25;
+
     private List<Item> equippedItems = new ArrayList<>();
     private List<Item> backpackItems = new ArrayList<>();
     private int y = 0;
