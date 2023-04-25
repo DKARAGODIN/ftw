@@ -31,8 +31,23 @@ public class MapGenerator {
     }
 
     public static void placeWalls(Map map, int amount) {
-        for (int i = 0; i < amount; i++) {
-            map.getCell(getFreeCellPosition(map)).setWall(new Wall());
+        for (int i = 0; i < amount;) {
+            Coordinate cellPosition = getFreeCellPosition(map);
+            int length = RANDOM.nextInt(10) + 1;
+            boolean toRight = RANDOM.nextBoolean();
+            if ((toRight && cellPosition.getX() + length >= map.getWidth()) || (!toRight && cellPosition.getY() + length >= map.getHeight()))
+                continue;
+            for (int j = 0; j < length; j++) {
+                if (map.getCell(cellPosition).getWall() == null) {
+                    map.getCell(cellPosition).setWall(new Wall());
+                    i++;
+                }
+                if (toRight) {
+                    cellPosition.setX(cellPosition.getX() + 1);
+                } else {
+                    cellPosition.setY(cellPosition.getY() + 1);
+                }
+            }
         }
     }
 
@@ -46,7 +61,7 @@ public class MapGenerator {
 
     public static Map genDefaultMap(int level, Player player) {
         var map = new Map(60, 195);
-        placeWalls(map, 4000);
+        placeWalls(map, 300);
         var items = new ArrayList<Item>();
         items.add(ItemGenerator.generateDefence(level));
         items.add(ItemGenerator.generateHealth(level));
