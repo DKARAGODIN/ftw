@@ -1,6 +1,5 @@
 package pro.karagodin.generators;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -35,8 +34,23 @@ public class MapGenerator {
     }
 
     public static void placeWalls(Map map, int amount) {
-        for (int i = 0; i < amount; i++) {
-            map.getCell(getFreeCellPosition(map)).setWall(new Wall());
+        for (int i = 0; i < amount;) {
+            Coordinate cellPosition = getFreeCellPosition(map);
+            int length = RANDOM.nextInt(10) + 1;
+            boolean toRight = RANDOM.nextBoolean();
+            if ((toRight && cellPosition.getX() + length >= map.getWidth()) || (!toRight && cellPosition.getY() + length >= map.getHeight()))
+                continue;
+            for (int j = 0; j < length; j++) {
+                if (map.getCell(cellPosition).getWall() == null) {
+                    map.getCell(cellPosition).setWall(new Wall());
+                    i++;
+                }
+                if (toRight) {
+                    cellPosition.setX(cellPosition.getX() + 1);
+                } else {
+                    cellPosition.setY(cellPosition.getY() + 1);
+                }
+            }
         }
     }
 
@@ -48,12 +62,10 @@ public class MapGenerator {
         return new Map(60, 195);
     }
 
-    public static Map genDefaultMap(int level, Player player) {
+    public static Map genDefaultMap(int stage, Player player) {
         var map = new Map(60, 195);
         placeWalls(map, 3000);
-        var items = new ArrayList<Item>();
-        items.add(ItemGenerator.generateDefence(level));
-        items.add(ItemGenerator.generateHealth(level));
+        var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
         placeMob(map, player);
         placeMob(map, new Mob(100, 100, new TimeInterval(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeInterval(3000))))));

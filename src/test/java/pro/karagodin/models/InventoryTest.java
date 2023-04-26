@@ -3,6 +3,7 @@ package pro.karagodin.models;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,31 +14,31 @@ class InventoryTest {
 
     @BeforeEach
     void setUp() {
-        item = new Item();
+        item = new Item(new HashMap<>(), '!');
         inventory = new Inventory();
     }
 
     @Test
     void addItemToBackpack() {
-        inventory.addItemToBackpack(item);
-        List<Item> backpackItems = inventory.getBackpackItems();
+        inventory.addItemToStash(item);
+        List<Item> backpackItems = inventory.getStashedItems();
         assertEquals(1, backpackItems.size());
         assertEquals(item, backpackItems.get(0));
     }
 
     @Test
     void removeItemFromBackpack() {
-        inventory.addItemToBackpack(item);
-        inventory.removeItemFromBackpack(item);
-        List<Item> backpackItems = inventory.getBackpackItems();
+        inventory.addItemToStash(item);
+        inventory.removeItemFromStash(item);
+        List<Item> backpackItems = inventory.getStashedItems();
         assertTrue(backpackItems.isEmpty());
     }
 
     @Test
     void equipItem() {
-        inventory.addItemToBackpack(item);
+        inventory.addItemToStash(item);
         inventory.equipItem(item);
-        assertFalse(inventory.getBackpackItems().contains(item));
+        assertFalse(inventory.getStashedItems().contains(item));
         assertTrue(inventory.getEquippedItems().contains(item));
     }
 
@@ -48,10 +49,10 @@ class InventoryTest {
 
     @Test
     void unequipItem() {
-        inventory.addItemToBackpack(item);
+        inventory.addItemToStash(item);
         inventory.equipItem(item);
         inventory.unequipItem(item);
-        assertTrue(inventory.getBackpackItems().contains(item));
+        assertTrue(inventory.getStashedItems().contains(item));
         assertFalse(inventory.getEquippedItems().contains(item));
     }
 

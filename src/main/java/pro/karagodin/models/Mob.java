@@ -19,8 +19,16 @@ import pro.karagodin.time.TimeInterval;
 @Setter
 @Getter
 public class Mob implements CIDrowable {
+
     protected int hp;
     protected int maxHp;
+    protected int attack;
+    protected int defence;
+    protected int minDamage;
+    protected int maxDamage;
+    protected int stamina;
+    protected int maxStamina;
+
     protected TimeInterval pace;
     protected Strategy strategy;
     protected char view = 'A';

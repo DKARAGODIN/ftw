@@ -18,13 +18,15 @@ public class Game {
     }
 
     public void start() throws IOException {
-        printer.init(player.getInventory()); // aka menu
+        printer.init(player); // aka menu
 
         printer.printGUI();
-        printer.printHeroInfo();
-
+        int currentStage = 1;
         while (true) {
             stage = new Stage(printer, player); // must be generator
+
+            printer.refreshCurrentStageNumber(currentStage);
+            printer.refreshHeroStats();
 
             boolean isGameOver = stage.start();
             if (isGameOver) {

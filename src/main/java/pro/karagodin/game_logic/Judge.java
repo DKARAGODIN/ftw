@@ -84,7 +84,7 @@ public class Judge {
         var player = (Player) mobAndCoord.getMob();
         var inv = player.getInventory();
         var item = cell.getFloor().pickItem();
-        inv.addItemToBackpack(item);
+        inv.addItemToStash(item);
 
         var mapDiff = new MapDiff();
         mapDiff.addNewCoordinate(mobAndCoord.getPosition());
