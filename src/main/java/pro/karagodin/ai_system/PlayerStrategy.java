@@ -23,35 +23,39 @@ public class PlayerStrategy implements Strategy {
         Player player = (Player) mobAndCoord.getMob();
         char key = getPressedKey();
         if (player.isInventoryMode()) {
-            Coordinate oldInventoryCoord, newInventoryCoord;
+            Coordinate oldInventoryCoord = player.getInventory().getCoordinate();
+            Coordinate newInventoryCoord;
             switch (key) {
                 case '^':
-                    oldInventoryCoord = player.getInventory().getCoordinate();
                     newInventoryCoord = oldInventoryCoord.withY(y -> y == 0 ? 6 : y - 1);
-                    printer.moveCellFocus(newInventoryCoord, oldInventoryCoord);
+                    printer.moveInventoryCellFocus(newInventoryCoord, oldInventoryCoord);
                     player.getInventory().setCoordinate(newInventoryCoord);
                     break;
                 case 'v':
-                    oldInventoryCoord = player.getInventory().getCoordinate();
                     newInventoryCoord = oldInventoryCoord.withY(y -> y == 6 ? 0 : y + 1);
-                    printer.moveCellFocus(newInventoryCoord, oldInventoryCoord);
+                    printer.moveInventoryCellFocus(newInventoryCoord, oldInventoryCoord);
                     player.getInventory().setCoordinate(newInventoryCoord);
                     break;
                 case '<':
-                    oldInventoryCoord = player.getInventory().getCoordinate();
                     newInventoryCoord = oldInventoryCoord.withX(x -> x == 0 ? 4 : x - 1);
-                    printer.moveCellFocus(newInventoryCoord, oldInventoryCoord);
+                    printer.moveInventoryCellFocus(newInventoryCoord, oldInventoryCoord);
                     player.getInventory().setCoordinate(newInventoryCoord);
                     break;
                 case '>':
-                    oldInventoryCoord = player.getInventory().getCoordinate();
                     newInventoryCoord = oldInventoryCoord.withX(x -> x == 4 ? 0 : x + 1);
-                    printer.moveCellFocus(newInventoryCoord, oldInventoryCoord);
+                    printer.moveInventoryCellFocus(newInventoryCoord, oldInventoryCoord);
                     player.getInventory().setCoordinate(newInventoryCoord);
                     break;
                 case 'i':
                     player.setInventoryMode(false);
-                    printer.moveCellFocus(null, player.getInventory().getCoordinate());
+                    printer.moveInventoryCellFocus(null, player.getInventory().getCoordinate());
+                    break;
+                case ' ':
+                    boolean moved = player.moveItem();
+                    if (moved) {
+                        printer.moveInventoryItems();
+                    }
+                    break;
                 default:
                     return Action.DoNothing;
             }
@@ -68,7 +72,7 @@ public class PlayerStrategy implements Strategy {
                     return Action.MoveRight;
                 case 'i':
                     player.setInventoryMode(true);
-                    printer.moveCellFocus(new Coordinate(0, 0), null);
+                    printer.moveInventoryCellFocus(new Coordinate(0, 0), null);
                     player.getInventory().setCoordinates(0, 0);
                     return Action.DoNothing;
                 case 'q':

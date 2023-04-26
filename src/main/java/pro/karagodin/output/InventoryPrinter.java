@@ -1,6 +1,8 @@
 package pro.karagodin.output;
 
-import java.io.IOException;
+import static pro.karagodin.output.CHARACTERS.BLACK_EMPTY;
+import static pro.karagodin.output.CHARACTERS.GREY_EMPTY;
+
 import java.util.List;
 
 import com.googlecode.lanterna.TextCharacter;
@@ -33,12 +35,12 @@ public class InventoryPrinter {
         this.stashedTable = new Coordinate(lu.getX(), lu.getY() + 1 + equippedTableHeight + 1);
     }
 
-    public void moveCellFocus(Coordinate newPosition, Coordinate oldPosition) throws IOException {
+    public void moveCellFocus(Coordinate newPosition, Coordinate oldPosition) {
         if (oldPosition != null) {
-            fillCell(oldPosition.getX(), oldPosition.getY(), CHARACTERS.BLACK_EMPTY);
+            fillCell(oldPosition.getX(), oldPosition.getY(), BLACK_EMPTY);
         }
         if (newPosition != null) {
-            fillCell(newPosition.getX(), newPosition.getY(), CHARACTERS.GREY_EMPTY);
+            fillCell(newPosition.getX(), newPosition.getY(), GREY_EMPTY);
         }
         refreshCells();
     }
@@ -51,15 +53,21 @@ public class InventoryPrinter {
         drawTableGUI(stashedTable.getX(), stashedTable.getY(), UNEQUIPPED_CELL_ROWS);
     }
 
-    public void refreshCells() throws IOException {
-        drawItemsInTable(equippedTable, CELLS_COLS, inventory.getEquippedItems());
-        drawItemsInTable(stashedTable, CELLS_COLS, inventory.getBackpackItems());
+    public void refreshCells() {
+        drawItemsInTable(equippedTable, inventory.getEquippedItems());
+        drawItemsInTable(stashedTable, inventory.getBackpackItems());
     }
 
-    private void drawItemsInTable(Coordinate table, int cols, List<Item> items) {
+    public void refreshLastCellAfterMoveItem() {
+        fillCell(inventory.getEquippedItems().size() % CELLS_COLS, inventory.getEquippedItems().size() / CELLS_COLS, BLACK_EMPTY);
+        fillCell(inventory.getBackpackItems().size() % CELLS_COLS, 2 + inventory.getBackpackItems().size() / CELLS_COLS, BLACK_EMPTY);
+        moveCellFocus(inventory.getCoordinate(), null);
+    }
+
+    private void drawItemsInTable(Coordinate table, List<Item> items) {
         for (int i = 0; i < items.size(); i++) {
-            int row = i / cols;
-            int col = i % cols;
+            int row = i / CELLS_COLS;
+            int col = i % CELLS_COLS;
             drawItemInCell(table.getX() + 1 + col * (CELL_WIDTH + 1), table.getY() + 1 + row * (CELL_HEIGHT + 1), items.get(i));
         }
     }
@@ -92,14 +100,12 @@ public class InventoryPrinter {
             row -= EQUIPPED_CELL_ROWS;
         int x = startPoint.getX() + 1 + col * (CELL_WIDTH + 1);
         int y = startPoint.getY() + 1 + row * (CELL_HEIGHT + 1);
-        fillRect(x, y, CELL_WIDTH, CELL_HEIGHT, c);
+        fillRect(x, y, c);
     }
 
-    private void fillRect(int startX, int startY, int width, int height, TextCharacter c) {
-        for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
+    private void fillRect(int startX, int startY, TextCharacter c) {
+        for (int x = 0; x < CELL_WIDTH; x++)
+            for (int y = 0; y < CELL_HEIGHT; y++)
                 screen.setCharacter(startX + x, startY + y, c);
     }
-
-
 }

@@ -19,9 +19,6 @@ public class Printer {
     private static final int MAX_COL = 230;
     private static final int MAX_ROW = 60;
 
-    private static int hero_col = MAX_COL / 2;
-    private static int hero_row = MAX_ROW / 2;
-
     private Screen screen;
     private InventoryPrinter inventoryPrinter;
 
@@ -43,13 +40,19 @@ public class Printer {
         screen.refresh(Screen.RefreshType.DELTA);
     }
 
-    public void moveCellFocus(Coordinate newPosition, Coordinate oldPosition) throws IOException {
+    public void moveInventoryCellFocus(Coordinate newPosition, Coordinate oldPosition) throws IOException {
         inventoryPrinter.moveCellFocus(newPosition, oldPosition);
+        screen.refresh(Screen.RefreshType.DELTA);
+    }
+
+    public void moveInventoryItems() throws IOException {
+        inventoryPrinter.refreshLastCellAfterMoveItem();
         screen.refresh(Screen.RefreshType.DELTA);
     }
 
     public void refreshInventory() throws IOException {
         inventoryPrinter.refreshCells();
+        screen.refresh(Screen.RefreshType.DELTA);
     }
 
     public void printHeroInfo() throws IOException {
