@@ -14,18 +14,16 @@ public class Stage {
     private final Printer printer;
     private final Judge judge;
     private final Map map;
-    private final Timeline timeline;
 
     public Stage(Printer printer, Player player) {
         this.printer = printer;
         this.judge = new Judge(player);
         this.map = MapGenerator.genDefaultMap(1, player);
-        //map.setPlayer(player, new Coordinate(97, 10));
-        this.timeline = new Timeline(this.map);
     }
 
     public boolean start() throws IOException {
         printer.printMap(map);
+        Timeline timeline = new Timeline(map);
         while (!judge.isStageOver()) {
             if (timeline.getDeltaTimeForAction() > 0) {
                 try {
