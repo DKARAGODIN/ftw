@@ -53,6 +53,8 @@ public class PlayerStrategy implements Strategy {
                     boolean moved = player.moveItem();
                     if (moved) {
                         printer.moveInventoryItems();
+                        player.applyEquippedItems();
+                        printer.printHeroInfo();
                     }
                     break;
                 default:

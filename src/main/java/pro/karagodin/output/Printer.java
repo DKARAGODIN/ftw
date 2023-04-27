@@ -11,22 +11,24 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MapDiff;
-import pro.karagodin.models.Inventory;
 import pro.karagodin.models.Map;
+import pro.karagodin.models.Player;
 
 
 public class Printer {
     private static final int MAX_COL = 230;
     private static final int MAX_ROW = 60;
+    private static final int GUI_CONTROLS_HORIZONTAL_LINE_ROW = MAX_ROW - 6;
+    public static final int GUI_INVENTORY_WIDTH = 34;
 
     private Screen screen;
     private InventoryPrinter inventoryPrinter;
 
-    public void init(Inventory inventory) throws IOException {
+    public void init(Player player) throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Screen screen = terminalFactory.createScreen();
         this.screen = screen;
-        this.inventoryPrinter = new InventoryPrinter(screen, new Coordinate(MAX_COL - 34, 13), inventory);
+        this.inventoryPrinter = new InventoryPrinter(screen, new Coordinate(MAX_COL - GUI_INVENTORY_WIDTH, 13), player.getInventory());
         screen.startScreen();
 
         printWelcomeMessage(screen);
@@ -88,7 +90,6 @@ public class Printer {
 
     public void printGUI() throws IOException {
         final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
-        final int GUI_HORIZONTAL_LINE_ROW = MAX_ROW - 15;
         final TextCharacter VERTICAL_RED_LINE_CHAR = TextCharacter.fromCharacter('|', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
         final TextCharacter HORIZONTAL_RED_LINE_CHAR = TextCharacter.fromCharacter('-', TextColor.ANSI.RED, TextColor.ANSI.BLACK)[0];
 
@@ -104,15 +105,15 @@ public class Printer {
         }
         // Controls line
         for (int i = GUI_VERTICAL_LINE_COL + 1; i <= MAX_COL; i++) {
-            screen.setCharacter(i, GUI_HORIZONTAL_LINE_ROW, HORIZONTAL_RED_LINE_CHAR);
+            screen.setCharacter(i, GUI_CONTROLS_HORIZONTAL_LINE_ROW, HORIZONTAL_RED_LINE_CHAR);
         }
 
         TextGraphics textGraphics = screen.newTextGraphics();
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 1, "Controls");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 2, "arrows - move your hero");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 3, "space - make some action");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 4, "i - change inventory");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,GUI_HORIZONTAL_LINE_ROW + 5, "q - quit the game");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 1, "Controls");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 2, "arrows - move your hero");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 3, "space - make some action");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 4, "i - change inventory");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 5, "q - quit the game");
 
         screen.refresh(Screen.RefreshType.DELTA);
     }

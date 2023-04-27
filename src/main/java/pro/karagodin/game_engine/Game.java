@@ -18,7 +18,7 @@ public class Game {
     }
 
     public void start() throws IOException {
-        printer.init(player.getInventory()); // aka menu
+        printer.init(player); // aka menu
 
         printer.printGUI();
         printer.printHeroInfo();

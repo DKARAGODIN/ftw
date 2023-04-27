@@ -11,7 +11,7 @@ public class Inventory {
     public static final int MAX_STASHED_ITEMS = 25;
 
     private List<Item> equippedItems = new ArrayList<>();
-    private List<Item> backpackItems = new ArrayList<>();
+    private List<Item> stashedItems = new ArrayList<>();
     private int y = 0;
     private int x = 0;
 
@@ -19,23 +19,23 @@ public class Inventory {
         return equippedItems;
     }
 
-    public List<Item> getBackpackItems() {
-        return backpackItems;
+    public List<Item> getStashedItems() {
+        return stashedItems;
     }
 
-    public void addItemToBackpack(Item item) {
-        backpackItems.add(item);
+    public void addItemToStash(Item item) {
+        stashedItems.add(item);
     }
 
-    public void removeItemFromBackpack(Item item) {
-        backpackItems.remove(item);
+    public void removeItemFromStash(Item item) {
+        stashedItems.remove(item);
     }
 
     public void equipItem(Item item) {
-        if (!backpackItems.contains(item)) {
+        if (!stashedItems.contains(item)) {
             throw new IllegalArgumentException("Item not found in backpack");
         }
-        backpackItems.remove(item);
+        stashedItems.remove(item);
         equippedItems.add(item);
     }
 
@@ -44,7 +44,7 @@ public class Inventory {
             throw new IllegalArgumentException("Item not found in equipped items");
         }
         equippedItems.remove(item);
-        backpackItems.add(item);
+        stashedItems.add(item);
     }
 
     public int getY() {
