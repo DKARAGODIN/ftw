@@ -1,6 +1,5 @@
 package pro.karagodin.generators;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -59,12 +58,10 @@ public class MapGenerator {
         return new Map(60, 195);
     }
 
-    public static Map genDefaultMap(int level, Player player) {
+    public static Map genDefaultMap(int stage, Player player) {
         var map = new Map(60, 195);
         placeWalls(map, 300);
-        var items = new ArrayList<Item>();
-        items.add(ItemGenerator.generateDefence(level));
-        items.add(ItemGenerator.generateHealth(level));
+        var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
         placePlayer(map, player);
         return map;

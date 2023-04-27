@@ -71,10 +71,10 @@ public class InventoryPrinter {
     private Item getItemByCoordinate(Coordinate newPosition) {
         if (newPosition.getY() < 2) {
             int idx = newPosition.getX() + newPosition.getY() * CELLS_COLS;
-            return idx > inventory.getEquippedItems().size()-1 ? null : inventory.getEquippedItems().get(idx);
+            return idx > inventory.getEquippedItems().size() - 1 ? null : inventory.getEquippedItems().get(idx);
         } else {
             int idx = newPosition.getX() + (newPosition.getY() - 2) * CELLS_COLS;
-            return idx > inventory.getStashedItems().size()-1 ? null : inventory.getStashedItems().get(idx);
+            return idx > inventory.getStashedItems().size() - 1 ? null : inventory.getStashedItems().get(idx);
         }
     }
 

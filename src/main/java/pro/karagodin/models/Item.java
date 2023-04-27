@@ -1,10 +1,10 @@
 package pro.karagodin.models;
 
+import java.util.Map;
+
 import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import pro.karagodin.output.CIDrowable;
-
-import java.util.Map;
 
 /**
  * A game object that has no behavior but affects the player's characteristics
@@ -40,15 +40,15 @@ public class Item implements CIDrowable {
     }
 
     public enum Modifier implements Comparable<Modifier> {
-        MAX_HP ("Maximum HP", 5, 10),
-        REGEN_HP ("HP regeneration", 0.5, 1),
-        ATTACK ("Attack", 0.3, 1),
-        DEFENCE ("Defence", 0.3, 1),
-        MIN_DAMAGE ("Min damage", 2, 5),
-        MAX_DAMAGE ("Max damage", 2, 5),
-        MAX_STAMINA ("Max stamina", 2, 10),
-        REGEN_STAMINA ("Stamina regeneration", 0.5, 1),
-        SPEED ("Speed", 0.5, 1)
+        MAX_HP("Maximum HP", 5, 10),
+        REGEN_HP("HP regeneration", 0.5, 1),
+        ATTACK("Attack", 0.3, 1),
+        DEFENCE("Defence", 0.3, 1),
+        MIN_DAMAGE("Min damage", 2, 5),
+        MAX_DAMAGE("Max damage", 2, 5),
+        MAX_STAMINA("Max stamina", 2, 10),
+        REGEN_STAMINA("Stamina regeneration", 0.5, 1),
+        SPEED("Speed", 0.5, 1)
         ;
 
         private final String description;

@@ -1,18 +1,19 @@
 package pro.karagodin.generators;
 
-import pro.karagodin.models.Item;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
+import pro.karagodin.models.Item;
+
 public class ItemGenerator {
 
     private static final Random random = new Random();
 
-    private ItemGenerator() {}
+    private ItemGenerator() {
+    }
 
     public static List<Item> generateItems(int stage) {
         List<Item> result = new ArrayList<>();

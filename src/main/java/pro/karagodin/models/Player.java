@@ -2,6 +2,8 @@ package pro.karagodin.models;
 
 import static pro.karagodin.models.Inventory.MAX_EQUIPPED_ITEMS;
 
+import java.util.Map;
+
 import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +12,6 @@ import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.output.Printer;
 import pro.karagodin.time.TimeInterval;
 
-import java.util.Map;
 
 /**
  * A game object that handled by users
@@ -73,6 +74,8 @@ public class Player extends Mob {
                     case MAX_DAMAGE -> maxDamage = BASE_MAX_DAMAGE + e.getValue();
                     case MAX_HP -> maxHp = BASE_MAX_HEALTH + e.getValue();
                     case MAX_STAMINA -> maxStamina = BASE_MAX_STAMINA + e.getValue();
+                    default -> {
+                    }
                 }
             }
         }
