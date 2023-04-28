@@ -39,7 +39,6 @@ public class InventoryPrinter {
         this.stashedTable = new Coordinate(lu.getX(), lu.getY() + 1 + equippedTableHeight + 1);
         var stashedTableHeight = STASHED_CELL_ROWS * (CELL_HEIGHT + 1) + 1;
         this.itemDescriptionFirstLine = new Coordinate(lu.getX(), lu.getY() + 1 + equippedTableHeight + 1 + stashedTableHeight + 1);
-
     }
 
     public void moveCellFocus(Coordinate newPosition, Coordinate oldPosition) {
@@ -78,7 +77,8 @@ public class InventoryPrinter {
         }
     }
 
-    public void printInventoryGUI(TextGraphics textGraphics) {
+    public void printInventoryGUI() {
+        TextGraphics textGraphics = screen.newTextGraphics();
         textGraphics.putString(equippedTitle.getX(), equippedTitle.getY(), "Hero equipped items");
         drawTableGUI(equippedTable.getX(), equippedTable.getY(), EQUIPPED_CELL_ROWS);
 

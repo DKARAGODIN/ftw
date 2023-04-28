@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.googlecode.lanterna.input.KeyStroke;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
+import pro.karagodin.models.Item;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
@@ -50,11 +51,11 @@ public class PlayerStrategy implements Strategy {
                     printer.moveInventoryCellFocus(null, player.getInventory().getCoordinate());
                     break;
                 case ' ':
-                    boolean moved = player.moveItem();
-                    if (moved) {
+                    Item moved = player.moveItem();
+                    if (moved != null) {
                         printer.moveInventoryItems();
-                        player.applyEquippedItems();
-                        printer.printHeroInfo();
+                        player.applyMovedItem(moved);
+                        printer.refreshHeroStats();
                     }
                     break;
                 default:

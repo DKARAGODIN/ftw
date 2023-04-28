@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
+import lombok.Setter;
 import pro.karagodin.output.CIDrowable;
 
 /**
@@ -15,6 +16,9 @@ public class Item implements CIDrowable {
 
     private final Map<Modifier, Integer> itemModifiers;
     private final char view;
+
+    @Setter
+    private boolean equipped;
 
     public Item(Map<Modifier, Integer> itemModifiers, char view) {
         this.itemModifiers = itemModifiers;

@@ -21,8 +21,8 @@ import pro.karagodin.time.TimeInterval;
 public class Player extends Mob {
 
     private static final int BASE_MAX_HEALTH = 100;
-    private static final int BASE_ATTACK = 1;
-    private static final int BASE_DEFENCE = 1;
+    private static final int BASE_ATTACK = 3;
+    private static final int BASE_DEFENCE = 3;
     private static final int BASE_MIN_DAMAGE = 5;
     private static final int BASE_MAX_DAMAGE = 15;
     private static final int BASE_MAX_STAMINA = 100;
@@ -38,42 +38,63 @@ public class Player extends Mob {
         super(hp, maxHp, pace, new PlayerStrategy(printer));
         this.view = '@';
         this.color = TextColor.ANSI.RED;
+
+        this.defence = BASE_ATTACK;
+        this.attack = BASE_DEFENCE;
+        this.minDamage = BASE_MIN_DAMAGE;
+        this.maxDamage = BASE_MAX_DAMAGE;
+        this.stamina = BASE_MAX_STAMINA;
+        this.maxStamina = BASE_MAX_STAMINA;
+
     }
 
     public void quitFromGame() {
         wantsToContinuePlaying = false;
     }
 
-    public boolean moveItem() {
+    public Item moveItem() {
         Coordinate invCoord = inventory.getCoordinate();
         if (invCoord.getY() > 1) {
             int idx = 5 * (inventory.getY() - 2) + inventory.getX();
             if (idx < inventory.getStashedItems().size() && inventory.getEquippedItems().size() < MAX_EQUIPPED_ITEMS) {
                 Item item = inventory.getStashedItems().remove(idx);
                 inventory.getEquippedItems().add(item);
-                return true;
+                item.setEquipped(true);
+                return item;
             }
         } else {
             int idx = 5 * inventory.getY() + inventory.getX();
             if (idx < inventory.getEquippedItems().size()) {
                 Item item = inventory.getEquippedItems().remove(idx);
                 inventory.getStashedItems().add(item);
-                return true;
+                item.setEquipped(false);
+                return item;
             }
         }
-        return false;
+        return null;
     }
 
-    public void applyEquippedItems() {
-        for (Item item : inventory.getEquippedItems()) {
-            for (Map.Entry<Item.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
+    public void applyMovedItem(Item item) {
+        for (Map.Entry<Item.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
+            if (item.isEquipped()) {
                 switch (e.getKey()) {
-                    case ATTACK -> attack = BASE_ATTACK + e.getValue();
-                    case DEFENCE -> defence = BASE_DEFENCE + e.getValue();
-                    case MIN_DAMAGE -> minDamage = BASE_MIN_DAMAGE + e.getValue();
-                    case MAX_DAMAGE -> maxDamage = BASE_MAX_DAMAGE + e.getValue();
-                    case MAX_HP -> maxHp = BASE_MAX_HEALTH + e.getValue();
-                    case MAX_STAMINA -> maxStamina = BASE_MAX_STAMINA + e.getValue();
+                    case ATTACK -> attack += e.getValue();
+                    case DEFENCE -> defence += e.getValue();
+                    case MIN_DAMAGE -> minDamage += e.getValue();
+                    case MAX_DAMAGE -> maxDamage += e.getValue();
+                    case MAX_HP -> maxHp += e.getValue();
+                    case MAX_STAMINA -> maxStamina += e.getValue();
+                    default -> {
+                    }
+                }
+            } else {
+                switch (e.getKey()) {
+                    case ATTACK -> attack -= e.getValue();
+                    case DEFENCE -> defence -= e.getValue();
+                    case MIN_DAMAGE -> minDamage -= e.getValue();
+                    case MAX_DAMAGE -> maxDamage -= e.getValue();
+                    case MAX_HP -> maxHp -= e.getValue();
+                    case MAX_STAMINA -> maxStamina -= e.getValue();
                     default -> {
                     }
                 }

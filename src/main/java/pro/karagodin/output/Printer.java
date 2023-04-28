@@ -19,16 +19,20 @@ public class Printer {
     private static final int MAX_COL = 230;
     private static final int MAX_ROW = 60;
     private static final int GUI_CONTROLS_HORIZONTAL_LINE_ROW = MAX_ROW - 6;
+    private static final int STATS_DESCRIPTION_COLUMN_OFFSET = 20;
+
     public static final int GUI_INVENTORY_WIDTH = 34;
 
     private Screen screen;
     private InventoryPrinter inventoryPrinter;
+    private PlayerStatsPrinter playerStatsPrinter;
 
     public void init(Player player) throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Screen screen = terminalFactory.createScreen();
         this.screen = screen;
         this.inventoryPrinter = new InventoryPrinter(screen, new Coordinate(MAX_COL - GUI_INVENTORY_WIDTH, 13), player.getInventory());
+        this.playerStatsPrinter = new PlayerStatsPrinter(screen, new Coordinate(MAX_COL - GUI_INVENTORY_WIDTH, 3), player);
         screen.startScreen();
 
         printWelcomeMessage(screen);
@@ -57,35 +61,25 @@ public class Printer {
         screen.refresh(Screen.RefreshType.DELTA);
     }
 
-    public void printHeroInfo() throws IOException {
-        final int GUI_VERTICAL_LINE_COL = MAX_COL - 35;
-
-        TextGraphics textGraphics = screen.newTextGraphics();
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,0, "Game stats");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,1, "0 - current stage");
-
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,3, "Hero stats");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,4, "1 (1000) - LVL (XP to next LVL)");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,5, "0 (0) - XP (XP modifier)");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,6, "100 (0) - HP (HPS)");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,7, "1 - Attack");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,8, "1 - Defense");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,9, "5-10 - Damage");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,10, "100 (0) - Stamina (Stamina modifier)");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1,11, "50 (0) - Speed (speed modifier)");
-
-        inventoryPrinter.printInventoryGUI(textGraphics);
-
+    public void refreshHeroStats() throws IOException {
+        playerStatsPrinter.refreshHeroStats();
         screen.refresh(Screen.RefreshType.DELTA);
     }
 
-    public void printMap(Map map) {
+    public void refreshCurrentStageNumber(int currentStage) throws IOException {
+        TextGraphics textGraphics = screen.newTextGraphics();
+        textGraphics.putString(MAX_COL - GUI_INVENTORY_WIDTH, 1, String.valueOf(currentStage));
+        screen.refresh(Screen.RefreshType.DELTA);
+    }
+
+    public void printMap(Map map) throws IOException {
         for (int x  = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 var coord = new Coordinate(x, y);
                 screen.setCharacter(x, y, map.getCell(coord).asCharacter());
             }
         }
+        screen.refresh(Screen.RefreshType.DELTA);
     }
 
     public void printGUI() throws IOException {
@@ -108,7 +102,13 @@ public class Printer {
             screen.setCharacter(i, GUI_CONTROLS_HORIZONTAL_LINE_ROW, HORIZONTAL_RED_LINE_CHAR);
         }
 
+        inventoryPrinter.printInventoryGUI();
+        playerStatsPrinter.printGui();
+
         TextGraphics textGraphics = screen.newTextGraphics();
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, 0, "Game stats");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1 + STATS_DESCRIPTION_COLUMN_OFFSET, 1, "Stage");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, 2, "Hero Stats");
         textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 1, "Controls");
         textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 2, "arrows - move your hero");
         textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 3, "space - make some action");
