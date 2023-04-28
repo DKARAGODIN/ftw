@@ -1,6 +1,5 @@
 package pro.karagodin.ai_system;
 
-import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
@@ -23,12 +22,12 @@ public class PushStrategy implements Strategy {
     }
 
     @Override
-    public Strategy nextStrategy() {
+    public Strategy getNextStrategy() {
         return durationInMoveNumber > 0 ? this : originStrategy;
     }
 
     @Override
-    public TextColor getForeground() {
-        return TextColor.ANSI.BLUE;
+    public TypeOfStrategy getTypeOfStrategy() {
+        return TypeOfStrategy.CowardStrategy;
     }
 }

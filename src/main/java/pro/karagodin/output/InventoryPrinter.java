@@ -24,8 +24,9 @@ public class InventoryPrinter {
     private final Coordinate equippedTable;
     private final Inventory inventory;
     private final Coordinate stashedTable;
+    private final MapStyler styler;
 
-    public InventoryPrinter(Screen screen, Coordinate lu, Inventory inventory) {
+    public InventoryPrinter(Screen screen, Coordinate lu, Inventory inventory, MapStyler styler) {
         this.screen = screen;
         this.equippedTitle = new Coordinate(lu.getX(), lu.getY());
         this.equippedTable = new Coordinate(lu.getX(), lu.getY() + 1);
@@ -33,6 +34,7 @@ public class InventoryPrinter {
         var equippedTableHeight = EQUIPPED_CELL_ROWS * (CELL_HEIGHT + 1) + 1;
         this.stashedTitle = new Coordinate(lu.getX(), lu.getY() + 1 + equippedTableHeight);
         this.stashedTable = new Coordinate(lu.getX(), lu.getY() + 1 + equippedTableHeight + 1);
+        this.styler = styler;
     }
 
     public void moveCellFocus(Coordinate newPosition, Coordinate oldPosition) {
@@ -73,7 +75,7 @@ public class InventoryPrinter {
     }
 
     private void drawItemInCell(int startX, int startY, Item item) {
-        screen.setCharacter(startX + CELL_WIDTH / 2, startY + CELL_HEIGHT / 2, new TextCharacter(item.getView()));
+        screen.setCharacter(startX + CELL_WIDTH / 2, startY + CELL_HEIGHT / 2, styler.stylizeItem(item).toTextCharacter());
     }
 
     private void drawTableGUI(int startX, int startY, int rows) {

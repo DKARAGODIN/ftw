@@ -24,8 +24,7 @@ public class Player extends Mob {
     private boolean wantsToContinuePlaying = true;
 
     public Player(int hp, int maxHp, TimeInterval pace, Printer printer) {
-        super(hp, maxHp, pace, new PlayerStrategy(printer));
-        this.view = '@';
+        super(0, hp, maxHp, pace, new PlayerStrategy(printer));
     }
 
     public void quitFromGame() {

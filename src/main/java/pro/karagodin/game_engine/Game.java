@@ -3,6 +3,7 @@ package pro.karagodin.game_engine;
 import java.io.IOException;
 
 import pro.karagodin.models.Player;
+import pro.karagodin.output.DefaultMapStyler;
 import pro.karagodin.output.Printer;
 import pro.karagodin.time.TimeInterval;
 
@@ -13,7 +14,7 @@ public class Game {
     private Player player;
 
     public Game() {
-        printer = new Printer();
+        printer = new Printer(new DefaultMapStyler());
         player = new Player(100, 100, new TimeInterval(200), printer);
     }
 

@@ -2,7 +2,6 @@ package pro.karagodin.ai_system;
 
 import java.util.Random;
 
-import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
@@ -24,7 +23,7 @@ public class RoamStrategy implements Strategy {
     }
 
     @Override
-    public TextColor getForeground() {
-        return TextColor.ANSI.YELLOW;
+    public TypeOfStrategy getTypeOfStrategy() {
+        return TypeOfStrategy.PassiveStrategy;
     }
 }

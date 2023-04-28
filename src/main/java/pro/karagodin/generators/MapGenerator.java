@@ -22,7 +22,7 @@ public class MapGenerator {
         Coordinate position;
         while (true) {
             position = new Coordinate(RANDOM.nextInt(0, map.getWidth()), RANDOM.nextInt(0, map.getHeight()));
-            if (map.getCell(position).getWall() == null && ! map.getCell(position).getFloor().hasItem()) {
+            if (map.getCell(position).getWall() == null && map.getCell(position).getItem() == null) {
                 return position;
             }
         }
@@ -30,7 +30,7 @@ public class MapGenerator {
 
     public static void placeItems(Map map, List<Item> items) {
         for (int i = 0; i < items.size(); i++) {
-            map.getCell(getFreeCellPosition(map)).getFloor().setItem(items.get(i));
+            map.getCell(getFreeCellPosition(map)).setItem(items.get(i));
         }
     }
 
@@ -71,7 +71,7 @@ public class MapGenerator {
         items.add(ItemGenerator.generateHealth(level));
         placeItems(map, items);
         placeMob(map, player);
-        placeMob(map, new Mob(100, 100, new TimeInterval(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeInterval(3000))))));
+        placeMob(map, new Mob(1, 100, 100, new TimeInterval(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeInterval(3000))))));
         return map;
     }
 }

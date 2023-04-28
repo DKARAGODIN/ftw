@@ -21,12 +21,17 @@ public class Printer {
 
     private Screen screen;
     private InventoryPrinter inventoryPrinter;
+    private MapStyler styler;
+
+    public Printer(MapStyler styler) {
+        this.styler = styler;
+    }
 
     public void init(Inventory inventory) throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Screen screen = terminalFactory.createScreen();
         this.screen = screen;
-        this.inventoryPrinter = new InventoryPrinter(screen, new Coordinate(MAX_COL - 34, 13), inventory);
+        this.inventoryPrinter = new InventoryPrinter(screen, new Coordinate(MAX_COL - 34, 13), inventory, styler);
         screen.startScreen();
 
         printWelcomeMessage(screen);
@@ -35,7 +40,7 @@ public class Printer {
     public void updateCoordinates(Map map, MapDiff diff) throws IOException {
         for (Coordinate coord : diff.getUpdatedCoordinatesInMap()) {
             var cell = map.getCell(coord);
-                screen.setCharacter(coord.getX(), coord.getY(), cell.asCharacter());
+                screen.setCharacter(coord.getX(), coord.getY(), styler.stylizeCell(cell).toTextCharacter());
         }
         screen.refresh(Screen.RefreshType.DELTA);
     }
@@ -81,7 +86,7 @@ public class Printer {
         for (int x  = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 var coord = new Coordinate(x, y);
-                screen.setCharacter(x, y, map.getCell(coord).asCharacter());
+                screen.setCharacter(x, y, styler.stylizeCell(map.getCell(coord)).toTextCharacter());
             }
         }
     }

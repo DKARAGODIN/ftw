@@ -75,7 +75,7 @@ public class Judge {
 
     private GameDiff tryPickItem(MobWithPosition mobAndCoord, Map map) {
         var cell = map.getCell(mobAndCoord.getPosition());
-        if (cell.getFloor().hasItem())
+        if (cell.getItem() != null)
             return pickItem(mobAndCoord, map, cell);
         return null;
     }
@@ -83,7 +83,7 @@ public class Judge {
     private GameDiff pickItem(MobWithPosition mobAndCoord, Map map, Cell cell) {
         var player = (Player) mobAndCoord.getMob();
         var inv = player.getInventory();
-        var item = cell.getFloor().pickItem();
+        var item = cell.pickItem();
         inv.addItemToBackpack(item);
 
         var mapDiff = new MapDiff();

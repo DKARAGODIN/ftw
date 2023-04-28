@@ -14,7 +14,7 @@ public class ConfusedStrategy extends RoamStrategy {
     }
 
     @Override
-    public Strategy nextStrategy() {
+    public Strategy getNextStrategy() {
         return endTime.deltaWithCurrentTime() > 0 ? this : originStrategy;
     }
 }
