@@ -2,11 +2,13 @@ package pro.karagodin.ai_system;
 
 import java.io.IOException;
 
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
+import pro.karagodin.output.ConsoleCharacter;
 import pro.karagodin.output.Printer;
 
 public class PlayerStrategy implements Strategy {
@@ -86,8 +88,8 @@ public class PlayerStrategy implements Strategy {
     }
 
     @Override
-    public TypeOfStrategy getTypeOfStrategy() {
-        return TypeOfStrategy.PlayerStrategy;
+    public ConsoleCharacter modifyMobCharacter(ConsoleCharacter character) {
+        return character.overwrite(new ConsoleCharacter(null, TextColor.ANSI.RED, null, null, null, true));
     }
 
     public char getPressedKey() throws IOException {

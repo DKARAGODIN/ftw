@@ -2,6 +2,7 @@ package pro.karagodin.ai_system;
 
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
+import pro.karagodin.output.ConsoleCharacter;
 
 public class PushStrategy implements Strategy {
 
@@ -27,7 +28,7 @@ public class PushStrategy implements Strategy {
     }
 
     @Override
-    public TypeOfStrategy getTypeOfStrategy() {
-        return TypeOfStrategy.CowardStrategy;
+    public ConsoleCharacter modifyMobCharacter(ConsoleCharacter character) {
+        return originStrategy.modifyMobCharacter(character).overwrite(new ConsoleCharacter(null, null, null, null, true, null));
     }
 }

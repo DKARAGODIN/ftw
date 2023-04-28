@@ -1,6 +1,5 @@
 package pro.karagodin.output;
 
-import pro.karagodin.ai_system.Strategy;
 import pro.karagodin.models.Cell;
 import pro.karagodin.models.Floor;
 import pro.karagodin.models.Item;
@@ -10,8 +9,6 @@ import pro.karagodin.models.Wall;
 public interface MapStyler {
 
     public ConsoleCharacter stylizeMob(Mob mob);
-
-    public ConsoleCharacter stylizeStrategy(Strategy strategy);
 
     public ConsoleCharacter stylizeWall(Wall wall);
 
@@ -25,7 +22,7 @@ public interface MapStyler {
             return character;
         }
         if (cell.getUnit() != null) {
-            character = character.compose(stylizeMob(cell.getUnit()).overwrite(stylizeStrategy(cell.getUnit().getStrategy())));
+            character = character.compose(cell.getUnit().getStrategy().modifyMobCharacter(stylizeMob(cell.getUnit())));
         }
         if (cell.getWall() != null) {
             character = character.compose(stylizeWall(cell.getWall()));

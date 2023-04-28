@@ -2,8 +2,10 @@ package pro.karagodin.ai_system;
 
 import java.util.Random;
 
+import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
+import pro.karagodin.output.ConsoleCharacter;
 
 public class RoamStrategy implements Strategy {
     private final Random randomGenerator = new Random();
@@ -23,7 +25,7 @@ public class RoamStrategy implements Strategy {
     }
 
     @Override
-    public TypeOfStrategy getTypeOfStrategy() {
-        return TypeOfStrategy.PassiveStrategy;
+    public ConsoleCharacter modifyMobCharacter(ConsoleCharacter character) {
+        return character.overwrite(new ConsoleCharacter(null, TextColor.ANSI.YELLOW, null, null, null, null));
     }
 }
