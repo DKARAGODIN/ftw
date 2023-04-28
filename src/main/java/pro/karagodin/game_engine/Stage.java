@@ -14,6 +14,7 @@ public class Stage {
     private final Printer printer;
     private final Judge judge;
     private final Map map;
+    private final Timeline timeline;
 
     public Stage(Printer printer, Player player) {
         this.printer = printer;
