@@ -65,7 +65,7 @@ public class MapGenerator {
 
     public static Map genDefaultMap(int stage, Player player) {
         var map = new Map(60, 195);
-        placeWalls(map, 3000);
+        placeWalls(map, 300);
         var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
         placeMob(map, player);
