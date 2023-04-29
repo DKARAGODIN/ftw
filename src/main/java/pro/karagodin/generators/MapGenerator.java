@@ -8,7 +8,6 @@ import pro.karagodin.models.Item;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.models.Wall;
-import pro.karagodin.time.TimeMoment;
 
 public class MapGenerator {
 
@@ -61,15 +60,6 @@ public class MapGenerator {
         }
     }
 
-    /**
-     * Puts mobs on map
-     * @param map
-     * @param mob
-     */
-    public static void placeMob(Map map, Mob mob) {
-        map.getCell(getFreeCellPosition(map)).setUnit(mob);
-    }
-
     public static Map genEmptytMap() {
         return new Map(60, 195);
     }
@@ -88,4 +78,9 @@ public class MapGenerator {
         placePlayer(map, player);
         return map;
     }
+
+    public static void placePlayer(Map map, Player player) {
+        map.getCell(getFreeCellPosition(map)).setUnit(player);
+    }
+
 }

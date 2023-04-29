@@ -35,11 +35,6 @@ public class Mob implements CIDrowable {
         this.strategy = strategy;
     }
 
-    public Mob(int hp, int maxHp, TimeMoment pace, Strategy strategy, ArrayList<Effect> attackEffects) {
-        this(hp, maxHp, pace, strategy);
-        this.attackEffects = attackEffects;
-    }
-
     public char getView() {
         return view;
     }
