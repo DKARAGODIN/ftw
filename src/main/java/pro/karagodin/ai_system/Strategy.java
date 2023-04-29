@@ -7,6 +7,9 @@ import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 import pro.karagodin.output.CIDrowable;
 
+/**
+ * Responsible for Mobs and player actions
+ */
 public interface Strategy extends CIDrowable {
     Action getNextAction(MobWithPosition mobAndCoord, Map map) throws IOException;
 

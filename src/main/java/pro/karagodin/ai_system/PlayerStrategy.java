@@ -11,6 +11,9 @@ import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
 
+/**
+ * Implements interaction between Player and Character
+ */
 public class PlayerStrategy implements Strategy {
 
     private final Printer printer;

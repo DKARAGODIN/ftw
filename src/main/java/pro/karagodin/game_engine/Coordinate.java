@@ -2,6 +2,9 @@ package pro.karagodin.game_engine;
 
 import java.util.function.UnaryOperator;
 
+/**
+ * Represents physical coordinates of the screen. X - column, Y - row. Starting from left up corner. Only positive values allowed
+ */
 public class Coordinate {
     private int cX;
     private int cY;

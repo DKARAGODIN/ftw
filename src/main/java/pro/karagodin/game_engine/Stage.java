@@ -9,6 +9,9 @@ import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
 
+/**
+ * Game round.
+ */
 public class Stage {
 
     private final Printer printer;

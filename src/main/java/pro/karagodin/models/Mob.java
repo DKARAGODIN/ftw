@@ -11,10 +11,10 @@ import pro.karagodin.ai_system.Effect;
 import pro.karagodin.ai_system.Strategy;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.output.CIDrowable;
-import pro.karagodin.time.TimeInterval;
+import pro.karagodin.time.TimeMoment;
 
 /**
-  A game object that can move around and affect gameplay
+ * A game object that can move around and affect gameplay
  */
 @Setter
 @Getter
@@ -29,20 +29,20 @@ public class Mob implements CIDrowable {
     protected int stamina;
     protected int maxStamina;
 
-    protected TimeInterval pace;
+    protected TimeMoment pace;
     protected Strategy strategy;
     protected char view = 'A';
     protected TextColor color = TextColor.ANSI.WHITE;
     protected ArrayList<Effect> attackEffects = new ArrayList<>();
 
-    public Mob(int hp, int maxHp, TimeInterval pace, Strategy strategy) {
+    public Mob(int hp, int maxHp, TimeMoment pace, Strategy strategy) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.pace = pace;
         this.strategy = strategy;
     }
 
-    public Mob(int hp, int maxHp, TimeInterval pace, Strategy strategy, ArrayList<Effect> attackEffects) {
+    public Mob(int hp, int maxHp, TimeMoment pace, Strategy strategy, ArrayList<Effect> attackEffects) {
         this(hp, maxHp, pace, strategy);
         this.attackEffects = attackEffects;
     }

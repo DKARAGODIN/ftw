@@ -4,5 +4,9 @@ import pro.karagodin.models.Mob;
 
 public interface Effect {
 
-    public void doEffect(Mob mob);
+    /**
+     * Side effect of the attack
+     * @param mob
+     */
+    void doEffect(Mob mob);
 }

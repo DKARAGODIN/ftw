@@ -6,6 +6,9 @@ import pro.karagodin.ai_system.Action;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 
+/**
+ * Tuple for mob and it's coordinate
+ */
 public class MobWithPosition {
 
     private final Mob mob;

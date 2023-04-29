@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
-import pro.karagodin.time.TimeInterval;
+import pro.karagodin.time.TimeMoment;
 
 public class Game {
 
@@ -14,9 +14,13 @@ public class Game {
 
     public Game() {
         printer = new Printer();
-        player = new Player(100, 100, new TimeInterval(200), printer);
+        player = new Player(100, 100, new TimeMoment(200L), printer);
     }
 
+    /**
+     * Main game loop
+     * @throws IOException
+     */
     public void start() throws IOException {
         printer.init(player); // aka menu
 

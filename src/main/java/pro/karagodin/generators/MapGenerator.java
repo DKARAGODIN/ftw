@@ -12,7 +12,7 @@ import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
 import pro.karagodin.models.Wall;
-import pro.karagodin.time.TimeInterval;
+import pro.karagodin.time.TimeMoment;
 
 public class MapGenerator {
 
@@ -28,12 +28,22 @@ public class MapGenerator {
         }
     }
 
+    /**
+     * Puts items on map
+     * @param map
+     * @param items
+     */
     public static void placeItems(Map map, List<Item> items) {
         for (int i = 0; i < items.size(); i++) {
             map.getCell(getFreeCellPosition(map)).getFloor().setItem(items.get(i));
         }
     }
 
+    /**
+     * Puts walls on map
+     * @param map
+     * @param amount
+     */
     public static void placeWalls(Map map, int amount) {
         for (int i = 0; i < amount;) {
             Coordinate cellPosition = getFreeCellPosition(map);
@@ -55,6 +65,11 @@ public class MapGenerator {
         }
     }
 
+    /**
+     * Puts mobs on map
+     * @param map
+     * @param mob
+     */
     public static void placeMob(Map map, Mob mob) {
         map.getCell(getFreeCellPosition(map)).setUnit(mob);
     }
@@ -63,13 +78,19 @@ public class MapGenerator {
         return new Map(60, 195);
     }
 
+    /**
+     * Default map for testing and first stage play
+     * @param stage
+     * @param player
+     * @return
+     */
     public static Map genDefaultMap(int stage, Player player) {
         var map = new Map(60, 195);
         placeWalls(map, 300);
         var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
         placeMob(map, player);
-        placeMob(map, new Mob(100, 100, new TimeInterval(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeInterval(3000))))));
+        placeMob(map, new Mob(100, 100, new TimeMoment(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeMoment(3000))))));
         return map;
     }
 }

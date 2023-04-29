@@ -1,13 +1,13 @@
 package pro.karagodin.ai_system;
 
 import pro.karagodin.models.Mob;
-import pro.karagodin.time.TimeInterval;
+import pro.karagodin.time.TimeMoment;
 
 public class ConfusedEffect implements Effect {
 
-    private final TimeInterval duration;
+    private final TimeMoment duration;
 
-    public ConfusedEffect(TimeInterval duration) {
+    public ConfusedEffect(TimeMoment duration) {
         this.duration = duration;
     }
 

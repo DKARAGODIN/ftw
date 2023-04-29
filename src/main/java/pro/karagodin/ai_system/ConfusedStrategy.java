@@ -1,14 +1,16 @@
 package pro.karagodin.ai_system;
 
-import pro.karagodin.time.TimeInterval;
 import pro.karagodin.time.TimeMoment;
 
+/**
+ * Strategy implements confusion effect
+ */
 public class ConfusedStrategy extends RoamStrategy {
 
     private final Strategy originStrategy;
     private final TimeMoment endTime;
 
-    public ConfusedStrategy(Strategy originStrategy, TimeInterval duration) {
+    public ConfusedStrategy(Strategy originStrategy, TimeMoment duration) {
         this.originStrategy = originStrategy;
         this.endTime = new TimeMoment().after(duration);
     }
