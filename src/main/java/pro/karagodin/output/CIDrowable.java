@@ -2,10 +2,13 @@ package pro.karagodin.output;
 
 import com.googlecode.lanterna.TextColor;
 
+/**
+ * Object that printer can draw on map
+ */
 public interface CIDrowable {
-    public char getView();
+    char getView();
 
-    public TextColor getForeground();
+    TextColor getForeground();
 
-    public TextColor getBackground();
+    TextColor getBackground();
 }

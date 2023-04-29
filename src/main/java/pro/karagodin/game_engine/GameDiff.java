@@ -1,5 +1,8 @@
 package pro.karagodin.game_engine;
 
+/**
+ * Game changes after quantum of time
+ */
 public class GameDiff {
     private MapDiff mapDiff;
     private MobWithPosition newMobPosition;

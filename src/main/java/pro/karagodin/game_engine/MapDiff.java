@@ -2,6 +2,9 @@ package pro.karagodin.game_engine;
 
 import java.util.ArrayList;
 
+/**
+ * Map changes after quantum of time
+ */
 public class MapDiff {
     private ArrayList<Coordinate> updatedCoordinatesInMap;
 

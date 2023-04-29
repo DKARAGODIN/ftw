@@ -7,6 +7,9 @@ import com.googlecode.lanterna.screen.Screen;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Player;
 
+/**
+ * Prints hero statistics GUI
+ */
 public class PlayerStatsPrinter {
 
     private static final int STATS_DESCRIPTION_COLUMN_OFFSET = 20;

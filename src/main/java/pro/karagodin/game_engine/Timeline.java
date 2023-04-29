@@ -5,22 +5,10 @@ import java.util.PriorityQueue;
 import pro.karagodin.models.Map;
 import pro.karagodin.time.TimeMoment;
 
+/**
+ * Game time loop.
+ */
 public class Timeline {
-
-    private static class MobInfo implements Comparable<MobInfo> {
-        public MobWithPosition mobAndCoord;
-        public TimeMoment actionTime;
-
-        public MobInfo(MobWithPosition mobAndCoord, TimeMoment actionTime) {
-            this.mobAndCoord = mobAndCoord;
-            this.actionTime = actionTime;
-        }
-
-        @Override
-        public int compareTo(MobInfo mobInfo) {
-            return actionTime.compareTo(mobInfo.actionTime);
-        }
-    }
 
     private PriorityQueue<MobInfo> mobsWithTimes;
     private TimeMoment nextTimeForLastMob;
@@ -37,6 +25,10 @@ public class Timeline {
         }
     }
 
+    /**
+     * Get next mob in queue
+     * @return
+     */
     public MobWithPosition getMobForDoingAction() {
         MobInfo info = mobsWithTimes.peek();
         if (info.actionTime.deltaWithCurrentTime() > 0) {
@@ -55,4 +47,18 @@ public class Timeline {
         return mobsWithTimes.peek().actionTime.deltaWithCurrentTime();
     }
 
+    private static class MobInfo implements Comparable<MobInfo> {
+        public MobWithPosition mobAndCoord;
+        public TimeMoment actionTime;
+
+        public MobInfo(MobWithPosition mobAndCoord, TimeMoment actionTime) {
+            this.mobAndCoord = mobAndCoord;
+            this.actionTime = actionTime;
+        }
+
+        @Override
+        public int compareTo(MobInfo mobInfo) {
+            return actionTime.compareTo(mobInfo.actionTime);
+        }
+    }
 }

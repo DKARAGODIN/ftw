@@ -13,7 +13,9 @@ import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Inventory;
 import pro.karagodin.models.Item;
 
-
+/**
+ * Prints inventory GUI info
+ */
 public class InventoryPrinter {
     private static final int CELL_WIDTH = 5;
     private static final int CELL_HEIGHT = 3;

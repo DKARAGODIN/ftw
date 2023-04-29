@@ -12,6 +12,9 @@ import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
 
+/**
+ * Game logic decision maker
+ */
 public class Judge {
 
     private final Player player;
@@ -20,6 +23,13 @@ public class Judge {
         this.player = player;
     }
 
+    /**
+     * Calculates what happened in the game and it's results
+     * @param action
+     * @param mobAndCoord
+     * @param map
+     * @return
+     */
     @Nullable
     public GameDiff doAction(Action action, MobWithPosition mobAndCoord, Map map) {
         switch (action) {

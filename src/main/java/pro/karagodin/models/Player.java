@@ -10,11 +10,11 @@ import lombok.Setter;
 import pro.karagodin.ai_system.PlayerStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.output.Printer;
-import pro.karagodin.time.TimeInterval;
+import pro.karagodin.time.TimeMoment;
 
 
 /**
- * A game object that handled by users
+ * A game object controlled by user
  */
 @Setter
 @Getter
@@ -34,7 +34,7 @@ public class Player extends Mob {
     private boolean inventoryMode = false;
     private boolean wantsToContinuePlaying = true;
 
-    public Player(int hp, int maxHp, TimeInterval pace, Printer printer) {
+    public Player(int hp, int maxHp, TimeMoment pace, Printer printer) {
         super(hp, maxHp, pace, new PlayerStrategy(printer));
         this.view = '@';
         this.color = TextColor.ANSI.RED;
