@@ -18,12 +18,14 @@ public class Stage {
     private final Judge judge;
     private final Map map;
     private final Timeline timeline;
+    private final int currentStage;
 
-    public Stage(Printer printer, Player player) {
+    public Stage(Printer printer, Player player, int currentStage) {
         this.printer = printer;
         this.judge = new Judge(player);
         this.map = MapGenerator.genDefaultMap(1, player);
         this.timeline = new Timeline(this.map);
+        this.currentStage = currentStage;
     }
 
     public boolean start() throws IOException {
@@ -36,6 +38,9 @@ public class Stage {
                 }
             } else {
                 MobWithPosition mobAndCoord = timeline.getMobForDoingAction();
+                if (mobAndCoord == null)
+                    continue;
+
                 Action mobAction = mobAndCoord.getNextAction(map);
                 GameDiff gameDiff = judge.doAction(mobAction, mobAndCoord, map);
                 if (gameDiff != null) {

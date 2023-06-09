@@ -41,7 +41,7 @@ public class Judge {
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     } else if (isAttack(map, newMobCoord)) {
-                        doAttack(map, mobAndCoord.getPosition(), newMobCoord);
+                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
@@ -51,7 +51,7 @@ public class Judge {
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     } else if (isAttack(map, newMobCoord)) {
-                        doAttack(map, mobAndCoord.getPosition(), newMobCoord);
+                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
@@ -61,7 +61,7 @@ public class Judge {
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     } else if (isAttack(map, newMobCoord)) {
-                        doAttack(map, mobAndCoord.getPosition(), newMobCoord);
+                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
@@ -71,7 +71,7 @@ public class Judge {
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     } else if (isAttack(map, newMobCoord)) {
-                        doAttack(map, mobAndCoord.getPosition(), newMobCoord);
+                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
                 break;
@@ -119,8 +119,35 @@ public class Judge {
         return nextMobCell.getUnit() != null;
     }
 
-    private void doAttack(Map map, Coordinate attackerPosition, Coordinate attackedPosition) {
-        combatSystem.attack(map.getCell(attackerPosition).getUnit(), map.getCell(attackedPosition).getUnit());
+    private GameDiff doAttack(Map map, Coordinate attackerPosition, Coordinate defenderPosition) {
+        Mob attacker = map.getCell(attackerPosition).getUnit();
+        Mob defender = map.getCell(defenderPosition).getUnit();
+        combatSystem.attack(attacker, defender);
+
+        if (defender.getHp() <= 0) {
+            if (defender instanceof Player) {
+                //Game over
+                System.exit(1);
+            } else {
+                GameDiff result = new GameDiff();
+                MapDiff mapDiff = new MapDiff(defenderPosition);
+                map.getCell(defenderPosition).setUnit(null);
+                result.setMapDiff(mapDiff);
+                return result;
+            }
+        } else if (attacker.getHp() <= 0) {
+            if (attacker instanceof Player) {
+                //Game over
+                System.exit(1);
+            } else {
+                GameDiff result = new GameDiff();
+                MapDiff mapDiff = new MapDiff(attackerPosition);
+                map.getCell(attackerPosition).setUnit(null);
+                result.setMapDiff(mapDiff);
+                return result;
+            }
+        }
+        return null;
     }
 
     private GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {

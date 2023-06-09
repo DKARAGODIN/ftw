@@ -35,6 +35,9 @@ public class Timeline {
             return null;
         }
         mobsWithTimes.poll();
+        if (info.mobAndCoord == null) {
+            return null;
+        }
         nextTimeForLastMob = info.actionTime.after(info.mobAndCoord.getMob().getPace());
         return info.mobAndCoord;
     }

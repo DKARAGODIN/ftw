@@ -6,7 +6,11 @@ package pro.karagodin.game_engine;
 public class GameDiff {
     private MapDiff mapDiff;
     private MobWithPosition newMobPosition;
-    private final boolean isInventoryChanged;
+    private boolean isInventoryChanged = false;
+    private boolean playerStatsChanged = false;
+
+    public GameDiff() {
+    }
 
     public GameDiff(MobWithPosition oldMobPosition) {
         this(new MapDiff(oldMobPosition.getPosition()), oldMobPosition, false);
@@ -40,5 +44,13 @@ public class GameDiff {
 
     public void setNewMobPosition(MobWithPosition newMobPosition) {
         this.newMobPosition = newMobPosition;
+    }
+
+    public boolean isPlayerStatsChanged() {
+        return playerStatsChanged;
+    }
+
+    public void setPlayerStatsChanged(boolean playerStatsChanged) {
+        this.playerStatsChanged = playerStatsChanged;
     }
 }
