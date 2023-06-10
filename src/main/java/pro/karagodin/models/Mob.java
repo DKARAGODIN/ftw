@@ -35,15 +35,19 @@ public class Mob implements CIDrowable {
     protected TextColor color = TextColor.ANSI.WHITE;
     protected ArrayList<Effect> attackEffects = new ArrayList<>();
 
-    public Mob(int hp, int maxHp, TimeMoment pace, Strategy strategy) {
+    public Mob(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy) {
         this.hp = hp;
         this.maxHp = maxHp;
+        this.attack = attack;
+        this.defence = defence;
+        this.minDamage = minDamage;
+        this.maxDamage = maxDamage;
         this.pace = pace;
         this.strategy = strategy;
     }
 
-    public Mob(int hp, int maxHp, TimeMoment pace, Strategy strategy, ArrayList<Effect> attackEffects) {
-        this(hp, maxHp, pace, strategy);
+    public Mob(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy, ArrayList<Effect> attackEffects) {
+        this(hp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy);
         this.attackEffects = attackEffects;
     }
 

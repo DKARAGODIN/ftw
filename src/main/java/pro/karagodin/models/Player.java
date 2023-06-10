@@ -34,8 +34,8 @@ public class Player extends Mob {
     private boolean inventoryMode = false;
     private boolean wantsToContinuePlaying = true;
 
-    public Player(int hp, int maxHp, TimeMoment pace, Printer printer) {
-        super(hp, maxHp, pace, new PlayerStrategy(printer));
+    public Player(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Printer printer) {
+        super(hp, maxHp, attack, defence, minDamage, maxDamage, pace, new PlayerStrategy(printer));
         this.view = '@';
         this.color = TextColor.ANSI.RED;
 

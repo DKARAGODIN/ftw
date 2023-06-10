@@ -3,6 +3,7 @@ package pro.karagodin.generators;
 import java.util.List;
 import java.util.Random;
 
+import pro.karagodin.ai_system.AttackAroundStrategy;
 import pro.karagodin.ai_system.StatueStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Item;
@@ -88,22 +89,10 @@ public class MapGenerator {
         var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
         placeMob(map, player);
-        Mob m1 = new Mob(1, 100, new TimeMoment(1000), new StatueStrategy());
-        m1.setMinDamage(0); m1.setMaxDamage(0);
-        placeMob(map, m1);
-        Mob m2 = new Mob(1, 100, new TimeMoment(1000), new StatueStrategy());
-        m2.setMinDamage(0); m2.setMaxDamage(0);
-        placeMob(map, m2);
-        Mob m3 = new Mob(1, 100, new TimeMoment(1000), new StatueStrategy());
-        m3.setMinDamage(0); m3.setMaxDamage(0);
-        placeMob(map, m3);
-        Mob m4 = new Mob(1, 100, new TimeMoment(1000), new StatueStrategy());
-        m4.setMinDamage(0); m4.setMaxDamage(0);
-        placeMob(map, m4);
-        Mob m5 = new Mob(1, 100, new TimeMoment(1000), new StatueStrategy());
-        m5.setMinDamage(0); m5.setMaxDamage(0);
-        placeMob(map, m5);
-
+        for (int i = 0; i < 5; i++) {
+            placeMob(map, new Mob(1, 100, 0, 10, 0, 0, new TimeMoment(1000), new StatueStrategy()));
+        }
+        placeMob(map, new Mob(100, 100, 10, 3, 4, 6, new TimeMoment(1000), new AttackAroundStrategy()));
 
         //placeMob(map, new Mob(100, 100, new TimeMoment(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeMoment(3000))))));
         return map;

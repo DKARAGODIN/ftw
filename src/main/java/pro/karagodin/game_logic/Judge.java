@@ -38,51 +38,29 @@ public class Judge {
     public GameDiff doAction(Action action, MobWithPosition mobAndCoord, Map map) {
         switch (action) {
             case MoveLeft:
-                if (mobAndCoord.getPosition().getX() > 0) {
-                    Coordinate newMobCoord = mobAndCoord.getPosition().withX(x -> x - 1);
-                    if (canDoMovement(map, newMobCoord)) {
-                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
-                    } else if (isAttack(map, newMobCoord)) {
-                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
-                    }
-                }
-                break;
             case MoveRight:
-                if (mobAndCoord.getPosition().getX() < map.getWidth() - 1) {
-                    Coordinate newMobCoord = mobAndCoord.getPosition().withX(x -> x + 1);
-                    if (canDoMovement(map, newMobCoord)) {
-                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
-                    } else if (isAttack(map, newMobCoord)) {
-                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
-                    }
-                }
-                break;
             case MoveDown:
-                if (mobAndCoord.getPosition().getY() < map.getHeight() - 1) {
-                    Coordinate newMobCoord = mobAndCoord.getPosition().withY(y -> y + 1);
-                    if (canDoMovement(map, newMobCoord)) {
-                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
-                    } else if (isAttack(map, newMobCoord)) {
-                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
-                    }
-                }
-                break;
             case MoveUp:
-                if (mobAndCoord.getPosition().getY() > 0) {
-                    Coordinate newMobCoord = mobAndCoord.getPosition().withY(y -> y - 1);
+                Coordinate newMobCoord = switch (action) {
+                    case MoveLeft -> map.getLefterCoordinate(mobAndCoord.getPosition());
+                    case MoveRight -> map.getRighterCoordinate(mobAndCoord.getPosition());
+                    case MoveDown -> map.getLowerCoordinate(mobAndCoord.getPosition());
+                    case MoveUp -> map.getHigherCoordinate(mobAndCoord.getPosition());
+                    default -> null;
+                };
+                if (newMobCoord != null) {
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
                     } else if (isAttack(map, newMobCoord)) {
                         return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
                     }
                 }
-                break;
+                return new GameDiff(mobAndCoord);
             case InteractWithObjectOnFloor:
                 return tryPickItem(mobAndCoord, map);
             default:
-                break;
+                return null;
         }
-        return new GameDiff(mobAndCoord);
     }
 
     private GameDiff tryPickItem(MobWithPosition mobAndCoord, Map map) {

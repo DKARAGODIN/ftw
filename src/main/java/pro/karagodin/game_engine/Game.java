@@ -14,7 +14,7 @@ public class Game {
 
     public Game() {
         printer = new Printer();
-        player = new Player(100, 100, new TimeMoment(200L), printer);
+        player = new Player(100, 100, 10, 10, 3, 7, new TimeMoment(200L), printer);
     }
 
     /**

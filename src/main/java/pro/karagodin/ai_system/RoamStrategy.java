@@ -11,16 +11,12 @@ public class RoamStrategy implements Strategy {
 
     @Override
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
-        switch (randomGenerator.nextInt(4)) {
-            case 0:
-                return Action.MoveUp;
-            case 1:
-                return Action.MoveDown;
-            case 2:
-                return Action.MoveLeft;
-            default:
-                return Action.MoveRight;
-        }
+        return switch (randomGenerator.nextInt(4)) {
+            case 0 -> Action.MoveUp;
+            case 1 -> Action.MoveDown;
+            case 2 -> Action.MoveLeft;
+            default -> Action.MoveRight;
+        };
     }
 
     @Override
