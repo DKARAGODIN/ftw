@@ -21,7 +21,7 @@ public class MapGenerator {
         Coordinate position;
         while (true) {
             position = new Coordinate(RANDOM.nextInt(0, map.getWidth()), RANDOM.nextInt(0, map.getHeight()));
-            if (map.getCell(position).getWall() == null && map.getCell(position).getItem() == null) {
+            if (map.getCell(position).getWall() == null && map.getCell(position).getItem() == null && map.getCell(position).getUnit() == null) {
                 return position;
             }
         }

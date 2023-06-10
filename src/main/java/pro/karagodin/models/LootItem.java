@@ -40,7 +40,7 @@ public class LootItem implements LowerItem {
 
     @Override
     public GameDiff use(Judge judge) {
-        return judge.useSmallThing(this);
+        return judge.useLootItem(this);
     }
 
     public enum Modifier implements Comparable<Modifier> {

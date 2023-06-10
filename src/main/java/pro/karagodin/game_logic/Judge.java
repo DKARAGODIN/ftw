@@ -10,10 +10,10 @@ import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Cell;
 import pro.karagodin.models.ConsumableItem;
 import pro.karagodin.models.Hole;
+import pro.karagodin.models.LootItem;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
-import pro.karagodin.models.LootItem;
 
 /**
  * Game logic decision maker
@@ -80,34 +80,27 @@ public class Judge {
         return null;
     }
 
-    public GameDiff useSmallThing(LootItem smallThing) {
-        return pickSmallThing(smallThing, new MobWithPosition(tempMap, tempCoordinate), tempMap.getCell(tempCoordinate));
+    public GameDiff useLootItem(LootItem lootItem) {
+        var playerWithCoord = new MobWithPosition(tempMap, tempCoordinate);
+        var player = (Player) playerWithCoord.getMob();
+        var inv = player.getInventory();
+        inv.addLootToStash(lootItem);
+        tempMap.getCell(tempCoordinate).setItem(null);
+        return new GameDiff(new MapDiff(tempCoordinate), playerWithCoord, true);
     }
 
     public GameDiff useConsumableItem(ConsumableItem consumableItem) {
-        return pickConsumable(consumableItem, new MobWithPosition(tempMap, tempCoordinate), tempMap.getCell(tempCoordinate));
+        var playerWithCoord = new MobWithPosition(tempMap, tempCoordinate);
+        var player = (Player) playerWithCoord.getMob();
+        int hp = player.getHp() + consumableItem.getHpBoost();
+        player.setHp(Math.min(player.getMaxHp(), hp));
+        tempMap.getCell(tempCoordinate).setItem(null);
+        return new GameDiff(new MapDiff(tempCoordinate), playerWithCoord, false, true);
     }
 
     public GameDiff useHole(Hole hole) {
         this.stageCompleted = true;
         return null;
-    }
-
-    private GameDiff pickConsumable(ConsumableItem item, MobWithPosition mobAndCoord, Cell cell) {
-        Player player = (Player) mobAndCoord.getMob();
-        int hp = player.getHp() + item.getHpBoost();
-        player.setHp(Math.min(player.getMaxHp(), hp));
-        GameDiff gd = new GameDiff(new MapDiff(mobAndCoord.getPosition()), mobAndCoord);
-        gd.setPlayerStatsChanged(true);
-        return gd;
-    }
-
-    private GameDiff pickSmallThing(LootItem smallThing, MobWithPosition mobAndCoord, Cell cell) {
-        var player = (Player) mobAndCoord.getMob();
-        var inv = player.getInventory();
-        cell.setItem(null);
-        inv.addLootToStash(smallThing);
-        return new GameDiff(new MapDiff(mobAndCoord.getPosition()), mobAndCoord, true);
     }
 
     public boolean isStageOver() {

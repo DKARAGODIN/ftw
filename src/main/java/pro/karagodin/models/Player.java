@@ -91,9 +91,9 @@ public class Player extends Mob {
         processIncreaseXP();
     }
 
-    public void applyMovedItem(LootItem smallThing) {
-        for (Map.Entry<LootItem.Modifier, Integer> e : smallThing.getItemModifiers().entrySet()) {
-            if (smallThing.isEquipped()) {
+    public void applyMovedLootItem(LootItem item) {
+        for (Map.Entry<LootItem.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
+            if (item.isEquipped()) {
                 switch (e.getKey()) {
                     case ATTACK -> attack += e.getValue();
                     case DEFENCE -> defence += e.getValue();

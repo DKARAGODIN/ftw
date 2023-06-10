@@ -21,9 +21,14 @@ public class GameDiff {
     }
 
     public GameDiff(MapDiff mapDiff, MobWithPosition newMobPosition, boolean isInventoryChanged) {
+        this(mapDiff, newMobPosition, isInventoryChanged, false);
+    }
+
+    public GameDiff(MapDiff mapDiff, MobWithPosition newMobPosition, boolean isInventoryChanged, boolean playerStatsChanged) {
         this.mapDiff = mapDiff;
         this.newMobPosition = newMobPosition;
         this.isInventoryChanged = isInventoryChanged;
+        this.playerStatsChanged = playerStatsChanged;
     }
 
     public MapDiff getMapDiff() {
