@@ -1,7 +1,5 @@
 package pro.karagodin.ai_system;
 
-import java.io.IOException;
-
 import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
@@ -10,7 +8,7 @@ import pro.karagodin.models.Player;
 
 public class AttackAroundStrategy implements Strategy {
     @Override
-    public Action getNextAction(MobWithPosition mobAndCoord, Map map) throws IOException {
+    public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
         return map
                 .getAllDirections()
                 .stream()

@@ -3,8 +3,7 @@ package pro.karagodin.generators;
 import java.util.List;
 import java.util.Random;
 
-import pro.karagodin.ai_system.AttackAroundStrategy;
-import pro.karagodin.ai_system.StatueStrategy;
+import pro.karagodin.ai_system.PursuitStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Item;
 import pro.karagodin.models.Map;
@@ -83,16 +82,23 @@ public class MapGenerator {
      * @param player
      * @return
      */
-    public static Map genDefaultMap(int stage, Player player) {
+    public static Map generate(int stage, Player player) {
         var map = new Map(60, 195);
-        placeWalls(map, 300);
+        placeWalls(map, stage > 10 ? 1000 : stage * 70 + 300);
         var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
         placeMob(map, player);
-        for (int i = 0; i < 5; i++) {
-            placeMob(map, new Mob(1, 100, 0, 10, 0, 0, new TimeMoment(1000), new StatueStrategy()));
+        for (int i = 0; i < stage; i++) {
+            placeMob(map, new Mob(
+                    100,
+                    100,
+                    10,
+                    3,
+                    4,
+                    6,
+                    new TimeMoment(1000),
+                    new PursuitStrategy(0.7)));
         }
-        placeMob(map, new Mob(100, 100, 10, 3, 4, 6, new TimeMoment(1000), new AttackAroundStrategy()));
 
         //placeMob(map, new Mob(100, 100, new TimeMoment(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeMoment(3000))))));
         return map;

@@ -14,11 +14,7 @@ import pro.karagodin.output.CIDrowable;
 public class Cell implements CIDrowable {
     protected Mob unit = null;
     protected Wall wall = null;
-    protected Floor floor;
-
-    public Cell() {
-        floor = new Floor();
-    }
+    protected Floor floor = new Floor();
 
     @Override
     public char getView() {

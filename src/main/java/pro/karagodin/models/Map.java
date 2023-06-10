@@ -80,4 +80,15 @@ public class Map {
                 new MapDirection(this::getRighterCoordinate, Action.MoveRight)
         );
     }
+
+    public Coordinate findPlayerCoordinate() {
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
+                if (cells[i][j].unit instanceof Player) {
+                    return new Coordinate(i, j);
+                }
+            }
+        }
+        return null;
+    }
 }
