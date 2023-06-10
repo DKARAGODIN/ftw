@@ -8,7 +8,7 @@ import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
-import pro.karagodin.models.SmallThing;
+import pro.karagodin.models.LootItem;
 import pro.karagodin.output.Printer;
 
 /**
@@ -55,7 +55,7 @@ public class PlayerStrategy implements Strategy {
                     printer.moveInventoryCellFocus(null, player.getInventory().getCoordinate());
                     break;
                 case ' ':
-                    SmallThing moved = player.moveItem();
+                    LootItem moved = player.moveItem();
                     if (moved != null) {
                         printer.moveInventoryItems();
                         player.applyMovedItem(moved);

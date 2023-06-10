@@ -10,10 +10,9 @@ import pro.karagodin.game_logic.Judge;
 
 /**
  * A game object that has no behavior but affects the player's characteristics
- * Maximum number of characteristics affected is 8 due to GUI limitations
  */
 @Getter
-public class SmallThing implements LowerItem {
+public class LootItem implements LowerItem {
 
     private final Map<Modifier, Integer> itemModifiers;
     private final char view;
@@ -21,7 +20,7 @@ public class SmallThing implements LowerItem {
     @Setter
     private boolean equipped;
 
-    public SmallThing(Map<Modifier, Integer> itemModifiers, char view) {
+    public LootItem(Map<Modifier, Integer> itemModifiers, char view) {
         this.itemModifiers = itemModifiers;
         this.view = view;
     }
@@ -46,14 +45,12 @@ public class SmallThing implements LowerItem {
 
     public enum Modifier implements Comparable<Modifier> {
         MAX_HP("Maximum HP", 5, 10),
-        REGEN_HP("HP regeneration", 0.5, 1),
+        //REGEN_HP("HP regeneration", 0.5, 1), -- Effect not implemented yet
         ATTACK("Attack", 0.3, 1),
         DEFENCE("Defence", 0.3, 1),
         MIN_DAMAGE("Min damage", 2, 5),
         MAX_DAMAGE("Max damage", 2, 5),
-        MAX_STAMINA("Max stamina", 2, 10),
-        REGEN_STAMINA("Stamina regeneration", 0.5, 1),
-        SPEED("Speed", 0.5, 1)
+        //SPEED("Speed", 0.5, 1) - Effect not implemented yet
         ;
 
         private final String description;

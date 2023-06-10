@@ -8,11 +8,12 @@ import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Cell;
+import pro.karagodin.models.ConsumableItem;
 import pro.karagodin.models.Hole;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
-import pro.karagodin.models.SmallThing;
+import pro.karagodin.models.LootItem;
 
 /**
  * Game logic decision maker
@@ -79,8 +80,12 @@ public class Judge {
         return null;
     }
 
-    public GameDiff useSmallThing(SmallThing smallThing) {
+    public GameDiff useSmallThing(LootItem smallThing) {
         return pickSmallThing(smallThing, new MobWithPosition(tempMap, tempCoordinate), tempMap.getCell(tempCoordinate));
+    }
+
+    public GameDiff useConsumableItem(ConsumableItem consumableItem) {
+        return pickConsumable(consumableItem, new MobWithPosition(tempMap, tempCoordinate), tempMap.getCell(tempCoordinate));
     }
 
     public GameDiff useHole(Hole hole) {
@@ -88,11 +93,20 @@ public class Judge {
         return null;
     }
 
-    private GameDiff pickSmallThing(SmallThing smallThing, MobWithPosition mobAndCoord, Cell cell) {
+    private GameDiff pickConsumable(ConsumableItem item, MobWithPosition mobAndCoord, Cell cell) {
+        Player player = (Player) mobAndCoord.getMob();
+        int hp = player.getHp() + item.getHpBoost();
+        player.setHp(Math.min(player.getMaxHp(), hp));
+        GameDiff gd = new GameDiff(new MapDiff(mobAndCoord.getPosition()), mobAndCoord);
+        gd.setPlayerStatsChanged(true);
+        return gd;
+    }
+
+    private GameDiff pickSmallThing(LootItem smallThing, MobWithPosition mobAndCoord, Cell cell) {
         var player = (Player) mobAndCoord.getMob();
         var inv = player.getInventory();
         cell.setItem(null);
-        inv.addSmallThingToStash(smallThing);
+        inv.addLootToStash(smallThing);
         return new GameDiff(new MapDiff(mobAndCoord.getPosition()), mobAndCoord, true);
     }
 

@@ -26,8 +26,6 @@ public class Mob implements CIDrowable {
     protected int defence;
     protected int minDamage;
     protected int maxDamage;
-    protected int stamina;
-    protected int maxStamina;
 
     protected TimeMoment pace;
     protected Strategy strategy;

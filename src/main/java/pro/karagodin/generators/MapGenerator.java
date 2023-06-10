@@ -10,7 +10,6 @@ import pro.karagodin.models.LowerItem;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
-import pro.karagodin.models.SmallThing;
 import pro.karagodin.models.Wall;
 import pro.karagodin.time.TimeMoment;
 
@@ -33,7 +32,7 @@ public class MapGenerator {
      * @param map
      * @param smallThings
      */
-    public static void placeSmallThings(Map map, List<SmallThing> smallThings) {
+    public static void placeItems(Map map, List<? extends LowerItem> smallThings) {
         for (int i = 0; i < smallThings.size(); i++) {
             map.getCell(getFreeCellPosition(map)).setItem(smallThings.get(i));
         }
@@ -92,7 +91,7 @@ public class MapGenerator {
         var map = new Map(60, 195);
         placeWalls(map, stage > 10 ? 1000 : stage * 70 + 300);
         var items = ItemGenerator.generateItems(stage);
-        placeSmallThings(map, items);
+        placeItems(map, items);
         placeMob(map, player);
         for (int i = 0; i < stage; i++) {
             placeMob(map, new Mob(

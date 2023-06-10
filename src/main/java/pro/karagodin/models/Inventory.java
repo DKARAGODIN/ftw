@@ -10,41 +10,41 @@ public class Inventory {
     public static final int MAX_EQUIPPED_ITEMS = 10;
     public static final int MAX_STASHED_ITEMS = 25;
 
-    private List<SmallThing> equippedSmallThings = new ArrayList<>();
-    private List<SmallThing> stashedSmallThings = new ArrayList<>();
+    private List<LootItem> equippedLoot = new ArrayList<>();
+    private List<LootItem> stashedLoot = new ArrayList<>();
     private int y = 0;
     private int x = 0;
 
-    public List<SmallThing> getEquippedSmallThings() {
-        return equippedSmallThings;
+    public List<LootItem> getEquippedSmallThings() {
+        return equippedLoot;
     }
 
-    public List<SmallThing> getStashedSmallThings() {
-        return stashedSmallThings;
+    public List<LootItem> getStashedSmallThings() {
+        return stashedLoot;
     }
 
-    public void addSmallThingToStash(SmallThing smallThing) {
-        stashedSmallThings.add(smallThing);
+    public void addLootToStash(LootItem smallThing) {
+        stashedLoot.add(smallThing);
     }
 
-    public void removeSmallThingFromStash(SmallThing smallThing) {
-        stashedSmallThings.remove(smallThing);
+    public void removeLootFromStash(LootItem smallThing) {
+        stashedLoot.remove(smallThing);
     }
 
-    public void equipSmallThing(SmallThing smallThing) {
-        if (!stashedSmallThings.contains(smallThing)) {
+    public void equipLoot(LootItem smallThing) {
+        if (!stashedLoot.contains(smallThing)) {
             throw new IllegalArgumentException("SmallThing not found in backpack");
         }
-        stashedSmallThings.remove(smallThing);
-        equippedSmallThings.add(smallThing);
+        stashedLoot.remove(smallThing);
+        equippedLoot.add(smallThing);
     }
 
-    public void unequipSmallThing(SmallThing smallThing) {
-        if (!equippedSmallThings.contains(smallThing)) {
+    public void unequipLoot(LootItem smallThing) {
+        if (!equippedLoot.contains(smallThing)) {
             throw new IllegalArgumentException("SmallThing not found in equipped items");
         }
-        equippedSmallThings.remove(smallThing);
-        stashedSmallThings.add(smallThing);
+        equippedLoot.remove(smallThing);
+        stashedLoot.add(smallThing);
     }
 
     public int getY() {

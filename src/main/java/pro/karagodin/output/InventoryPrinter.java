@@ -11,7 +11,7 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Inventory;
-import pro.karagodin.models.SmallThing;
+import pro.karagodin.models.LootItem;
 
 /**
  * Prints inventory GUI info
@@ -57,11 +57,11 @@ public class InventoryPrinter {
     private void updateItemDescription(Coordinate newPosition) {
         fillRect(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY(), Printer.GUI_INVENTORY_WIDTH, ITEM_DESCRIPTION_BLOCK_HEIGHT, BLACK_EMPTY);
         if (newPosition != null) {
-            SmallThing smallThing = getItemByCoordinate(newPosition);
+            LootItem smallThing = getItemByCoordinate(newPosition);
             if (smallThing != null) {
                 TextGraphics g = this.screen.newTextGraphics();
                 int row = itemDescriptionFirstLine.getY();
-                for (Map.Entry<SmallThing.Modifier, Integer> e : smallThing.getItemModifiers().entrySet()) {
+                for (Map.Entry<LootItem.Modifier, Integer> e : smallThing.getItemModifiers().entrySet()) {
                     g.putString(itemDescriptionFirstLine.getX(), row, e.getValue() + " " + e.getKey().getDescription());
                     row++;
                 }
@@ -69,7 +69,7 @@ public class InventoryPrinter {
         }
     }
 
-    private SmallThing getItemByCoordinate(Coordinate newPosition) {
+    private LootItem getItemByCoordinate(Coordinate newPosition) {
         if (newPosition.getY() < 2) {
             int idx = newPosition.getX() + newPosition.getY() * CELLS_COLS;
             return idx > inventory.getEquippedSmallThings().size() - 1 ? null : inventory.getEquippedSmallThings().get(idx);
@@ -101,7 +101,7 @@ public class InventoryPrinter {
         moveCellFocus(inventory.getCoordinate(), null);
     }
 
-    private void drawItemsInTable(Coordinate table, List<SmallThing> smallThings) {
+    private void drawItemsInTable(Coordinate table, List<LootItem> smallThings) {
         for (int i = 0; i < smallThings.size(); i++) {
             int row = i / CELLS_COLS;
             int col = i % CELLS_COLS;
@@ -109,7 +109,7 @@ public class InventoryPrinter {
         }
     }
 
-    private void drawItemInCell(int startX, int startY, SmallThing smallThing) {
+    private void drawItemInCell(int startX, int startY, LootItem smallThing) {
         screen.setCharacter(startX + CELL_WIDTH / 2, startY + CELL_HEIGHT / 2, new TextCharacter(smallThing.getView()));
     }
 
