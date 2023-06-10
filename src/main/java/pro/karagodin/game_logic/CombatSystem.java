@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class CombatSystem {
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     /**
      * Formula taken from Heroes 3.

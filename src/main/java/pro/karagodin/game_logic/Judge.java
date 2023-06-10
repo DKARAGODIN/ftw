@@ -19,10 +19,12 @@ public class Judge {
 
     private final Player player;
     private final CombatSystem combatSystem;
+    private final DeathSystem deathSystem;
 
     public Judge(Player player) {
         this.player = player;
         this.combatSystem = new CombatSystem();
+        this.deathSystem = new DeathSystem();
     }
 
     /**
@@ -102,11 +104,11 @@ public class Judge {
     }
 
     public boolean isStageOver() {
-        return !player.isWantsToContinuePlaying();
+        return !player.isWantsToContinuePlaying() || player.isKilled();
     }
 
     public boolean isGameOver() {
-        return !player.isWantsToContinuePlaying();
+        return !player.isWantsToContinuePlaying() || player.isKilled();
     }
 
     private boolean canDoMovement(Map map, Coordinate position) {
@@ -124,7 +126,22 @@ public class Judge {
         Mob defender = map.getCell(defenderPosition).getUnit();
         combatSystem.attack(attacker, defender);
 
-        if (defender.getHp() <= 0) {
+        MapDiff mapDiff = new MapDiff();
+        mapDiff.addNewCoordinate(attackerPosition);
+        mapDiff.addNewCoordinate(defenderPosition);
+        if (defender.isKilled()) {
+            deathSystem.killMob(defenderPosition, map);
+        }
+        if (attacker.isKilled()) {
+            deathSystem.killMob(attackerPosition, map);
+        }
+        MobWithPosition newAttackerWithCoord = new MobWithPosition(map, attackerPosition);
+        if (!attacker.isKilled() && defender.isKilled()) { // optional if-block
+            newAttackerWithCoord = doMovement(map, attackerPosition, defenderPosition).getNewMobPosition();
+        }
+        return new GameDiff(mapDiff, newAttackerWithCoord);
+
+        /*if (defender.getHp() <= 0) {
             if (defender instanceof Player) {
                 //Game over
                 System.exit(1);
@@ -147,7 +164,7 @@ public class Judge {
                 return result;
             }
         }
-        return null;
+        return null;*/
     }
 
     private GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {

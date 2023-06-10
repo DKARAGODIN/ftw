@@ -10,7 +10,7 @@ import pro.karagodin.time.TimeMoment;
  */
 public class Timeline {
 
-    private PriorityQueue<MobInfo> mobsWithTimes;
+    private final PriorityQueue<MobInfo> mobsWithTimes;
     private TimeMoment nextTimeForLastMob;
 
     public Timeline(Map map) {
@@ -25,19 +25,22 @@ public class Timeline {
         }
     }
 
+    private MobInfo peek() {
+        while (mobsWithTimes.peek().mobAndCoord.getMob().isKilled()) {
+            mobsWithTimes.poll();
+        }
+        return mobsWithTimes.peek();
+    }
+
     /**
      * Get next mob in queue
      * @return
      */
     public MobWithPosition getMobForDoingAction() {
-        MobInfo info = mobsWithTimes.peek();
-        if (info.actionTime.deltaWithCurrentTime() > 0) {
+        if (getDeltaTimeForAction() > 0) {
             return null;
         }
-        mobsWithTimes.poll();
-        if (info.mobAndCoord == null) {
-            return null;
-        }
+        MobInfo info = mobsWithTimes.poll();
         nextTimeForLastMob = info.actionTime.after(info.mobAndCoord.getMob().getPace());
         return info.mobAndCoord;
     }
@@ -47,7 +50,7 @@ public class Timeline {
     }
 
     public long getDeltaTimeForAction() {
-        return mobsWithTimes.peek().actionTime.deltaWithCurrentTime();
+        return peek().actionTime.deltaWithCurrentTime();
     }
 
     private static class MobInfo implements Comparable<MobInfo> {

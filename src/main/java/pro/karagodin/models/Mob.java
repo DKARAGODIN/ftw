@@ -66,4 +66,8 @@ public class Mob implements CIDrowable {
         strategy = strategy.nextStrategy();
         return action;
     }
+
+    public boolean isKilled() {
+        return hp <= 0;
+    }
 }
