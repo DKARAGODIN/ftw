@@ -37,4 +37,8 @@ public class Coordinate {
     public Coordinate withY(UnaryOperator<Integer> fY) {
         return new Coordinate(cX, fY.apply(cY));
     }
+
+    public int getDistanceBetween(Coordinate other) {
+        return Math.abs(this.getX() - other.getX()) + Math.abs(this.getY() - other.getY());
+    }
 }

@@ -71,10 +71,10 @@ public class Judge {
 
     private GameDiff useItem(MobWithPosition mobAndCoord, Map map) {
         var cell = map.getCell(mobAndCoord.getPosition());
-        if (cell.getFloor().hasItem()) {
+        if (cell.getItem() != null) {
             this.tempMap = map;
             this.tempCoordinate = mobAndCoord.getPosition();
-            return cell.getFloor().getItem().use(this);
+            return cell.getItem().use(this);
         }
         return null;
     }
@@ -91,7 +91,7 @@ public class Judge {
     private GameDiff pickSmallThing(SmallThing smallThing, MobWithPosition mobAndCoord, Cell cell) {
         var player = (Player) mobAndCoord.getMob();
         var inv = player.getInventory();
-        cell.getFloor().pickItem();
+        cell.setItem(null);
         inv.addSmallThingToStash(smallThing);
         return new GameDiff(new MapDiff(mobAndCoord.getPosition()), mobAndCoord, true);
     }

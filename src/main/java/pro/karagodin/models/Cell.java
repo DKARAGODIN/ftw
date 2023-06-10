@@ -38,20 +38,20 @@ public class Cell implements CIDrowable {
         rawCell.setWall(wall);
     }
 
-    public Floor getFloor() {
-        return rawCell.getFloor();
+    public LowerItem getItem() {
+        return rawCell.getFloor().getItem();
     }
 
-    public void setFloor(Floor floor) {
-        rawCell.setFloor(floor);
+    public void setItem(LowerItem item) {
+        rawCell.getFloor().setItem(item);
     }
 
     @Override
     public char getView() {
         if (getUnit() != null)
             return getUnit().getView();
-        if (getFloor().hasItem())
-            return getFloor().getItem().getView();
+        if (getItem() != null)
+            return getItem().getView();
         if (getWall() != null)
             return getWall().getView();
         return ' ';
@@ -61,8 +61,8 @@ public class Cell implements CIDrowable {
     public TextColor getForeground() {
         if (getUnit() != null)
             return getUnit().getForeground();
-        if (getFloor().hasItem())
-            return getFloor().getItem().getForeground();
+        if (getItem() != null)
+            return getItem().getForeground();
         if (getWall() != null)
             return getWall().getForeground();
         return TextColor.ANSI.WHITE;
@@ -70,7 +70,7 @@ public class Cell implements CIDrowable {
 
     @Override
     public TextColor getBackground() {
-        return getFloor().getBackground();
+        return rawCell.getFloor().getBackground();
     }
 
     public TextCharacter asCharacter() {

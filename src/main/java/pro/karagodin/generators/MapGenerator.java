@@ -3,7 +3,7 @@ package pro.karagodin.generators;
 import java.util.List;
 import java.util.Random;
 
-import pro.karagodin.ai_system.PursuitStrategy;
+import pro.karagodin.ai_system.BloodsuckerStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Hole;
 import pro.karagodin.models.LowerItem;
@@ -22,7 +22,7 @@ public class MapGenerator {
         Coordinate position;
         while (true) {
             position = new Coordinate(RANDOM.nextInt(0, map.getWidth()), RANDOM.nextInt(0, map.getHeight()));
-            if (map.getCell(position).getWall() == null && ! map.getCell(position).getFloor().hasItem()) {
+            if (map.getCell(position).getWall() == null && map.getCell(position).getItem() == null) {
                 return position;
             }
         }
@@ -35,7 +35,7 @@ public class MapGenerator {
      */
     public static void placeSmallThings(Map map, List<SmallThing> smallThings) {
         for (int i = 0; i < smallThings.size(); i++) {
-            map.getCell(getFreeCellPosition(map)).getFloor().setItem(smallThings.get(i));
+            map.getCell(getFreeCellPosition(map)).setItem(smallThings.get(i));
         }
     }
 
@@ -75,7 +75,7 @@ public class MapGenerator {
     }
 
     public static void placeItem(Map map, LowerItem item) {
-        map.getCell(getFreeCellPosition(map)).getFloor().setItem(item);
+        map.getCell(getFreeCellPosition(map)).setItem(item);
     }
 
     public static Map genEmptytMap() {
@@ -103,7 +103,7 @@ public class MapGenerator {
                     4,
                     6,
                     new TimeMoment(stage > 10 ? 10 : 1010 - stage * 100),
-                    new PursuitStrategy(0.7)));
+                    new BloodsuckerStrategy(0.9, 5)));
         }
         placeItem(map, new Hole());
         return map;
