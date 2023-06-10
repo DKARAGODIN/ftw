@@ -13,99 +13,63 @@ class CombatSystemTest {
 
     @Test
     public void test1_no_modifier() {
-        Mob m1 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m1.setMinDamage(10);
-        m1.setMaxDamage(10);
-        Mob m2 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m2.setMinDamage(20);
-        m2.setMaxDamage(20);
+        Mob m1 = new Mob(100, 100, 0, 0, 10, 10, new TimeMoment(1), new StatueStrategy());
+        Mob m2 = new Mob(100, 100, 0, 0, 20, 20, new TimeMoment(1), new StatueStrategy());
         combatSystem.attack(m1, m2);
+        combatSystem.attack(m2, m1);
         assertEquals(80, m1.getHp());
         assertEquals(90, m2.getHp());
     }
 
     @Test
     public void test2_no_modifier() {
-        Mob m1 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m1.setMinDamage(100);
-        m1.setMaxDamage(110);
-        Mob m2 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m2.setMinDamage(20);
-        m2.setMaxDamage(20);
+        Mob m1 = new Mob(100, 100, 0, 0, 100, 110, new TimeMoment(1), new StatueStrategy());
+        Mob m2 = new Mob(100, 100, 0, 0, 20, 20, new TimeMoment(1), new StatueStrategy());
         combatSystem.attack(m1, m2);
         assertEquals(100, m1.getHp());
-        assertEquals(0, m2.getHp());
+        assertTrue(m2.isKilled());
     }
 
     @Test
     public void test3_no_modifier() {
-        Mob m1 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m1.setMinDamage(1);
-        m1.setMaxDamage(99);
-        Mob m2 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m2.setMinDamage(100);
-        m2.setMaxDamage(100);
+        Mob m1 = new Mob(100, 100, 0, 0, 1, 99, new TimeMoment(1), new StatueStrategy());
+        Mob m2 = new Mob(100, 100, 0, 0, 100, 100, new TimeMoment(1), new StatueStrategy());
         combatSystem.attack(m1, m2);
-        assertEquals(0, m1.getHp());
+        assertFalse(m2.isKilled());
+        combatSystem.attack(m2, m1);
+        assertTrue(m1.isKilled());
         assertTrue(m2.getHp() < 100 && m2.getHp() > 0);
     }
 
     @Test
     public void test1_with_modifier() {
-        Mob m1 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m1.setMinDamage(10);
-        m1.setMaxDamage(10);
-        m1.setAttack(20);
-        Mob m2 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m2.setMinDamage(0);
-        m2.setMaxDamage(0);
+        Mob m1 = new Mob(100, 100, 20, 0, 10, 10, new TimeMoment(1), new StatueStrategy());
+        Mob m2 = new Mob(100, 100, 0, 0, 0, 0, new TimeMoment(1), new StatueStrategy());
         combatSystem.attack(m1, m2);
-        assertEquals(100, m1.getHp());
         assertEquals(80, m2.getHp());
     }
 
     @Test
     public void test2_with_modifier() {
-        Mob m1 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m1.setMinDamage(10);
-        m1.setMaxDamage(10);
-        m1.setAttack(0);
-        Mob m2 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m2.setMinDamage(0);
-        m2.setMaxDamage(0);
-        m2.setDefence(20);
+        Mob m1 = new Mob(100, 100, 0, 0, 10, 10, new TimeMoment(1), new StatueStrategy());
+        Mob m2 = new Mob(100, 100, 0, 20, 0, 0, new TimeMoment(1), new StatueStrategy());
         combatSystem.attack(m1, m2);
-        assertEquals(100, m1.getHp());
         assertEquals(95, m2.getHp());
     }
 
     @Test
     public void test3_with_modifier() {
-        Mob m1 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m1.setMinDamage(10);
-        m1.setMaxDamage(10);
-        m1.setAttack(100);
-        Mob m2 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m2.setMinDamage(0);
-        m2.setMaxDamage(0);
-        m2.setDefence(10);
+        Mob m1 = new Mob(100, 100, 100, 0, 10, 10, new TimeMoment(1), new StatueStrategy());
+        Mob m2 = new Mob(100, 100, 0, 10, 0, 0, new TimeMoment(1), new StatueStrategy());
         combatSystem.attack(m1, m2);
-        assertEquals(100, m1.getHp());
         assertEquals(60, m2.getHp());
     }
 
     @Test
     public void test4_with_modifier() {
-        Mob m1 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m1.setMinDamage(10);
-        m1.setMaxDamage(10);
-        m1.setAttack(0);
-        Mob m2 = new Mob(100, 100, new TimeMoment(1), new StatueStrategy());
-        m2.setMinDamage(0);
-        m2.setMaxDamage(0);
-        m2.setDefence(100);
+        Mob m1 = new Mob(100, 100, 0, 0, 10, 10, new TimeMoment(1), new StatueStrategy());
+        Mob m2 = new Mob(100, 100, 0, 100, 0, 0, new TimeMoment(1), new StatueStrategy());
         combatSystem.attack(m1, m2);
-        assertEquals(100, m1.getHp());
         assertEquals(98, m2.getHp());
     }
 }

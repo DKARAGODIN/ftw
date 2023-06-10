@@ -34,15 +34,11 @@ public class Player extends Mob {
     private boolean inventoryMode = false;
     private boolean wantsToContinuePlaying = true;
 
-    public Player(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Printer printer) {
-        super(hp, maxHp, attack, defence, minDamage, maxDamage, pace, new PlayerStrategy(printer));
+    public Player(int hp, int maxHp, TimeMoment pace, Printer printer) {
+        super(hp, maxHp, BASE_ATTACK, BASE_DEFENCE, BASE_MIN_DAMAGE, BASE_MAX_DAMAGE, pace, new PlayerStrategy(printer));
         this.view = '@';
         this.color = TextColor.ANSI.RED;
 
-        this.defence = BASE_ATTACK;
-        this.attack = BASE_DEFENCE;
-        this.minDamage = BASE_MIN_DAMAGE;
-        this.maxDamage = BASE_MAX_DAMAGE;
         this.stamina = BASE_MAX_STAMINA;
         this.maxStamina = BASE_MAX_STAMINA;
 
