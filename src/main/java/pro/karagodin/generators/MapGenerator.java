@@ -1,11 +1,8 @@
 package pro.karagodin.generators;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import pro.karagodin.ai_system.ConfusedEffect;
-import pro.karagodin.ai_system.RoamStrategy;
 import pro.karagodin.ai_system.StatueStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Item;

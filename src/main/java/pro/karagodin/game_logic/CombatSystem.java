@@ -1,9 +1,9 @@
 package pro.karagodin.game_logic;
 
+import java.util.Random;
+
 import pro.karagodin.ai_system.Effect;
 import pro.karagodin.models.Mob;
-
-import java.util.Random;
 
 /**
  * Calculates effects when combat happens

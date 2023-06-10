@@ -140,31 +140,6 @@ public class Judge {
             newAttackerWithCoord = doMovement(map, attackerPosition, defenderPosition).getNewMobPosition();
         }
         return new GameDiff(mapDiff, newAttackerWithCoord);
-
-        /*if (defender.getHp() <= 0) {
-            if (defender instanceof Player) {
-                //Game over
-                System.exit(1);
-            } else {
-                GameDiff result = new GameDiff();
-                MapDiff mapDiff = new MapDiff(defenderPosition);
-                map.getCell(defenderPosition).setUnit(null);
-                result.setMapDiff(mapDiff);
-                return result;
-            }
-        } else if (attacker.getHp() <= 0) {
-            if (attacker instanceof Player) {
-                //Game over
-                System.exit(1);
-            } else {
-                GameDiff result = new GameDiff();
-                MapDiff mapDiff = new MapDiff(attackerPosition);
-                map.getCell(attackerPosition).setUnit(null);
-                result.setMapDiff(mapDiff);
-                return result;
-            }
-        }
-        return null;*/
     }
 
     private GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {

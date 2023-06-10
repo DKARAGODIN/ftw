@@ -5,7 +5,7 @@ import pro.karagodin.models.Map;
 
 public class DeathSystem {
 
-    public void killMob (Coordinate mobPosition, Map map) {
+    public void killMob(Coordinate mobPosition, Map map) {
         if (!map.getCell(mobPosition).getUnit().isKilled()) {
             throw new RuntimeException("DeathSystem can't kill alive mob");
         }
