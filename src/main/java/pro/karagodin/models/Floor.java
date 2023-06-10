@@ -4,15 +4,15 @@ import com.googlecode.lanterna.TextColor;
 import pro.karagodin.output.CIDrowable;
 
 public class Floor implements CIDrowable {
-    protected Item item;
+    protected LowerItem item = null;
 
-    public Item getItem() {
+    public LowerItem getItem() {
         return item;
     }
 
-    /** remove item from floor and return it */
-    public Item pickItem() {
-        var pickedItem = this.item;
+    /** remove smallThing from floor and return it */
+    public LowerItem pickItem() {
+        var pickedItem = item;
         this.item = null;
         return pickedItem;
     }
@@ -21,7 +21,7 @@ public class Floor implements CIDrowable {
         return item != null;
     }
 
-    public void setItem(Item item) {
+    public void setItem(LowerItem item) {
         this.item = item;
     }
 

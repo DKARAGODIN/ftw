@@ -11,7 +11,7 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Inventory;
-import pro.karagodin.models.Item;
+import pro.karagodin.models.SmallThing;
 
 /**
  * Prints inventory GUI info
@@ -57,11 +57,11 @@ public class InventoryPrinter {
     private void updateItemDescription(Coordinate newPosition) {
         fillRect(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY(), Printer.GUI_INVENTORY_WIDTH, ITEM_DESCRIPTION_BLOCK_HEIGHT, BLACK_EMPTY);
         if (newPosition != null) {
-            Item item = getItemByCoordinate(newPosition);
-            if (item != null) {
+            SmallThing smallThing = getItemByCoordinate(newPosition);
+            if (smallThing != null) {
                 TextGraphics g = this.screen.newTextGraphics();
                 int row = itemDescriptionFirstLine.getY();
-                for (Map.Entry<Item.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
+                for (Map.Entry<SmallThing.Modifier, Integer> e : smallThing.getItemModifiers().entrySet()) {
                     g.putString(itemDescriptionFirstLine.getX(), row, e.getValue() + " " + e.getKey().getDescription());
                     row++;
                 }
@@ -69,13 +69,13 @@ public class InventoryPrinter {
         }
     }
 
-    private Item getItemByCoordinate(Coordinate newPosition) {
+    private SmallThing getItemByCoordinate(Coordinate newPosition) {
         if (newPosition.getY() < 2) {
             int idx = newPosition.getX() + newPosition.getY() * CELLS_COLS;
-            return idx > inventory.getEquippedItems().size() - 1 ? null : inventory.getEquippedItems().get(idx);
+            return idx > inventory.getEquippedSmallThings().size() - 1 ? null : inventory.getEquippedSmallThings().get(idx);
         } else {
             int idx = newPosition.getX() + (newPosition.getY() - 2) * CELLS_COLS;
-            return idx > inventory.getStashedItems().size() - 1 ? null : inventory.getStashedItems().get(idx);
+            return idx > inventory.getStashedSmallThings().size() - 1 ? null : inventory.getStashedSmallThings().get(idx);
         }
     }
 
@@ -87,30 +87,30 @@ public class InventoryPrinter {
         textGraphics.putString(stashedTitle.getX(), stashedTitle.getY(), "Hero stashed items");
         drawTableGUI(stashedTable.getX(), stashedTable.getY(), STASHED_CELL_ROWS);
 
-        textGraphics.putString(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY() - 1, "Selected item description");
+        textGraphics.putString(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY() - 1, "Selected smallThing description");
     }
 
     public void refreshCells() {
-        drawItemsInTable(equippedTable, inventory.getEquippedItems());
-        drawItemsInTable(stashedTable, inventory.getStashedItems());
+        drawItemsInTable(equippedTable, inventory.getEquippedSmallThings());
+        drawItemsInTable(stashedTable, inventory.getStashedSmallThings());
     }
 
     public void refreshLastCellAfterMoveItem() {
-        fillCell(inventory.getEquippedItems().size() % CELLS_COLS, inventory.getEquippedItems().size() / CELLS_COLS, BLACK_EMPTY);
-        fillCell(inventory.getStashedItems().size() % CELLS_COLS, 2 + inventory.getStashedItems().size() / CELLS_COLS, BLACK_EMPTY);
+        fillCell(inventory.getEquippedSmallThings().size() % CELLS_COLS, inventory.getEquippedSmallThings().size() / CELLS_COLS, BLACK_EMPTY);
+        fillCell(inventory.getStashedSmallThings().size() % CELLS_COLS, 2 + inventory.getStashedSmallThings().size() / CELLS_COLS, BLACK_EMPTY);
         moveCellFocus(inventory.getCoordinate(), null);
     }
 
-    private void drawItemsInTable(Coordinate table, List<Item> items) {
-        for (int i = 0; i < items.size(); i++) {
+    private void drawItemsInTable(Coordinate table, List<SmallThing> smallThings) {
+        for (int i = 0; i < smallThings.size(); i++) {
             int row = i / CELLS_COLS;
             int col = i % CELLS_COLS;
-            drawItemInCell(table.getX() + 1 + col * (CELL_WIDTH + 1), table.getY() + 1 + row * (CELL_HEIGHT + 1), items.get(i));
+            drawItemInCell(table.getX() + 1 + col * (CELL_WIDTH + 1), table.getY() + 1 + row * (CELL_HEIGHT + 1), smallThings.get(i));
         }
     }
 
-    private void drawItemInCell(int startX, int startY, Item item) {
-        screen.setCharacter(startX + CELL_WIDTH / 2, startY + CELL_HEIGHT / 2, new TextCharacter(item.getView()));
+    private void drawItemInCell(int startX, int startY, SmallThing smallThing) {
+        screen.setCharacter(startX + CELL_WIDTH / 2, startY + CELL_HEIGHT / 2, new TextCharacter(smallThing.getView()));
     }
 
     private void drawTableGUI(int startX, int startY, int rows) {

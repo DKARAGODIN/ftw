@@ -9,55 +9,55 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
-    private Item item;
+    private SmallThing smallThing;
     private Inventory inventory;
 
     @BeforeEach
     void setUp() {
-        item = new Item(new HashMap<>(), '!');
+        smallThing = new SmallThing(new HashMap<>(), '!');
         inventory = new Inventory();
     }
 
     @Test
     void addItemToBackpack() {
-        inventory.addItemToStash(item);
-        List<Item> backpackItems = inventory.getStashedItems();
-        assertEquals(1, backpackItems.size());
-        assertEquals(item, backpackItems.get(0));
+        inventory.addSmallThingToStash(smallThing);
+        List<SmallThing> backpackSmallThings = inventory.getStashedSmallThings();
+        assertEquals(1, backpackSmallThings.size());
+        assertEquals(smallThing, backpackSmallThings.get(0));
     }
 
     @Test
     void removeItemFromBackpack() {
-        inventory.addItemToStash(item);
-        inventory.removeItemFromStash(item);
-        List<Item> backpackItems = inventory.getStashedItems();
-        assertTrue(backpackItems.isEmpty());
+        inventory.addSmallThingToStash(smallThing);
+        inventory.removeSmallThingFromStash(smallThing);
+        List<SmallThing> backpackSmallThings = inventory.getStashedSmallThings();
+        assertTrue(backpackSmallThings.isEmpty());
     }
 
     @Test
     void equipItem() {
-        inventory.addItemToStash(item);
-        inventory.equipItem(item);
-        assertFalse(inventory.getStashedItems().contains(item));
-        assertTrue(inventory.getEquippedItems().contains(item));
+        inventory.addSmallThingToStash(smallThing);
+        inventory.equipSmallThing(smallThing);
+        assertFalse(inventory.getStashedSmallThings().contains(smallThing));
+        assertTrue(inventory.getEquippedSmallThings().contains(smallThing));
     }
 
     @Test
     void equipNonexistentItem() {
-        assertThrows(IllegalArgumentException.class, () -> inventory.equipItem(item));
+        assertThrows(IllegalArgumentException.class, () -> inventory.equipSmallThing(smallThing));
     }
 
     @Test
     void unequipItem() {
-        inventory.addItemToStash(item);
-        inventory.equipItem(item);
-        inventory.unequipItem(item);
-        assertTrue(inventory.getStashedItems().contains(item));
-        assertFalse(inventory.getEquippedItems().contains(item));
+        inventory.addSmallThingToStash(smallThing);
+        inventory.equipSmallThing(smallThing);
+        inventory.unequipSmallThing(smallThing);
+        assertTrue(inventory.getStashedSmallThings().contains(smallThing));
+        assertFalse(inventory.getEquippedSmallThings().contains(smallThing));
     }
 
     @Test
     void unequipNonexistentItem() {
-        assertThrows(IllegalArgumentException.class, () -> inventory.unequipItem(item));
+        assertThrows(IllegalArgumentException.class, () -> inventory.unequipSmallThing(smallThing));
     }
 }

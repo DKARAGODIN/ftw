@@ -5,6 +5,8 @@ import java.util.Map;
 import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
+import pro.karagodin.game_engine.GameDiff;
+import pro.karagodin.game_logic.Judge;
 import pro.karagodin.output.CIDrowable;
 
 /**
@@ -12,7 +14,7 @@ import pro.karagodin.output.CIDrowable;
  * Maximum number of characteristics affected is 8 due to GUI limitations
  */
 @Getter
-public class Item implements CIDrowable {
+public class SmallThing implements LowerItem {
 
     private final Map<Modifier, Integer> itemModifiers;
     private final char view;
@@ -20,7 +22,7 @@ public class Item implements CIDrowable {
     @Setter
     private boolean equipped;
 
-    public Item(Map<Modifier, Integer> itemModifiers, char view) {
+    public SmallThing(Map<Modifier, Integer> itemModifiers, char view) {
         this.itemModifiers = itemModifiers;
         this.view = view;
     }
@@ -31,16 +33,16 @@ public class Item implements CIDrowable {
     }
 
     @Override
-    public TextColor getBackground() {
-        return null;
-    }
-
-    @Override
     public String toString() {
-        return "Item{" +
+        return "SmallThing{" +
                 "itemModifiers=" + itemModifiers +
                 ", view=" + view +
                 '}';
+    }
+
+    @Override
+    public GameDiff use(Judge judge) {
+        return judge.useSmallThing(this);
     }
 
     public enum Modifier implements Comparable<Modifier> {

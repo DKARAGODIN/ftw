@@ -7,10 +7,7 @@ import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.game_engine.MobWithPosition;
-import pro.karagodin.models.Cell;
-import pro.karagodin.models.Map;
-import pro.karagodin.models.Mob;
-import pro.karagodin.models.Player;
+import pro.karagodin.models.*;
 
 /**
  * Game logic decision maker
@@ -20,11 +17,15 @@ public class Judge {
     private final Player player;
     private final CombatSystem combatSystem;
     private final DeathSystem deathSystem;
+    private Map tempMap = null;
+    private Coordinate tempCoordinate = null;
+    private boolean stageCompleted;
 
     public Judge(Player player) {
         this.player = player;
         this.combatSystem = new CombatSystem();
         this.deathSystem = new DeathSystem();
+        this.stageCompleted = false;
     }
 
     /**
@@ -57,32 +58,41 @@ public class Judge {
                 }
                 return new GameDiff(mobAndCoord);
             case InteractWithObjectOnFloor:
-                return tryPickItem(mobAndCoord, map);
+                return useItem(mobAndCoord, map);
             default:
                 return null;
         }
     }
 
-    private GameDiff tryPickItem(MobWithPosition mobAndCoord, Map map) {
+    private GameDiff useItem(MobWithPosition mobAndCoord, Map map) {
         var cell = map.getCell(mobAndCoord.getPosition());
-        if (cell.getFloor().hasItem())
-            return pickItem(mobAndCoord, map, cell);
+        if (cell.getFloor().hasItem()) {
+            this.tempMap = map;
+            this.tempCoordinate = mobAndCoord.getPosition();
+            return cell.getFloor().getItem().use(this);
+        }
         return null;
     }
 
-    private GameDiff pickItem(MobWithPosition mobAndCoord, Map map, Cell cell) {
+    public GameDiff useSmallThing(SmallThing smallThing) {
+        return pickSmallThing(smallThing, new MobWithPosition(tempMap, tempCoordinate), tempMap.getCell(tempCoordinate));
+    }
+
+    public GameDiff useHole(Hole hole) {
+        this.stageCompleted = true;
+        return null;
+    }
+
+    private GameDiff pickSmallThing(SmallThing smallThing, MobWithPosition mobAndCoord, Cell cell) {
         var player = (Player) mobAndCoord.getMob();
         var inv = player.getInventory();
-        var item = cell.getFloor().pickItem();
-        inv.addItemToStash(item);
-
-        var mapDiff = new MapDiff();
-        mapDiff.addNewCoordinate(mobAndCoord.getPosition());
-        return new GameDiff(mapDiff, mobAndCoord, true);
+        cell.getFloor().pickItem();
+        inv.addSmallThingToStash(smallThing);
+        return new GameDiff(new MapDiff(mobAndCoord.getPosition()), mobAndCoord, true);
     }
 
     public boolean isStageOver() {
-        return !player.isWantsToContinuePlaying() || player.isKilled();
+        return !player.isWantsToContinuePlaying() || player.isKilled() || stageCompleted;
     }
 
     public boolean isGameOver() {

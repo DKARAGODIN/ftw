@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
-import pro.karagodin.models.Item;
+import pro.karagodin.models.SmallThing;
 
 public class ItemGenerator {
 
@@ -20,8 +20,8 @@ public class ItemGenerator {
     private ItemGenerator() {
     }
 
-    public static List<Item> generateItems(int stage) {
-        List<Item> result = new ArrayList<>();
+    public static List<SmallThing> generateItems(int stage) {
+        List<SmallThing> result = new ArrayList<>();
         int itemsCount = 1 + stage / ITEMS_PER_STAGE_DIVISOR + random.nextInt(2);
         for (int i = 0; i < itemsCount; i++) {
             result.add(generateItem(stage));
@@ -29,8 +29,8 @@ public class ItemGenerator {
         return result;
     }
 
-    private static Item generateItem(int stage) {
-        Map<Item.Modifier, Integer> modifiers = new TreeMap<>();
+    private static SmallThing generateItem(int stage) {
+        Map<SmallThing.Modifier, Integer> modifiers = new TreeMap<>();
         int modifiersCount = Math.min(MAX_MODIFIERS, Math.max(1, stage / MODIFIERS_PER_STAGE_DIVISOR + random.nextInt(3)));
         int itemLevel = Math.min(stage, random.nextInt(4));
         for (int j = 0; j < modifiersCount; j++) {
@@ -39,10 +39,10 @@ public class ItemGenerator {
             value = random.nextInt((int) Math.floor(value * MIN_DISPERSION), (int) Math.ceil(value * MAX_DISPERSION));
             modifiers.put(modifier, value);
         }
-        return new Item(modifiers, 'T');
+        return new SmallThing(modifiers, 'T');
     }
 
-    private static Item.Modifier getRandomModivier() {
-        return Item.Modifier.values()[random.nextInt(Item.Modifier.values().length)];
+    private static SmallThing.Modifier getRandomModivier() {
+        return SmallThing.Modifier.values()[random.nextInt(SmallThing.Modifier.values().length)];
     }
 }

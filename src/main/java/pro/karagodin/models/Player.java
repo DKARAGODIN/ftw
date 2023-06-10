@@ -48,31 +48,31 @@ public class Player extends Mob {
         wantsToContinuePlaying = false;
     }
 
-    public Item moveItem() {
+    public SmallThing moveItem() {
         Coordinate invCoord = inventory.getCoordinate();
         if (invCoord.getY() > 1) {
             int idx = 5 * (inventory.getY() - 2) + inventory.getX();
-            if (idx < inventory.getStashedItems().size() && inventory.getEquippedItems().size() < MAX_EQUIPPED_ITEMS) {
-                Item item = inventory.getStashedItems().remove(idx);
-                inventory.getEquippedItems().add(item);
-                item.setEquipped(true);
-                return item;
+            if (idx < inventory.getStashedSmallThings().size() && inventory.getEquippedSmallThings().size() < MAX_EQUIPPED_ITEMS) {
+                SmallThing smallThing = inventory.getStashedSmallThings().remove(idx);
+                inventory.getEquippedSmallThings().add(smallThing);
+                smallThing.setEquipped(true);
+                return smallThing;
             }
         } else {
             int idx = 5 * inventory.getY() + inventory.getX();
-            if (idx < inventory.getEquippedItems().size()) {
-                Item item = inventory.getEquippedItems().remove(idx);
-                inventory.getStashedItems().add(item);
-                item.setEquipped(false);
-                return item;
+            if (idx < inventory.getEquippedSmallThings().size()) {
+                SmallThing smallThing = inventory.getEquippedSmallThings().remove(idx);
+                inventory.getStashedSmallThings().add(smallThing);
+                smallThing.setEquipped(false);
+                return smallThing;
             }
         }
         return null;
     }
 
-    public void applyMovedItem(Item item) {
-        for (Map.Entry<Item.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
-            if (item.isEquipped()) {
+    public void applyMovedItem(SmallThing smallThing) {
+        for (Map.Entry<SmallThing.Modifier, Integer> e : smallThing.getItemModifiers().entrySet()) {
+            if (smallThing.isEquipped()) {
                 switch (e.getKey()) {
                     case ATTACK -> attack += e.getValue();
                     case DEFENCE -> defence += e.getValue();

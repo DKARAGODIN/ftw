@@ -10,41 +10,41 @@ public class Inventory {
     public static final int MAX_EQUIPPED_ITEMS = 10;
     public static final int MAX_STASHED_ITEMS = 25;
 
-    private List<Item> equippedItems = new ArrayList<>();
-    private List<Item> stashedItems = new ArrayList<>();
+    private List<SmallThing> equippedSmallThings = new ArrayList<>();
+    private List<SmallThing> stashedSmallThings = new ArrayList<>();
     private int y = 0;
     private int x = 0;
 
-    public List<Item> getEquippedItems() {
-        return equippedItems;
+    public List<SmallThing> getEquippedSmallThings() {
+        return equippedSmallThings;
     }
 
-    public List<Item> getStashedItems() {
-        return stashedItems;
+    public List<SmallThing> getStashedSmallThings() {
+        return stashedSmallThings;
     }
 
-    public void addItemToStash(Item item) {
-        stashedItems.add(item);
+    public void addSmallThingToStash(SmallThing smallThing) {
+        stashedSmallThings.add(smallThing);
     }
 
-    public void removeItemFromStash(Item item) {
-        stashedItems.remove(item);
+    public void removeSmallThingFromStash(SmallThing smallThing) {
+        stashedSmallThings.remove(smallThing);
     }
 
-    public void equipItem(Item item) {
-        if (!stashedItems.contains(item)) {
-            throw new IllegalArgumentException("Item not found in backpack");
+    public void equipSmallThing(SmallThing smallThing) {
+        if (!stashedSmallThings.contains(smallThing)) {
+            throw new IllegalArgumentException("SmallThing not found in backpack");
         }
-        stashedItems.remove(item);
-        equippedItems.add(item);
+        stashedSmallThings.remove(smallThing);
+        equippedSmallThings.add(smallThing);
     }
 
-    public void unequipItem(Item item) {
-        if (!equippedItems.contains(item)) {
-            throw new IllegalArgumentException("Item not found in equipped items");
+    public void unequipSmallThing(SmallThing smallThing) {
+        if (!equippedSmallThings.contains(smallThing)) {
+            throw new IllegalArgumentException("SmallThing not found in equipped items");
         }
-        equippedItems.remove(item);
-        stashedItems.add(item);
+        equippedSmallThings.remove(smallThing);
+        stashedSmallThings.add(smallThing);
     }
 
     public int getY() {

@@ -5,11 +5,7 @@ import java.util.Random;
 
 import pro.karagodin.ai_system.PursuitStrategy;
 import pro.karagodin.game_engine.Coordinate;
-import pro.karagodin.models.Item;
-import pro.karagodin.models.Map;
-import pro.karagodin.models.Mob;
-import pro.karagodin.models.Player;
-import pro.karagodin.models.Wall;
+import pro.karagodin.models.*;
 import pro.karagodin.time.TimeMoment;
 
 public class MapGenerator {
@@ -27,13 +23,13 @@ public class MapGenerator {
     }
 
     /**
-     * Puts items on map
+     * Puts smallThings on map
      * @param map
-     * @param items
+     * @param smallThings
      */
-    public static void placeItems(Map map, List<Item> items) {
-        for (int i = 0; i < items.size(); i++) {
-            map.getCell(getFreeCellPosition(map)).getFloor().setItem(items.get(i));
+    public static void placeSmallThings(Map map, List<SmallThing> smallThings) {
+        for (int i = 0; i < smallThings.size(); i++) {
+            map.getCell(getFreeCellPosition(map)).getFloor().setItem(smallThings.get(i));
         }
     }
 
@@ -72,6 +68,10 @@ public class MapGenerator {
         map.getCell(getFreeCellPosition(map)).setUnit(mob);
     }
 
+    public static void placeItem(Map map, LowerItem item) {
+        map.getCell(getFreeCellPosition(map)).getFloor().setItem(item);
+    }
+
     public static Map genEmptytMap() {
         return new Map(60, 195);
     }
@@ -86,7 +86,7 @@ public class MapGenerator {
         var map = new Map(60, 195);
         placeWalls(map, stage > 10 ? 1000 : stage * 70 + 300);
         var items = ItemGenerator.generateItems(stage);
-        placeItems(map, items);
+        placeSmallThings(map, items);
         placeMob(map, player);
         for (int i = 0; i < stage; i++) {
             placeMob(map, new Mob(
@@ -96,11 +96,10 @@ public class MapGenerator {
                     3,
                     4,
                     6,
-                    new TimeMoment(1000),
+                    new TimeMoment(stage > 10 ? 10 : 1010 - stage * 100),
                     new PursuitStrategy(0.7)));
         }
-
-        //placeMob(map, new Mob(100, 100, new TimeMoment(50), new RoamStrategy(), new ArrayList<>(List.of(new ConfusedEffect(new TimeMoment(3000))))));
+        placeItem(map, new Hole());
         return map;
     }
 }

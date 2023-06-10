@@ -11,9 +11,9 @@ class FloorTest {
     @Test
     void testPickItem() {
         Floor floor = new Floor();
-        Item item = new Item(new HashMap<>(), '!');
-        floor.setItem(item);
-        assertEquals(item, floor.pickItem());
-        assertNull(floor.getItem());
+        SmallThing smallThing = new SmallThing(new HashMap<>(), '!');
+        floor.setItem(smallThing);
+        assertEquals(smallThing, floor.pickItem());
+        assertNull(floor.getSmallThing());
     }
 }

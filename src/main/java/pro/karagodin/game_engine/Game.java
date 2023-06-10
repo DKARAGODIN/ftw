@@ -25,8 +25,8 @@ public class Game {
         printer.init(player); // aka menu
 
         printer.printGUI();
-        int currentStage = 1;
-        while (true) {
+
+        for (int currentStage = 1;; currentStage++) {
             stage = new Stage(printer, player, currentStage); // must be generator
 
             printer.refreshCurrentStageNumber(currentStage);
