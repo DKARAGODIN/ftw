@@ -6,9 +6,9 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
+import pro.karagodin.models.LootItem;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
-import pro.karagodin.models.LootItem;
 import pro.karagodin.output.Printer;
 
 /**

@@ -10,10 +10,10 @@ import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Cell;
 import pro.karagodin.models.ConsumableItem;
 import pro.karagodin.models.Hole;
+import pro.karagodin.models.LootItem;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
-import pro.karagodin.models.LootItem;
 
 /**
  * Game logic decision maker
