@@ -117,22 +117,31 @@ public class Judge {
     private GameDiff doAttack(Map map, Coordinate attackerPosition, Coordinate defenderPosition) {
         Mob attacker = map.getCell(attackerPosition).getUnit();
         Mob defender = map.getCell(defenderPosition).getUnit();
+        int heroHealthBefore = attacker instanceof Player ? attacker.getHp() : defender.getHp();
         combatSystem.attack(attacker, defender);
+        int heroHealthAfter = attacker instanceof Player ? attacker.getHp() : defender.getHp();
 
+        GameDiff gd = new GameDiff();
         MapDiff mapDiff = new MapDiff();
+        gd.setMapDiff(mapDiff);
+        gd.setPlayerStatsChanged(heroHealthBefore - heroHealthAfter != 0);
+
         mapDiff.addNewCoordinate(attackerPosition);
         mapDiff.addNewCoordinate(defenderPosition);
         if (defender.isKilled()) {
             deathSystem.killMob(defenderPosition, map);
-        }
-        if (attacker.isKilled()) {
-            deathSystem.killMob(attackerPosition, map);
+            if (attacker instanceof Player) {
+                Player player = (Player) attacker;
+                player.increaseXP(defender.getMaxHp());
+                gd.setPlayerStatsChanged(true);
+            }
         }
         MobWithPosition newAttackerWithCoord = new MobWithPosition(map, attackerPosition);
         if (!attacker.isKilled() && defender.isKilled()) { // optional if-block
             newAttackerWithCoord = doMovement(map, attackerPosition, defenderPosition).getNewMobPosition();
         }
-        return new GameDiff(mapDiff, newAttackerWithCoord);
+        gd.setNewMobPosition(newAttackerWithCoord);
+        return gd;
     }
 
     private GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {

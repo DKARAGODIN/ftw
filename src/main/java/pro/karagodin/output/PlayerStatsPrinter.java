@@ -44,9 +44,9 @@ public class PlayerStatsPrinter {
         int col = coordinate.getX();
         int row = coordinate.getY();
         textGraphics.putString(col, row, String.valueOf(player.getLevel()));
-        textGraphics.putString(col, row + 1, String.valueOf(player.getXp()));
-        textGraphics.putString(col, row + 2, player.getHp() + " (" + player.getMaxHp() + ")");
-        textGraphics.putString(col, row + 3, player.getStamina() + " (" + player.getMaxStamina() + ")");
+        textGraphics.putString(col, row + 1, player.getXp() + " (" + player.getNextLevel() + ")" + "  ");
+        textGraphics.putString(col, row + 2, player.getHp() + " (" + player.getMaxHp() + ")" + "  ");
+        textGraphics.putString(col, row + 3, player.getStamina() + " (" + player.getMaxStamina() + ")" + "  ");
         textGraphics.putString(col, row + 4, player.getAttack() + "  ");
         textGraphics.putString(col, row + 5, player.getDefence() + "  ");
         textGraphics.putString(col, row + 6, player.getMinDamage() + " - " + player.getMaxDamage() + "  ");

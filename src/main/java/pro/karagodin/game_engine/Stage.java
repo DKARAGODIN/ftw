@@ -45,6 +45,9 @@ public class Stage {
                 GameDiff gameDiff = judge.doAction(mobAction, mobAndCoord, map);
                 if (gameDiff != null) {
                     printer.updateCoordinates(map, gameDiff.getMapDiff());
+                    if (gameDiff.isPlayerStatsChanged()) {
+                        printer.refreshHeroStats();
+                    }
                     if (gameDiff.isInventoryChanged()) {
                         printer.refreshInventory();
                     }

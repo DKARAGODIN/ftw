@@ -29,6 +29,9 @@ public class Player extends Mob {
 
     private int level = 1;
     private int xp = 0;
+    private int nextLevel = 100;
+    private int nextLevelIncrease = 100;
+
 
     private Inventory inventory = new Inventory();
     private boolean inventoryMode = false;
@@ -68,6 +71,29 @@ public class Player extends Mob {
             }
         }
         return null;
+    }
+
+    /**
+     * Incremental leveling. Next level is harder to get.
+     */
+    private void processIncreaseXP() {
+        if (this.xp >= this.nextLevel) {
+            this.nextLevel = this.nextLevel + this.nextLevelIncrease;
+            this.nextLevelIncrease = (int) (this.nextLevelIncrease * 1.1);
+            this.attack++;
+            this.defence++;
+            this.minDamage++;
+            this.maxDamage += 2;
+            this.maxHp += 10;
+            this.hp += 10;
+            this.level++;
+            processIncreaseXP();
+        }
+    }
+
+    public void increaseXP(int value) {
+        this.xp += value;
+        processIncreaseXP();
     }
 
     public void applyMovedItem(SmallThing smallThing) {
