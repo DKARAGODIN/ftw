@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CellTest {
     @Test
     void testConstructor() {
-        Cell cell = new Cell();
+        Map.RawCell cell = new Map.RawCell();
         assertNotNull(cell.getFloor());
         assertNull(cell.getUnit());
         assertNull(cell.getWall());

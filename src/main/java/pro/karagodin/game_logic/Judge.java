@@ -7,7 +7,12 @@ import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.game_engine.MobWithPosition;
-import pro.karagodin.models.*;
+import pro.karagodin.models.Cell;
+import pro.karagodin.models.Hole;
+import pro.karagodin.models.Map;
+import pro.karagodin.models.Mob;
+import pro.karagodin.models.Player;
+import pro.karagodin.models.SmallThing;
 
 /**
  * Game logic decision maker

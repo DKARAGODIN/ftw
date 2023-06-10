@@ -19,6 +19,9 @@ public class PursuitStrategy implements Strategy {
     @Override
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
         Coordinate playerCoordinate = map.findPlayerCoordinate();
+        if (playerCoordinate == null) {
+            return Action.DoNothing;
+        }
         Action horizontalVector = getHorizontalVector(mobAndCoord.getPosition(), playerCoordinate);
         Action verticalVector = getVerticalVector(mobAndCoord.getPosition(), playerCoordinate);
         double randomDouble = randomGenerator.nextDouble();

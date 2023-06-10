@@ -3,6 +3,8 @@ package pro.karagodin.models;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
+import lombok.Getter;
+import lombok.Setter;
 import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_engine.Coordinate;
 
@@ -11,11 +13,19 @@ import pro.karagodin.game_engine.Coordinate;
  * Maps are generated automatically or loaded from a file.
  */
 public class Map {
-    public static class MapDirection {
+    @Getter
+    @Setter
+    public static class RawCell {
+        private Mob unit = null;
+        private Wall wall = null;
+        private Floor floor = new Floor();
+    }
+
+    public static class Direction {
         private final UnaryOperator<Coordinate> operator;
         private final Action action;
 
-        private MapDirection(UnaryOperator<Coordinate> operator, Action action) {
+        private Direction(UnaryOperator<Coordinate> operator, Action action) {
             this.operator = operator;
             this.action = action;
         }
@@ -29,23 +39,24 @@ public class Map {
         }
     }
 
-    protected Cell[][] cells;
+    protected RawCell[][] cells;
+    private Coordinate playerCoordinate;
 
     public Map(int height, int width) {
-        cells = new Cell[width][height];
+        cells = new RawCell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                cells[x][y] = new Cell();
+                cells[x][y] = new RawCell();
             }
         }
     }
 
-    public void setPlayer(Player player, Coordinate playerPlace) {
-        cells[playerPlace.getX()][playerPlace.getY()].unit = player;
+    public void setPlayerCoordinate(Coordinate playerCoordinate) {
+        this.playerCoordinate = playerCoordinate;
     }
 
     public Cell getCell(Coordinate coord) {
-        return cells[coord.getX()][coord.getY()];
+        return new Cell(this, coord, cells[coord.getX()][coord.getY()]);
     }
 
     public int getWidth() {
@@ -72,23 +83,19 @@ public class Map {
         return coordinate.getX() < getWidth() - 1 ? coordinate.withX(x -> x + 1) : null;
     }
 
-    public List<MapDirection> getAllDirections() {
+    public List<Direction> getAllDirections() {
         return List.of(
-                new MapDirection(this::getHigherCoordinate, Action.MoveUp),
-                new MapDirection(this::getLowerCoordinate, Action.MoveDown),
-                new MapDirection(this::getLefterCoordinate, Action.MoveLeft),
-                new MapDirection(this::getRighterCoordinate, Action.MoveRight)
+                new Direction(this::getHigherCoordinate, Action.MoveUp),
+                new Direction(this::getLowerCoordinate, Action.MoveDown),
+                new Direction(this::getLefterCoordinate, Action.MoveLeft),
+                new Direction(this::getRighterCoordinate, Action.MoveRight)
         );
     }
 
     public Coordinate findPlayerCoordinate() {
-        for (int i = 0; i < getWidth(); i++) {
-            for (int j = 0; j < getHeight(); j++) {
-                if (cells[i][j].unit instanceof Player) {
-                    return new Coordinate(i, j);
-                }
-            }
+        if (playerCoordinate != null && (getCell(playerCoordinate).getUnit() == null || !(getCell(playerCoordinate).getUnit() instanceof Player))) {
+            throw new RuntimeException("Invalid playerCoordinate");
         }
-        return null;
+        return playerCoordinate;
     }
 }

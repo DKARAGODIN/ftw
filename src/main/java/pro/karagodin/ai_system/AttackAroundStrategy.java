@@ -17,7 +17,7 @@ public class AttackAroundStrategy implements Strategy {
                     return newCoord != null && map.getCell(newCoord).getUnit() instanceof Player;
                 })
                 .findAny()
-                .map(Map.MapDirection::getAction)
+                .map(Map.Direction::getAction)
                 .orElse(Action.DoNothing);
     }
 

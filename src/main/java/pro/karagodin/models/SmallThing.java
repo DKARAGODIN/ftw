@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_logic.Judge;
-import pro.karagodin.output.CIDrowable;
 
 /**
  * A game object that has no behavior but affects the player's characteristics

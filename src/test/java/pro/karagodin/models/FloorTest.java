@@ -14,6 +14,6 @@ class FloorTest {
         SmallThing smallThing = new SmallThing(new HashMap<>(), '!');
         floor.setItem(smallThing);
         assertEquals(smallThing, floor.pickItem());
-        assertNull(floor.getSmallThing());
+        assertNull(floor.getItem());
     }
 }
