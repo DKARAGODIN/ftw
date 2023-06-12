@@ -5,7 +5,6 @@ import static pro.karagodin.models.Inventory.MAX_EQUIPPED_ITEMS;
 import java.util.List;
 import java.util.Map;
 
-import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
 import pro.karagodin.ai_system.PlayerStrategy;
@@ -38,7 +37,7 @@ public class Player extends Mob {
     private boolean wantsToContinuePlaying = true;
 
     public Player(int hp, int maxHp, TimeMoment pace, Printer printer) {
-        super(hp, maxHp, BASE_ATTACK, BASE_DEFENCE, BASE_MIN_DAMAGE, BASE_MAX_DAMAGE, pace, new PlayerStrategy(printer), '@', TextColor.ANSI.RED, List.of());
+        super(hp, maxHp, BASE_ATTACK, BASE_DEFENCE, BASE_MIN_DAMAGE, BASE_MAX_DAMAGE, pace, new PlayerStrategy(printer), '@', List.of());
     }
 
     public void quitFromGame() {

@@ -103,7 +103,9 @@ public class MapGenerator {
                     4,
                     6,
                     new TimeMoment(stage > 10 ? 10 : 1010 - stage * 100),
-                    new BifurcateStrategy(new RoamStrategy(), 5)));
+                    new BifurcateStrategy(new RoamStrategy(), 5),
+                    'A',
+                    List.of()));
         }
         placeItem(map, new Hole());
         return map;

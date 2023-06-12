@@ -1,11 +1,11 @@
 package pro.karagodin.ai_system;
 
+import java.io.IOException;
+
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
-
-import java.io.IOException;
 
 public class SmartAttackStrategy extends AttackAroundStrategy {
 

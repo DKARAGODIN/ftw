@@ -31,14 +31,13 @@ public class Mob implements CIDrowable {
     protected TimeMoment pace;
     protected Strategy strategy;
     protected char view;
-    protected TextColor color;
     protected List<Effect> attackEffects;
 
-    public Mob(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy) {
-        this(hp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy, 'A', TextColor.ANSI.WHITE, List.of());
+    public Mob(int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy, char view, List<Effect> attackEffects) {
+        this(maxHp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy, view, attackEffects);
     }
 
-    public Mob(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy, char view, TextColor color, List<Effect> attackEffects) {
+    public Mob(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy, char view, List<Effect> attackEffects) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.attack = attack;
@@ -48,7 +47,6 @@ public class Mob implements CIDrowable {
         this.pace = pace;
         this.strategy = strategy;
         this.view = view;
-        this.color = color;
         this.attackEffects = new ArrayList<>(attackEffects);
     }
 
@@ -58,7 +56,7 @@ public class Mob implements CIDrowable {
 
     @Override
     public TextColor getForeground() {
-        return strategy.getForeground() != null ? strategy.getForeground() : color;
+        return strategy.getForeground() != null ? strategy.getForeground() : TextColor.ANSI.WHITE;
     }
 
     @Override
@@ -77,6 +75,6 @@ public class Mob implements CIDrowable {
     }
 
     public Mob cloneMob() {
-        return new Mob(hp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy.cloneStrategy(), view, color, attackEffects);
+        return new Mob(hp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy.cloneStrategy(), view, attackEffects);
     }
 }
