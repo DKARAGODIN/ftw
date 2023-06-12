@@ -10,7 +10,7 @@ import pro.karagodin.models.Player;
 
 public class AttackAroundStrategy implements Strategy {
 
-    private final Strategy subStrategy;
+    protected final Strategy subStrategy;
 
     public AttackAroundStrategy(Strategy subStrategy) {
         this.subStrategy = subStrategy;

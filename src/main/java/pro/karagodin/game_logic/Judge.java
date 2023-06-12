@@ -49,7 +49,7 @@ public class Judge {
         switch (action) {
             case MoveLeft, MoveRight, MoveDown, MoveUp -> {
                 Coordinate initialPosition = mobAndCoord.getPosition();
-                Coordinate newMobCoord = getCoordinateByAction(map, initialPosition, action);
+                Coordinate newMobCoord = map.getCoordinateByAction(initialPosition, action);
                 if (newMobCoord != null) {
                     if (canDoMovement(map, newMobCoord)) {
                         return doMovement(map, initialPosition, newMobCoord);
@@ -64,7 +64,7 @@ public class Judge {
             }
             case BifurcateLeft, BifurcateRight, BifurcateDown, BifurcateUp -> {
                 Coordinate initialPosition = mobAndCoord.getPosition();
-                Coordinate newMobCoord = getCoordinateByAction(map, initialPosition, action);
+                Coordinate newMobCoord = map.getCoordinateByAction(initialPosition, action);
                 if (newMobCoord != null && canDoMovement(map, newMobCoord)) {
                     GameDiff result = doMovement(map, initialPosition, newMobCoord);
                     map.getCell(initialPosition).setUnit(mobAndCoord.getMob().cloneMob());
@@ -77,16 +77,6 @@ public class Judge {
                 return null;
             }
         }
-    }
-
-    private Coordinate getCoordinateByAction(Map map, Coordinate coordinate, Action action) {
-        return switch (action) {
-            case MoveLeft, BifurcateLeft -> map.getLefterCoordinate(coordinate);
-            case MoveRight, BifurcateRight -> map.getRighterCoordinate(coordinate);
-            case MoveDown, BifurcateDown -> map.getLowerCoordinate(coordinate);
-            case MoveUp, BifurcateUp -> map.getHigherCoordinate(coordinate);
-            default -> null;
-        };
     }
 
     private GameDiff useItem(MobWithPosition mobAndCoord, Map map) {

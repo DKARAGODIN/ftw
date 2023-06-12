@@ -92,6 +92,16 @@ public class Map {
         );
     }
 
+    public Coordinate getCoordinateByAction(Coordinate coordinate, Action action) {
+        return switch (action) {
+            case MoveLeft, BifurcateLeft -> getLefterCoordinate(coordinate);
+            case MoveRight, BifurcateRight -> getRighterCoordinate(coordinate);
+            case MoveDown, BifurcateDown -> getLowerCoordinate(coordinate);
+            case MoveUp, BifurcateUp -> getHigherCoordinate(coordinate);
+            default -> null;
+        };
+    }
+
     public Coordinate findPlayerCoordinate() {
         if (playerCoordinate != null && (getCell(playerCoordinate).getUnit() == null || !(getCell(playerCoordinate).getUnit() instanceof Player))) {
             throw new RuntimeException("Invalid playerCoordinate");
