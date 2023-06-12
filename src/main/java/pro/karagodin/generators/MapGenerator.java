@@ -1,21 +1,37 @@
 package pro.karagodin.generators;
 
-import java.util.List;
-import java.util.Random;
-
 import pro.karagodin.ai_system.BloodsuckerStrategy;
 import pro.karagodin.game_engine.Coordinate;
-import pro.karagodin.models.Hole;
-import pro.karagodin.models.LowerItem;
-import pro.karagodin.models.Map;
-import pro.karagodin.models.Mob;
-import pro.karagodin.models.Player;
-import pro.karagodin.models.Wall;
+import pro.karagodin.models.*;
 import pro.karagodin.time.TimeMoment;
+
+import java.util.List;
+import java.util.Random;
 
 public class MapGenerator {
 
     private static final Random RANDOM = new Random();
+
+    private static void placeVerticalWall(Map map, Coordinate crd, int size) {
+        for (int y = 0; y < size; y++) {
+            var cell = map.getCell(new Coordinate(crd.getX(), y));
+            cell.setWall(new Wall());
+        }
+    }
+
+    private static void placeHorizontalWall(Map map, Coordinate crd, int size) {
+        for (int x = 0; x < size; x++) {
+            var cell = map.getCell(new Coordinate(x, crd.getY()));
+            cell.setWall(new Wall());
+        }
+    }
+
+    public static void placeBorders(Map map) {
+        placeHorizontalWall(map, new Coordinate(0, 0), map.getWidth());
+        placeHorizontalWall(map, new Coordinate(0, map.getHeight() - 1), map.getWidth());
+        placeVerticalWall(map, new Coordinate(0, 0), map.getHeight());
+        placeVerticalWall(map, new Coordinate(map.getWidth() - 1, 0), map.getHeight());
+    }
 
     public static Coordinate getFreeCellPosition(Map map) {
         Coordinate position;
@@ -29,6 +45,7 @@ public class MapGenerator {
 
     /**
      * Puts smallThings on map
+     *
      * @param map
      * @param smallThings
      */
@@ -40,11 +57,12 @@ public class MapGenerator {
 
     /**
      * Puts walls on map
+     *
      * @param map
      * @param amount
      */
     public static void placeWalls(Map map, int amount) {
-        for (int i = 0; i < amount;) {
+        for (int i = 0; i < amount; ) {
             Coordinate cellPosition = getFreeCellPosition(map);
             int length = RANDOM.nextInt(10) + 1;
             boolean toRight = RANDOM.nextBoolean();
@@ -66,6 +84,7 @@ public class MapGenerator {
 
     /**
      * Puts mobs on map
+     *
      * @param map
      * @param mob
      */
@@ -83,12 +102,14 @@ public class MapGenerator {
 
     /**
      * Default map for testing and first stage play
+     *
      * @param stage
      * @param player
      * @return
      */
     public static Map generate(int stage, Player player) {
-        var map = new Map(60, 195);
+        var map = new Map(40, 105);
+        placeBorders(map);
         placeWalls(map, stage > 10 ? 1000 : stage * 70 + 300);
         var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
