@@ -7,7 +7,7 @@ public class MapBuilder {
     private int height, weight;
     private boolean isMapGenerating = true;
     private Player player;
-    private int stage = 0;
+    private int stage = 1;
     private String filename;
     private MobFactory mobFactory;
     private void checkPlayer(){
@@ -27,15 +27,15 @@ public class MapBuilder {
             throw new RuntimeException("Size of generated map is not set");
         checkPlayer();
         checkMobFactory();
-        var generator = new MapGenerator(stage, height, weight);
-        return generator.createMap(player, mobFactory);
+        var generator = new MapGenerator(height, weight);
+        return generator.createMap(player, mobFactory, stage);
     }
 
     private Map buildByLoadingFromFile() {
         checkPlayer();
         checkMobFactory();
         var loader = new MapLoader(filename);
-        return loader.createMap(player, mobFactory);
+        return loader.createMap(player, mobFactory, stage);
     }
 
 

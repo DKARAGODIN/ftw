@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_logic.Judge;
-import pro.karagodin.generators.ComplexMobFactory;
 import pro.karagodin.generators.MapBuilder;
+import pro.karagodin.generators.SimpleMobFactory;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
@@ -24,13 +24,17 @@ public class Stage {
     public Stage(Printer printer, Player player, int currentStage) {
         this.printer = printer;
 
-        this.map = new MapBuilder()
+        var mapBuilder = new MapBuilder()
                 .setStage(currentStage)
                 .setPlayer(player)
-                .setIsGenerating()
                 .setSize(50, 100)
-                .setMobFactory(new ComplexMobFactory(currentStage))
-                .build();
+                .setMobFactory(new SimpleMobFactory(currentStage));
+        if(currentStage == 1)
+            mapBuilder = mapBuilder.setLoadFromFile("/stages/ftw");
+        else
+            mapBuilder = mapBuilder.setIsGenerating();
+        this.map = mapBuilder.build();
+
         this.timeline = new Timeline(this.map);
         this.judge = new Judge(player, this.timeline);
         this.currentStage = currentStage;
