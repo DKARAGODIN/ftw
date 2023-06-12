@@ -1,10 +1,7 @@
 package pro.karagodin.generators;
 
-import pro.karagodin.ai_system.BifurcateStrategy;
-import pro.karagodin.ai_system.RoamStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.*;
-import pro.karagodin.time.TimeMoment;
 
 import java.util.List;
 import java.util.Random;
@@ -12,9 +9,9 @@ import java.util.Random;
 public class MapGenerator implements MapFactory {
 
     private static final Random RANDOM = new Random();
-    private int stage;
-    private int height;
-    private int width;
+    private final int stage;
+    private final int height;
+    private final int width;
 
     public MapGenerator(int stage, int height, int width) {
         this.stage = stage;
@@ -108,11 +105,28 @@ public class MapGenerator implements MapFactory {
     }
 
 
-    public static int getRandomWallsAmount(Map map, int stage) {
+    public static int getWallsAmount(Map map, int stage) {
         int defaultAmount = stage > 10 ? 1000 : stage * 70 + 300;
         int maxSize = 60 + 195;
         double sizeCoef = (double) (map.getHeight() + map.getWidth()) / maxSize;
         return (int) (defaultAmount * sizeCoef);
+    }
+
+    private Mob createRandomMob(MobFactory mobFactory) {
+        switch (RANDOM.nextInt(4)) {
+            case 0 -> {
+                return mobFactory.createPassiveMob();
+            }
+            case 1 -> {
+                return mobFactory.createPassiveAggressiveMob();
+            }
+            case 2 -> {
+                return mobFactory.createAggressiveMob();
+            }
+            default -> {
+                return mobFactory.createCowardMob();
+            }
+        }
     }
 
     /**
@@ -121,28 +135,16 @@ public class MapGenerator implements MapFactory {
      * @param player
      * @return
      */
-
-
     @Override
-    public Map createMap(Player player) {
+    public Map createMap(Player player, MobFactory mobFactory) {
         var map = new Map(height, width);
         placeBorders(map);
-        placeWalls(map, getRandomWallsAmount(map, stage));
+        placeWalls(map, getWallsAmount(map, stage));
         var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
         placeMob(map, player);
         for (int i = 0; i < stage; i++) {
-            placeMob(map, new Mob(
-                    100,
-                    100,
-                    10,
-                    3,
-                    4,
-                    6,
-                    new TimeMoment(stage > 10 ? 10 : 1010 - stage * 100),
-                    new BifurcateStrategy(new RoamStrategy(), 5),
-                    'A',
-                    List.of()));
+            placeMob(map, createRandomMob(mobFactory));
         }
         placeItem(map, new Hole());
         return map;

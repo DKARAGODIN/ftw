@@ -9,17 +9,39 @@ public class MapBuilder {
     private Player player;
     private int stage = 0;
     private String filename;
+    private MobFactory mobFactory;
+    private void checkPlayer(){
+        if(player == null)
+            throw new RuntimeException("player is not set");
+    }
+
+    private void checkMobFactory(){
+        if(mobFactory == null)
+            mobFactory = new SimpleMobFactory(stage);
+    }
+
+
 
     private Map buildByGenerating() {
         if (height == 0 || weight == 0)
             throw new RuntimeException("Size of generated map is not set");
+        checkPlayer();
+        checkMobFactory();
         var generator = new MapGenerator(stage, height, weight);
-        return generator.createMap(player);
+        return generator.createMap(player, mobFactory);
     }
 
     private Map buildByLoadingFromFile() {
+        checkPlayer();
+        checkMobFactory();
         var loader = new MapLoader(filename);
-        return loader.createMap(player);
+        return loader.createMap(player, mobFactory);
+    }
+
+
+    public MapBuilder setMobFactory(MobFactory mobFactory) {
+        this.mobFactory = mobFactory;
+        return this;
     }
 
     public MapBuilder setSize(int h, int w) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_logic.Judge;
+import pro.karagodin.generators.ComplexMobFactory;
 import pro.karagodin.generators.MapBuilder;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
@@ -28,6 +29,7 @@ public class Stage {
                 .setPlayer(player)
                 .setIsGenerating()
                 .setSize(50, 100)
+                .setMobFactory(new ComplexMobFactory(currentStage))
                 .build();
         this.timeline = new Timeline(this.map);
         this.judge = new Judge(player, this.timeline);

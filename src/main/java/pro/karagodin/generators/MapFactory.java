@@ -6,5 +6,6 @@ import pro.karagodin.models.Player;
 
 public interface MapFactory {
 
-    Map createMap(Player player);
+
+    Map createMap(Player player, MobFactory mobFactory);
 }
