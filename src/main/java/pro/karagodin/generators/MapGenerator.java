@@ -12,10 +12,15 @@ public class MapGenerator implements MapFactory {
 
     private static final Random RANDOM = new Random();
     private int stage;
+    private int height;
+    private int width;
 
-    public MapGenerator(int stage) {
+    public MapGenerator(int stage, int height, int width) {
         this.stage = stage;
+        this.height = height;
+        this.width = width;
     }
+
 
     private static void placeVerticalWall(Map map, Coordinate crd, int size) {
         for (int y = 0; y < size; y++) {
@@ -101,9 +106,6 @@ public class MapGenerator implements MapFactory {
         map.getCell(getFreeCellPosition(map)).setItem(item);
     }
 
-    public static Map genEmptytMap() {
-        return new Map(60, 195);
-    }
 
     public static int getRandomWallsAmount(Map map, int stage) {
         int defaultAmount = stage > 10 ? 1000 : stage * 70 + 300;
@@ -122,7 +124,7 @@ public class MapGenerator implements MapFactory {
 
     @Override
     public Map createMap(Player player) {
-        var map = new Map(10, 35);
+        var map = new Map(height, width);
         placeBorders(map);
         placeWalls(map, getRandomWallsAmount(map, stage));
         var items = ItemGenerator.generateItems(stage);

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_logic.Judge;
-import pro.karagodin.generators.MapGenerator;
+import pro.karagodin.generators.MapBuilder;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
@@ -23,7 +23,12 @@ public class Stage {
     public Stage(Printer printer, Player player, int currentStage) {
         this.printer = printer;
         this.judge = new Judge(player);
-        this.map = new MapGenerator(currentStage).createMap(player);
+        this.map = new MapBuilder()
+                .setStage(currentStage)
+                .setPlayer(player)
+                .setIsGenerating()
+                .setSize(50, 100)
+                .build();
         this.timeline = new Timeline(this.map);
         this.currentStage = currentStage;
     }
