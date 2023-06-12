@@ -38,9 +38,6 @@ public class Stage {
                 }
             } else {
                 MobWithPosition mobAndCoord = timeline.getMobForDoingAction();
-                if (mobAndCoord == null)
-                    continue;
-
                 Action mobAction = mobAndCoord.getNextAction(map);
                 GameDiff gameDiff = judge.doAction(mobAction, mobAndCoord, map);
                 if (gameDiff != null) {

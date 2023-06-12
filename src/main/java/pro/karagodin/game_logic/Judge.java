@@ -48,12 +48,13 @@ public class Judge {
     public GameDiff doAction(Action action, MobWithPosition mobAndCoord, Map map) {
         switch (action) {
             case MoveLeft, MoveRight, MoveDown, MoveUp -> {
-                Coordinate newMobCoord = getCoordinateByAction(map, mobAndCoord.getPosition(), action);
+                Coordinate initialPosition = mobAndCoord.getPosition();
+                Coordinate newMobCoord = getCoordinateByAction(map, initialPosition, action);
                 if (newMobCoord != null) {
                     if (canDoMovement(map, newMobCoord)) {
-                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
+                        return doMovement(map, initialPosition, newMobCoord);
                     } else if (isAttack(map, newMobCoord)) {
-                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
+                        return doAttack(map, initialPosition, newMobCoord);
                     }
                 }
                 return new GameDiff(mobAndCoord);
@@ -62,11 +63,12 @@ public class Judge {
                 return useItem(mobAndCoord, map);
             }
             case BifurcateLeft, BifurcateRight, BifurcateDown, BifurcateUp -> {
-                Coordinate newMobCoord = getCoordinateByAction(map, mobAndCoord.getPosition(), action);
+                Coordinate initialPosition = mobAndCoord.getPosition();
+                Coordinate newMobCoord = getCoordinateByAction(map, initialPosition, action);
                 if (newMobCoord != null && canDoMovement(map, newMobCoord)) {
-                    GameDiff result = doMovement(map, mobAndCoord.getPosition(), newMobCoord);
-                    map.getCell(mobAndCoord.getPosition()).setUnit(mobAndCoord.getMob().cloneMob());
-                    timeline.addNewMob(mobAndCoord);
+                    GameDiff result = doMovement(map, initialPosition, newMobCoord);
+                    map.getCell(initialPosition).setUnit(mobAndCoord.getMob().cloneMob());
+                    timeline.addNewMob(new MobWithPosition(map, initialPosition));
                     return result;
                 }
                 return new GameDiff(mobAndCoord);
