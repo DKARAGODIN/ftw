@@ -99,6 +99,12 @@ public class MapGenerator {
     public static Map genEmptytMap() {
         return new Map(60, 195);
     }
+    public static int getRandomWallsAmount(Map map, int stage){
+        int defaultAmount = stage > 10 ? 1000 : stage * 70 + 300;
+        int maxSize = 60 + 195;
+        double sizeCoef = (double) (map.getHeight() + map.getWidth()) / maxSize;
+        return (int) (defaultAmount * sizeCoef);
+    }
 
     /**
      * Default map for testing and first stage play
@@ -108,9 +114,9 @@ public class MapGenerator {
      * @return
      */
     public static Map generate(int stage, Player player) {
-        var map = new Map(40, 105);
+        var map = new Map(10, 35);
         placeBorders(map);
-        placeWalls(map, stage > 10 ? 1000 : stage * 70 + 300);
+        placeWalls(map, getRandomWallsAmount(map, stage));
         var items = ItemGenerator.generateItems(stage);
         placeItems(map, items);
         placeMob(map, player);
