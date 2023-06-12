@@ -59,6 +59,10 @@ public class Map {
         return new Cell(this, coord, cells[coord.getX()][coord.getY()]);
     }
 
+    public Cell getCell(int x, int y) {
+        return new Cell(this, new Coordinate(x, y), cells[x][y]);
+    }
+
     public int getWidth() {
         return cells.length;
     }

@@ -11,7 +11,7 @@ import java.util.Scanner;
 import static pro.karagodin.generators.MapFiller.*;
 
 
-public class MapLoader implements MapFactory {
+public class MapLoader {
     private final String filename;
     private Coordinate playerCrd;
     private Coordinate holeCrd;
@@ -39,8 +39,7 @@ public class MapLoader implements MapFactory {
         return map;
     }
 
-    @Override
-    public Map createMap(Player player, MobFactory mobFactory, int stage) {
+    public Map loadMap(Player player, MobFactory mobFactory, int stage) {
         var map = loadMapFromFile();
         placeBorders(map);
         var items = ItemGenerator.generateItems(stage);

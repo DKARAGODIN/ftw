@@ -5,21 +5,22 @@ import pro.karagodin.models.Player;
 
 public class MapBuilder {
     private int height, weight;
-    private boolean isMapGenerating = true;
+    private MapGenerator mapGenerator = new CaveMapGenerator();
     private Player player;
     private int stage = 1;
     private String filename;
     private MobFactory mobFactory;
-    private void checkPlayer(){
-        if(player == null)
+    private boolean isMapGenerating = true;
+
+    private void checkPlayer() {
+        if (player == null)
             throw new RuntimeException("player is not set");
     }
 
-    private void checkMobFactory(){
-        if(mobFactory == null)
+    private void checkMobFactory() {
+        if (mobFactory == null)
             mobFactory = new SimpleMobFactory(stage);
     }
-
 
 
     private Map buildByGenerating() {
@@ -27,15 +28,14 @@ public class MapBuilder {
             throw new RuntimeException("Size of generated map is not set");
         checkPlayer();
         checkMobFactory();
-        var generator = new MapGenerator(height, weight);
-        return generator.createMap(player, mobFactory, stage);
+        return mapGenerator.createMap(player, mobFactory, stage, height, weight);
     }
 
     private Map buildByLoadingFromFile() {
         checkPlayer();
         checkMobFactory();
         var loader = new MapLoader(filename);
-        return loader.createMap(player, mobFactory, stage);
+        return loader.loadMap(player, mobFactory, stage);
     }
 
 
@@ -55,8 +55,9 @@ public class MapBuilder {
         return this;
     }
 
-    public MapBuilder setIsGenerating() {
+    public MapBuilder setGenerating(MapGenerator mapGenerator) {
         this.isMapGenerating = true;
+        this.mapGenerator = mapGenerator;
         return this;
     }
 
