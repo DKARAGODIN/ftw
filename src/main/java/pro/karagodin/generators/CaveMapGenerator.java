@@ -55,7 +55,7 @@ public class CaveMapGenerator implements MapGenerator {
 
     private void runRandomWalkers(Map map, Coordinate startPos, int walkers, int height, int width) {
         for (int i = 0; i < walkers || floorsCount < MIN_FLOORS_COUNT; i++)
-            randWalk(map, startPos, RANDOM.nextInt(15 * (height + width)));
+            randWalk(map, i > 0 ? getFreeCellPosition(map) : startPos, RANDOM.nextInt(15 * (height + width)));
     }
 
     /**
