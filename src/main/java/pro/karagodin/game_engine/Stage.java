@@ -22,7 +22,7 @@ public class Stage {
 
     public Stage(Printer printer, Player player, int currentStage) {
         this.printer = printer;
-        this.judge = new Judge(player);
+
         this.map = new MapBuilder()
                 .setStage(currentStage)
                 .setPlayer(player)
@@ -30,6 +30,7 @@ public class Stage {
                 .setSize(50, 100)
                 .build();
         this.timeline = new Timeline(this.map);
+        this.judge = new Judge(player, this.timeline);
         this.currentStage = currentStage;
     }
 

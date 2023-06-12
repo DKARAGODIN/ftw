@@ -122,4 +122,9 @@ public class PlayerStrategy implements Strategy {
     public TextColor getForeground() {
         return TextColor.ANSI.RED;
     }
+
+    @Override
+    public Strategy cloneStrategy() {
+        throw new UnsupportedOperationException();
+    }
 }

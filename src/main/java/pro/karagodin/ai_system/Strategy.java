@@ -26,4 +26,8 @@ public interface Strategy extends CIDrowable {
     default TextColor getBackground() {
         return null;
     }
+
+    default Strategy cloneStrategy() {
+        return this;
+    }
 }

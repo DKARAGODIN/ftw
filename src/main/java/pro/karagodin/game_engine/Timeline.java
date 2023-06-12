@@ -19,7 +19,7 @@ public class Timeline {
             for (int y = 0; y < map.getHeight(); y++) {
                 MobWithPosition mobAndCoord = new MobWithPosition(map, new Coordinate(x, y));
                 if (mobAndCoord.getMob() != null) {
-                    mobsWithTimes.add(new MobInfo(mobAndCoord, new TimeMoment()));
+                    addNewMob(mobAndCoord);
                 }
             }
         }
@@ -43,6 +43,10 @@ public class Timeline {
         MobInfo info = mobsWithTimes.poll();
         nextTimeForLastMob = info.actionTime.after(info.mobAndCoord.getMob().getPace());
         return info.mobAndCoord;
+    }
+
+    public void addNewMob(MobWithPosition mobAndCoord) {
+        mobsWithTimes.add(new MobInfo(mobAndCoord, new TimeMoment()));
     }
 
     public void addUpdatedMob(MobWithPosition mobAndCoord) {

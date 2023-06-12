@@ -7,6 +7,7 @@ import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.game_engine.MobWithPosition;
+import pro.karagodin.game_engine.Timeline;
 import pro.karagodin.models.Cell;
 import pro.karagodin.models.ConsumableItem;
 import pro.karagodin.models.Hole;
@@ -21,14 +22,16 @@ import pro.karagodin.models.Player;
 public class Judge {
 
     private final Player player;
+    private final Timeline timeline;
     private final CombatSystem combatSystem;
     private final DeathSystem deathSystem;
     private Map tempMap = null;
     private Coordinate tempCoordinate = null;
     private boolean stageCompleted;
 
-    public Judge(Player player) {
+    public Judge(Player player, Timeline timeline) {
         this.player = player;
+        this.timeline = timeline;
         this.combatSystem = new CombatSystem();
         this.deathSystem = new DeathSystem();
         this.stageCompleted = false;
@@ -44,29 +47,35 @@ public class Judge {
     @Nullable
     public GameDiff doAction(Action action, MobWithPosition mobAndCoord, Map map) {
         switch (action) {
-            case MoveLeft:
-            case MoveRight:
-            case MoveDown:
-            case MoveUp:
-                Coordinate newMobCoord = switch (action) {
-                    case MoveLeft -> map.getLefterCoordinate(mobAndCoord.getPosition());
-                    case MoveRight -> map.getRighterCoordinate(mobAndCoord.getPosition());
-                    case MoveDown -> map.getLowerCoordinate(mobAndCoord.getPosition());
-                    case MoveUp -> map.getHigherCoordinate(mobAndCoord.getPosition());
-                    default -> null;
-                };
+            case MoveLeft, MoveRight, MoveDown, MoveUp -> {
+                Coordinate initialPosition = mobAndCoord.getPosition();
+                Coordinate newMobCoord = map.getCoordinateByAction(initialPosition, action);
                 if (newMobCoord != null) {
                     if (canDoMovement(map, newMobCoord)) {
-                        return doMovement(map, mobAndCoord.getPosition(), newMobCoord);
+                        return doMovement(map, initialPosition, newMobCoord);
                     } else if (isAttack(map, newMobCoord)) {
-                        return doAttack(map, mobAndCoord.getPosition(), newMobCoord);
+                        return doAttack(map, initialPosition, newMobCoord);
                     }
                 }
                 return new GameDiff(mobAndCoord);
-            case InteractWithObjectOnFloor:
+            }
+            case InteractWithObjectOnFloor -> {
                 return useItem(mobAndCoord, map);
-            default:
+            }
+            case BifurcateLeft, BifurcateRight, BifurcateDown, BifurcateUp -> {
+                Coordinate initialPosition = mobAndCoord.getPosition();
+                Coordinate newMobCoord = map.getCoordinateByAction(initialPosition, action);
+                if (newMobCoord != null && canDoMovement(map, newMobCoord)) {
+                    GameDiff result = doMovement(map, initialPosition, newMobCoord);
+                    map.getCell(initialPosition).setUnit(mobAndCoord.getMob().cloneMob());
+                    timeline.addNewMob(new MobWithPosition(map, initialPosition));
+                    return result;
+                }
+                return new GameDiff(mobAndCoord);
+            }
+            default -> {
                 return null;
+            }
         }
     }
 
