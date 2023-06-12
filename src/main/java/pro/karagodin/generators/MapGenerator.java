@@ -8,9 +8,14 @@ import pro.karagodin.time.TimeMoment;
 import java.util.List;
 import java.util.Random;
 
-public class MapGenerator {
+public class MapGenerator implements MapFactory {
 
     private static final Random RANDOM = new Random();
+    private int stage;
+
+    public MapGenerator(int stage) {
+        this.stage = stage;
+    }
 
     private static void placeVerticalWall(Map map, Coordinate crd, int size) {
         for (int y = 0; y < size; y++) {
@@ -99,7 +104,8 @@ public class MapGenerator {
     public static Map genEmptytMap() {
         return new Map(60, 195);
     }
-    public static int getRandomWallsAmount(Map map, int stage){
+
+    public static int getRandomWallsAmount(Map map, int stage) {
         int defaultAmount = stage > 10 ? 1000 : stage * 70 + 300;
         int maxSize = 60 + 195;
         double sizeCoef = (double) (map.getHeight() + map.getWidth()) / maxSize;
@@ -109,11 +115,13 @@ public class MapGenerator {
     /**
      * Default map for testing and first stage play
      *
-     * @param stage
      * @param player
      * @return
      */
-    public static Map generate(int stage, Player player) {
+
+
+    @Override
+    public Map createMap(Player player) {
         var map = new Map(10, 35);
         placeBorders(map);
         placeWalls(map, getRandomWallsAmount(map, stage));

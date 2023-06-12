@@ -23,7 +23,7 @@ public class Stage {
     public Stage(Printer printer, Player player, int currentStage) {
         this.printer = printer;
         this.judge = new Judge(player);
-        this.map = MapGenerator.generate(currentStage, player);
+        this.map = new MapGenerator(currentStage).createMap(player);
         this.timeline = new Timeline(this.map);
         this.currentStage = currentStage;
     }
