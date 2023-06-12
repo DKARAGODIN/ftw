@@ -3,7 +3,8 @@ package pro.karagodin.generators;
 import java.util.List;
 import java.util.Random;
 
-import pro.karagodin.ai_system.BloodsuckerStrategy;
+import pro.karagodin.ai_system.BifurcateStrategy;
+import pro.karagodin.ai_system.RoamStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Hole;
 import pro.karagodin.models.LowerItem;
@@ -102,7 +103,7 @@ public class MapGenerator {
                     4,
                     6,
                     new TimeMoment(stage > 10 ? 10 : 1010 - stage * 100),
-                    new BloodsuckerStrategy(0.9, 5)));
+                    new BifurcateStrategy(new RoamStrategy(), 5)));
         }
         placeItem(map, new Hole());
         return map;

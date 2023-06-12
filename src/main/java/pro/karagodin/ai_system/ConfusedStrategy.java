@@ -7,16 +7,21 @@ import pro.karagodin.time.TimeMoment;
  */
 public class ConfusedStrategy extends RoamStrategy {
 
-    private final Strategy originStrategy;
+    private final Strategy subStrategy;
     private final TimeMoment endTime;
 
-    public ConfusedStrategy(Strategy originStrategy, TimeMoment duration) {
-        this.originStrategy = originStrategy;
+    public ConfusedStrategy(Strategy subStrategy, TimeMoment duration) {
+        this.subStrategy = subStrategy;
         this.endTime = new TimeMoment().after(duration);
     }
 
     @Override
     public Strategy nextStrategy() {
-        return endTime.deltaWithCurrentTime() > 0 ? this : originStrategy;
+        return endTime.deltaWithCurrentTime() > 0 ? this : subStrategy;
+    }
+
+    @Override
+    public Strategy cloneStrategy() {
+        return subStrategy.cloneStrategy();
     }
 }

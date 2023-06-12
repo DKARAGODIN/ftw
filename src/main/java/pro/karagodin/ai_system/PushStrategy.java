@@ -6,12 +6,12 @@ import pro.karagodin.models.Map;
 
 public class PushStrategy implements Strategy {
 
-    private final Strategy originStrategy;
+    private final Strategy subStrategy;
     private int durationInMoveNumber;
     private final Action move;
 
-    public PushStrategy(Strategy originStrategy, Action move, int durationInMoveNumber) {
-        this.originStrategy = originStrategy;
+    public PushStrategy(Strategy subStrategy, Action move, int durationInMoveNumber) {
+        this.subStrategy = subStrategy;
         this.durationInMoveNumber = durationInMoveNumber;
         this.move = move;
     }
@@ -24,11 +24,16 @@ public class PushStrategy implements Strategy {
 
     @Override
     public Strategy nextStrategy() {
-        return durationInMoveNumber > 0 ? this : originStrategy;
+        return durationInMoveNumber > 0 ? this : subStrategy;
     }
 
     @Override
     public TextColor getForeground() {
         return TextColor.ANSI.BLUE;
+    }
+
+    @Override
+    public Strategy cloneStrategy() {
+        return subStrategy.cloneStrategy();
     }
 }

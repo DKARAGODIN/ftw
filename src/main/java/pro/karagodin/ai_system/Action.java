@@ -7,4 +7,8 @@ public enum Action {
     MoveLeft,
     MoveRight,
     InteractWithObjectOnFloor,
+    BifurcateUp,
+    BifurcateDown,
+    BifurcateLeft,
+    BifurcateRight,
 }

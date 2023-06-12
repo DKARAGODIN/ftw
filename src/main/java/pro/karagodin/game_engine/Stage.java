@@ -15,16 +15,16 @@ import pro.karagodin.output.Printer;
 public class Stage {
 
     private final Printer printer;
-    private final Judge judge;
     private final Map map;
     private final Timeline timeline;
+    private final Judge judge;
     private final int currentStage;
 
     public Stage(Printer printer, Player player, int currentStage) {
         this.printer = printer;
-        this.judge = new Judge(player);
         this.map = MapGenerator.generate(currentStage, player);
         this.timeline = new Timeline(this.map);
+        this.judge = new Judge(player, this.timeline);
         this.currentStage = currentStage;
     }
 

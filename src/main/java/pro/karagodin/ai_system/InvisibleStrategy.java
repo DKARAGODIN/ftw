@@ -33,4 +33,9 @@ public class InvisibleStrategy implements Strategy {
     public TextColor getForeground() {
         return subStrategy != null ? subStrategy.getForeground() : TextColor.ANSI.WHITE;
     }
+
+    @Override
+    public Strategy cloneStrategy() {
+        return new InvisibleStrategy(subStrategy.cloneStrategy(), criticalDistance);
+    }
 }

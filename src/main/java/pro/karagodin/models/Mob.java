@@ -2,6 +2,7 @@ package pro.karagodin.models;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
@@ -29,11 +30,15 @@ public class Mob implements CIDrowable {
 
     protected TimeMoment pace;
     protected Strategy strategy;
-    protected char view = 'A';
-    protected TextColor color = TextColor.ANSI.WHITE;
-    protected ArrayList<Effect> attackEffects = new ArrayList<>();
+    protected char view;
+    protected TextColor color;
+    protected List<Effect> attackEffects;
 
     public Mob(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy) {
+        this(hp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy, 'A', TextColor.ANSI.WHITE, List.of());
+    }
+
+    public Mob(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy, char view, TextColor color, List<Effect> attackEffects) {
         this.hp = hp;
         this.maxHp = maxHp;
         this.attack = attack;
@@ -42,11 +47,9 @@ public class Mob implements CIDrowable {
         this.maxDamage = maxDamage;
         this.pace = pace;
         this.strategy = strategy;
-    }
-
-    public Mob(int hp, int maxHp, int attack, int defence, int minDamage, int maxDamage, TimeMoment pace, Strategy strategy, ArrayList<Effect> attackEffects) {
-        this(hp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy);
-        this.attackEffects = attackEffects;
+        this.view = view;
+        this.color = color;
+        this.attackEffects = new ArrayList<>(attackEffects);
     }
 
     public char getView() {
@@ -71,5 +74,9 @@ public class Mob implements CIDrowable {
 
     public boolean isKilled() {
         return hp <= 0;
+    }
+
+    public Mob cloneMob() {
+        return new Mob(hp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy.cloneStrategy(), view, color, attackEffects);
     }
 }

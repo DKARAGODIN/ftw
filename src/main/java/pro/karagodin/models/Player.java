@@ -2,6 +2,7 @@ package pro.karagodin.models;
 
 import static pro.karagodin.models.Inventory.MAX_EQUIPPED_ITEMS;
 
+import java.util.List;
 import java.util.Map;
 
 import com.googlecode.lanterna.TextColor;
@@ -37,9 +38,7 @@ public class Player extends Mob {
     private boolean wantsToContinuePlaying = true;
 
     public Player(int hp, int maxHp, TimeMoment pace, Printer printer) {
-        super(hp, maxHp, BASE_ATTACK, BASE_DEFENCE, BASE_MIN_DAMAGE, BASE_MAX_DAMAGE, pace, new PlayerStrategy(printer));
-        this.view = '@';
-        this.color = TextColor.ANSI.RED;
+        super(hp, maxHp, BASE_ATTACK, BASE_DEFENCE, BASE_MIN_DAMAGE, BASE_MAX_DAMAGE, pace, new PlayerStrategy(printer), '@', TextColor.ANSI.RED, List.of());
     }
 
     public void quitFromGame() {
@@ -115,5 +114,10 @@ public class Player extends Mob {
                 }
             }
         }
+    }
+
+    @Override
+    public Mob cloneMob() {
+        throw new UnsupportedOperationException();
     }
 }
