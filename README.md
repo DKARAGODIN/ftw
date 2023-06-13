@@ -145,9 +145,11 @@
 
 ## Формат карты в файле
 h и w - высота и ширина карты  
-player_x и player_y - координаты игрока  
-wall_cnt - количество стен  
-Далее wall_cnt строк с wall_x и wall_y, координатами стен
+Далее h строк длины w, описывающие карту. Среди них символы:
+'.' - пустота
+'#' - стена
+'P' - игрок
+'H' - нора
 
 # Диаграммы
 Документы с uml-диаграммами доступны в папке src и по [ссылке](https://drive.google.com/file/d/1-Kyv6zulRddlxvYu2PO-sJDKGJtXorRm/view?usp=sharing) на diagrams.net
