@@ -79,6 +79,17 @@ public class InventoryPrinter {
         }
     }
 
+    public void cleanInventory() {
+        for (int x = 0; x < CELLS_COLS; x++) {
+            for (int y = 0; y < EQUIPPED_CELL_ROWS; y++) {
+                fillCell(x, y, BLACK_EMPTY);
+            }
+            for (int y = 0; y < EQUIPPED_CELL_ROWS; y++) {
+                fillCell(x, y, BLACK_EMPTY);
+            }
+        }
+    }
+
     public void printInventoryGUI() {
         TextGraphics textGraphics = screen.newTextGraphics();
         textGraphics.putString(equippedTitle.getX(), equippedTitle.getY(), "Hero equipped items");
@@ -87,7 +98,7 @@ public class InventoryPrinter {
         textGraphics.putString(stashedTitle.getX(), stashedTitle.getY(), "Hero stashed items");
         drawTableGUI(stashedTable.getX(), stashedTable.getY(), STASHED_CELL_ROWS);
 
-        textGraphics.putString(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY() - 1, "Selected smallThing description");
+        textGraphics.putString(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY() - 1, "Selected loot description");
     }
 
     public void refreshCells() {

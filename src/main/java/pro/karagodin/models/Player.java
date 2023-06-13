@@ -20,11 +20,12 @@ import pro.karagodin.time.TimeMoment;
 @Getter
 public class Player extends Mob {
 
-    private static final int BASE_MAX_HEALTH = 100;
-    private static final int BASE_ATTACK = 3;
-    private static final int BASE_DEFENCE = 3;
-    private static final int BASE_MIN_DAMAGE = 5;
-    private static final int BASE_MAX_DAMAGE = 15;
+    public static final int BASE_MAX_HEALTH = 100;
+    public static final int BASE_ATTACK = 3;
+    public static final int BASE_DEFENCE = 3;
+    public static final int BASE_MIN_DAMAGE = 5;
+    public static final int BASE_MAX_DAMAGE = 15;
+    public static final TimeMoment BASE_PACE = new TimeMoment(200);
 
     private int level = 1;
     private int xp = 0;
@@ -118,5 +119,23 @@ public class Player extends Mob {
     @Override
     public Mob cloneMob() {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Sets field values to defaults in case player wants to restart
+     */
+    public void refresh() {
+        this.inventory.clear();
+        this.hp = BASE_MAX_HEALTH;
+        this.maxHp = BASE_MAX_HEALTH;
+        this.minDamage = BASE_MIN_DAMAGE;
+        this.maxDamage = BASE_MAX_DAMAGE;
+        this.level = 1;
+        this.xp = 0;
+        this.nextLevel = 100;
+        this.nextLevelIncrease = 100;
+        this.defence = BASE_DEFENCE;
+        this.attack = BASE_ATTACK;
+        this.pace = BASE_PACE;
     }
 }

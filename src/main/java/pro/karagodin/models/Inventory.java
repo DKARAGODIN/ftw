@@ -81,4 +81,9 @@ public class Inventory {
     public void setCoordinate(Coordinate newCoordinate) {
         setCoordinates(newCoordinate.getX(), newCoordinate.getY());
     }
+
+    public void clear() {
+        this.equippedLoot.clear();
+        this.stashedLoot.clear();
+    }
 }
