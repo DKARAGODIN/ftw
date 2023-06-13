@@ -68,8 +68,7 @@ public class ItemGenerator {
         int modifiersCount = Math.min(MAX_MODIFIERS, Math.max(1, stage / MODIFIERS_PER_STAGE_DIVISOR + random.nextInt(3)));
         int itemLevel = Math.min(stage, random.nextInt(4));
         //Primary modifier
-        Map.Entry<Character, LootItem.Modifier> e = ITEMS_PROJECTION[random.nextInt(MAX_MODIFIERS)];
-        {
+        Map.Entry<Character, LootItem.Modifier> e = ITEMS_PROJECTION[random.nextInt(MAX_MODIFIERS)]; {
             var modifier = e.getValue();
             var value = modifier.getStartValue() + (int) modifier.getLevelIncrease() * itemLevel;
             value = random.nextInt((int) Math.floor(value * MIN_DISPERSION), (int) Math.ceil(value * MAX_DISPERSION));
