@@ -168,7 +168,7 @@ public class Printer {
         }
 
         TextGraphics textGraphics = screen.newTextGraphics();
-        textGraphics.putString(GAME_OVER_RECTANGLE_COL + 1, GAME_OVER_RECTANGLE_ROW + 3, "Game over. Want to restart? yes \\ no ");
+        textGraphics.putString(GAME_OVER_RECTANGLE_COL + 1, GAME_OVER_RECTANGLE_ROW + 2, "Game over. Want to restart? yes \\ no ");
 
         screen.refresh(Screen.RefreshType.DELTA);
 

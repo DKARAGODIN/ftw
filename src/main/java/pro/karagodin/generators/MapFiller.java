@@ -59,7 +59,7 @@ public class MapFiller {
     }
 
     /**
-     * Puts randomly smallThing on map
+     * Puts randomly LootItem on map
      */
     public static void randomPlaceItem(Map map, LowerItem item) {
         map.getCell(getFreeCellPosition(map)).setItem(item);

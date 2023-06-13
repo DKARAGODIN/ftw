@@ -84,7 +84,7 @@ public class InventoryPrinter {
             for (int y = 0; y < EQUIPPED_CELL_ROWS; y++) {
                 fillCell(x, y, BLACK_EMPTY);
             }
-            for (int y = 0; y < EQUIPPED_CELL_ROWS; y++) {
+            for (int y = 0; y < STASHED_CELL_ROWS; y++) {
                 fillCell(x, y, BLACK_EMPTY);
             }
         }

@@ -25,11 +25,11 @@ public class ComplexMobFactory implements MobFactory {
     @Override
     public Mob createAggressiveMob() {
         return new Mob(
-                60 + stage * 40 + nextInt(stage * 10),
+                50 + stage * 15 + nextInt(stage * 10),
                 stage + nextInt(stage),
-                stage * 2 / 3 + nextInt(stage * 2 / 3),
-                stage * 15 + nextInt(stage * 10),
-                stage * 25 + nextInt(stage * 10),
+                stage / 3 + nextInt(stage  / 3),
+                stage * 10 + nextInt(stage * 5),
+                stage * 20 + nextInt(stage * 5),
                 new TimeMoment(stage > 10 ? 10 : 910 - stage * 100 + nextInt(200)),
                 strategyFactory.createAggressiveStrategy(),
                 'a',
@@ -39,11 +39,11 @@ public class ComplexMobFactory implements MobFactory {
     @Override
     public Mob createPassiveAggressiveMob() {
         return new Mob(
-                40 + stage * 30 + nextInt(stage * 10),
-                stage * 3 / 4 + nextInt(stage / 2),
+                40 + stage * 15 + nextInt(stage * 10),
+                stage  / 4 + nextInt(stage / 2),
                 stage / 4 + nextInt(stage / 2),
-                stage * 10 + nextInt(stage * 10),
-                stage * 20 + nextInt(stage * 10),
+                stage * 10 + nextInt(stage * 5),
+                stage * 20 + nextInt(stage * 5),
                 new TimeMoment(stage > 10 ? 50 : 950 - stage * 100 + nextInt(200)),
                 strategyFactory.createPassiveAggressiveStrategy(),
                 'r',

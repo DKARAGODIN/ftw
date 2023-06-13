@@ -22,7 +22,6 @@ public class MapBuilder {
             mobFactory = new SimpleMobFactory(stage);
     }
 
-
     private Map buildByGenerating() {
         if (height == 0 || weight == 0)
             throw new RuntimeException("Size of generated map is not set");

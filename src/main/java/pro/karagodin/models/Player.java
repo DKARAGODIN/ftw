@@ -137,5 +137,6 @@ public class Player extends Mob {
         this.defence = BASE_DEFENCE;
         this.attack = BASE_ATTACK;
         this.pace = BASE_PACE;
+        this.wantsToContinuePlaying = true;
     }
 }
