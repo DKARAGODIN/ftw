@@ -2,10 +2,7 @@ package pro.karagodin.game_engine;
 
 import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_logic.Judge;
-import pro.karagodin.generators.CaveMapGenerator;
-import pro.karagodin.generators.MapBuilder;
-import pro.karagodin.generators.SimpleMobFactory;
-import pro.karagodin.generators.WallsMapGenerator;
+import pro.karagodin.generators.*;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
@@ -31,7 +28,7 @@ public class Stage {
                 .setStage(currentStage)
                 .setPlayer(player)
                 .setSize(50, 100)
-                .setMobFactory(new SimpleMobFactory(currentStage));
+                .setMobFactory(new ComplexMobFactory(currentStage));
         if (currentStage == 1)
             mapBuilder = mapBuilder.setLoadFromFile("/stages/ftw");
         else if(new Random().nextInt(2) == 0)

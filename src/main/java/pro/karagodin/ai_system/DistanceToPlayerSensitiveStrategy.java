@@ -5,21 +5,19 @@ import pro.karagodin.models.Map;
 
 public class DistanceToPlayerSensitiveStrategy extends SensitiveStrategy {
 
-    private final Strategy shortRangeStrategy;
-    private final Strategy longRangeStrategy;
     private final int criticalDistance;
     private int distanceBetweenMobAndPlayer;
 
     public DistanceToPlayerSensitiveStrategy(Strategy shortRangeStrategy, Strategy longRangeStrategy, int criticalDistance) {
-        this.shortRangeStrategy = shortRangeStrategy;
-        this.longRangeStrategy = longRangeStrategy;
+        this.trueStrategy = shortRangeStrategy;
+        this.falseStrategy = longRangeStrategy;
         this.criticalDistance = criticalDistance;
         this.distanceBetweenMobAndPlayer = 2147483647;
     }
 
     @Override
-    protected Strategy getCurrentStrategy() {
-        return distanceBetweenMobAndPlayer <= criticalDistance ? shortRangeStrategy : longRangeStrategy;
+    protected boolean isPredicateExecuted() {
+        return distanceBetweenMobAndPlayer <= criticalDistance;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class DistanceToPlayerSensitiveStrategy extends SensitiveStrategy {
     }
 
     @Override
-    public Strategy cloneStrategy() {
-        return new DistanceToPlayerSensitiveStrategy(shortRangeStrategy.cloneStrategy(), longRangeStrategy.cloneStrategy(), criticalDistance);
+    protected Strategy constructor(Strategy trueStrategy, Strategy falseStrategy) {
+        return new DistanceToPlayerSensitiveStrategy(trueStrategy, falseStrategy, criticalDistance);
     }
 }

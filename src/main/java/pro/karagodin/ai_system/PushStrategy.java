@@ -4,36 +4,35 @@ import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
-public class PushStrategy implements Strategy {
+import java.io.IOException;
 
-    private final Strategy subStrategy;
+public class PushStrategy extends EffectiveStrategy {
+
     private int durationInMoveNumber;
-    private final Action move;
 
     public PushStrategy(Strategy subStrategy, Action move, int durationInMoveNumber) {
         this.subStrategy = subStrategy;
+        this.effectStrategy = new Strategy() {
+            @Override
+            public Action getNextAction(MobWithPosition mobAndCoord, Map map) throws IOException {
+                return move;
+            }
+
+            @Override
+            public TextColor getForeground() {
+                return TextColor.ANSI.BLUE;
+            }
+        };
         this.durationInMoveNumber = durationInMoveNumber;
-        this.move = move;
     }
 
     @Override
-    public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
+    protected void updateState(MobWithPosition mobAndCoord, Map map) {
         durationInMoveNumber--;
-        return move;
     }
 
     @Override
-    public Strategy nextStrategy() {
-        return durationInMoveNumber > 0 ? this : subStrategy;
-    }
-
-    @Override
-    public TextColor getForeground() {
-        return TextColor.ANSI.BLUE;
-    }
-
-    @Override
-    public Strategy cloneStrategy() {
-        return subStrategy.cloneStrategy();
+    protected boolean isEndOfEffect() {
+        return durationInMoveNumber <= 0;
     }
 }

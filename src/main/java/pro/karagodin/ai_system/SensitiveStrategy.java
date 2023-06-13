@@ -8,9 +8,18 @@ import pro.karagodin.models.Map;
 
 public abstract class SensitiveStrategy implements Strategy {
 
-    protected abstract Strategy getCurrentStrategy();
+    protected Strategy trueStrategy;
+    protected Strategy falseStrategy;
+
+    protected abstract boolean isPredicateExecuted();
 
     protected abstract void updateState(MobWithPosition mobAndCoord, Map map);
+
+    protected abstract Strategy constructor(Strategy trueStrategy, Strategy falseStrategy);
+
+    protected Strategy getCurrentStrategy() {
+        return isPredicateExecuted() ? trueStrategy : falseStrategy;
+    }
 
     @Override
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) throws IOException {
@@ -20,7 +29,12 @@ public abstract class SensitiveStrategy implements Strategy {
 
     @Override
     public Strategy nextStrategy() {
-        return getCurrentStrategy().nextStrategy();
+        if (isPredicateExecuted()) {
+            trueStrategy = trueStrategy.nextStrategy();
+        } else {
+            falseStrategy = falseStrategy.nextStrategy();
+        }
+        return this;
     }
 
     @Override
@@ -36,5 +50,10 @@ public abstract class SensitiveStrategy implements Strategy {
     @Override
     public TextColor getBackground() {
         return getCurrentStrategy().getBackground();
+    }
+
+    @Override
+    public Strategy cloneStrategy() {
+        return constructor(trueStrategy.cloneStrategy(), falseStrategy.cloneStrategy());
     }
 }

@@ -5,31 +5,31 @@ import pro.karagodin.models.Map;
 
 public class HpOfMobSensitiveStrategy extends SensitiveStrategy {
 
-    private final Strategy healthyStrategy;
-    private final Strategy illStrategy;
     private final double criticalHpFraction;
     private int currentHp;
     private int maxHp;
 
     public HpOfMobSensitiveStrategy(Strategy healthyStrategy, Strategy illStrategy, double criticalHpFraction) {
-        this.healthyStrategy = healthyStrategy;
-        this.illStrategy = illStrategy;
+        this.trueStrategy = healthyStrategy;
+        this.falseStrategy = illStrategy;
         this.criticalHpFraction = criticalHpFraction;
         this.currentHp = 2147483647;
+        this.maxHp = 2147483647;
     }
 
     @Override
-    protected Strategy getCurrentStrategy() {
-        return currentHp < criticalHpFraction * maxHp ? illStrategy : healthyStrategy;
+    protected boolean isPredicateExecuted() {
+        return currentHp > criticalHpFraction * maxHp;
     }
 
     @Override
     protected void updateState(MobWithPosition mobAndCoord, Map map) {
         currentHp = mobAndCoord.getMob().getHp();
+        maxHp = mobAndCoord.getMob().getMaxHp();
     }
 
     @Override
-    public Strategy cloneStrategy() {
-        return new HpOfMobSensitiveStrategy(healthyStrategy.cloneStrategy(), illStrategy.cloneStrategy(), criticalHpFraction);
+    protected Strategy constructor(Strategy trueStrategy, Strategy falseStrategy) {
+        return new HpOfMobSensitiveStrategy(trueStrategy, falseStrategy, criticalHpFraction);
     }
 }

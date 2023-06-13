@@ -2,13 +2,11 @@ package pro.karagodin.ai_system;
 
 import java.io.IOException;
 
-import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
-public class BifurcateStrategy implements Strategy {
+public class BifurcateStrategy extends DecoratingStrategy {
 
-    private final Strategy subStrategy;
     private final int frequencyOfBifurcating;
     private int stepCounter;
 
@@ -19,16 +17,28 @@ public class BifurcateStrategy implements Strategy {
     }
 
     @Override
+    protected Strategy constructor(Strategy subStrategy) {
+        return new BifurcateStrategy(subStrategy, frequencyOfBifurcating);
+    }
+
+    @Override
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) throws IOException {
         if (stepCounter < frequencyOfBifurcating)
             stepCounter++;
-        Action resultAction = subStrategy.getNextAction(mobAndCoord, map);
-        if (stepCounter == frequencyOfBifurcating) {
+        Action action = subStrategy.getNextAction(mobAndCoord, map);
+        if (stepCounter == frequencyOfBifurcating && isMoveAction(action)) {
             stepCounter = 0;
-            return moveToBifurcate(resultAction);
+            return moveToBifurcate(action);
         } else {
-            return resultAction;
+            return action;
         }
+    }
+
+    private boolean isMoveAction(Action action) {
+        return switch (action) {
+            case MoveUp, MoveDown, MoveLeft, MoveRight -> true;
+            default -> false;
+        };
     }
 
     private Action moveToBifurcate(Action action) {
@@ -37,17 +47,7 @@ public class BifurcateStrategy implements Strategy {
             case MoveDown -> Action.BifurcateDown;
             case MoveLeft -> Action.BifurcateLeft;
             case MoveRight -> Action.BifurcateRight;
-            default -> action;
+            default -> null;
         };
-    }
-
-    @Override
-    public TextColor getForeground() {
-        return subStrategy.getForeground();
-    }
-
-    @Override
-    public Strategy cloneStrategy() {
-        return new BifurcateStrategy(subStrategy.cloneStrategy(), frequencyOfBifurcating);
     }
 }
