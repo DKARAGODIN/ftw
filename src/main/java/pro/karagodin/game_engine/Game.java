@@ -1,13 +1,12 @@
 package pro.karagodin.game_engine;
 
+import static pro.karagodin.models.Player.BASE_MAX_HEALTH;
+import static pro.karagodin.models.Player.BASE_PACE;
+
 import java.io.IOException;
 
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
-import pro.karagodin.time.TimeMoment;
-
-import static pro.karagodin.models.Player.BASE_MAX_HEALTH;
-import static pro.karagodin.models.Player.BASE_PACE;
 
 public class Game {
 
