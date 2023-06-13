@@ -1,18 +1,23 @@
 package pro.karagodin.generators;
 
+import static pro.karagodin.generators.MapFiller.createRandomMob;
+import static pro.karagodin.generators.MapFiller.getFreeCellPosition;
+import static pro.karagodin.generators.MapFiller.placeBorders;
+import static pro.karagodin.generators.MapFiller.randomPlaceItem;
+import static pro.karagodin.generators.MapFiller.randomPlaceItems;
+import static pro.karagodin.generators.MapFiller.randomPlaceMob;
+
+import java.util.Random;
+
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Hole;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.models.Wall;
 
-import java.util.Random;
-
-import static pro.karagodin.generators.MapFiller.*;
-
 public class WallsMapGenerator implements MapGenerator {
-    private static final Random RANDOM = new Random();
 
+    private static final Random RANDOM = new Random();
 
     private int getWallsAmount(Map map, int stage) {
         int defaultAmount = stage > 10 ? 1000 : stage * 70 + 300;
@@ -20,8 +25,6 @@ public class WallsMapGenerator implements MapGenerator {
         double sizeCoef = (double) (map.getHeight() + map.getWidth()) / maxSize;
         return (int) (defaultAmount * sizeCoef);
     }
-
-
 
     /**
      * Puts randomly walls on map

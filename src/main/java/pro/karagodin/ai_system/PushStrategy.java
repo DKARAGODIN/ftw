@@ -4,8 +4,6 @@ import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
-import java.io.IOException;
-
 public class PushStrategy extends EffectiveStrategy {
 
     private int durationInMoveNumber;
@@ -14,7 +12,7 @@ public class PushStrategy extends EffectiveStrategy {
         this.subStrategy = subStrategy;
         this.effectStrategy = new Strategy() {
             @Override
-            public Action getNextAction(MobWithPosition mobAndCoord, Map map) throws IOException {
+            public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
                 return move;
             }
 

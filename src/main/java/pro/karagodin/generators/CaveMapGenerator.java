@@ -1,16 +1,26 @@
 package pro.karagodin.generators;
 
-import pro.karagodin.game_engine.Coordinate;
-import pro.karagodin.models.*;
+import static pro.karagodin.generators.MapFiller.createRandomMob;
+import static pro.karagodin.generators.MapFiller.getFreeCellPosition;
+import static pro.karagodin.generators.MapFiller.randomPlaceItem;
+import static pro.karagodin.generators.MapFiller.randomPlaceItems;
+import static pro.karagodin.generators.MapFiller.randomPlaceMob;
 
 import java.util.Random;
 
-import static pro.karagodin.generators.MapFiller.*;
+import pro.karagodin.game_engine.Coordinate;
+import pro.karagodin.models.Cell;
+import pro.karagodin.models.Hole;
+import pro.karagodin.models.Map;
+import pro.karagodin.models.Player;
+import pro.karagodin.models.Wall;
 
 public class CaveMapGenerator implements MapGenerator {
+
     private static final Random RANDOM = new Random();
     private static final int MIN_FLOORS_COUNT = 100;
     private int floorsCount = 0;
+
     private void fillMapWithWalls(Map map) {
         for (int y = 0; y < map.getHeight(); y++)
             for (int x = 0; x < map.getWidth(); x++)
@@ -24,7 +34,7 @@ public class CaveMapGenerator implements MapGenerator {
     private void tryMovePos(Coordinate crd, Map map, int newX, int newY) {
         int height = map.getHeight();
         int width = map.getWidth();
-        if (newX < 1 || newY < 1 || newX >= width-1 || newY >= height-1 || isSkipCell(map.getCell(newX, newY)))
+        if (newX < 1 || newY < 1 || newX >= width - 1 || newY >= height - 1 || isSkipCell(map.getCell(newX, newY)))
             return;
         crd.setX(newX);
         crd.setY(newY);
@@ -39,6 +49,7 @@ public class CaveMapGenerator implements MapGenerator {
             case 1 -> tryMovePos(crd, map, x + 1, y);
             case 2 -> tryMovePos(crd, map, x, y - 1);
             case 3 -> tryMovePos(crd, map, x, y + 1);
+            default -> throw new RuntimeException("Invalid random number generated");
         }
 
     }
@@ -46,7 +57,7 @@ public class CaveMapGenerator implements MapGenerator {
     private void randWalk(Map map, Coordinate startPos, int steps) {
         var curPos = new Coordinate(startPos.getX(), startPos.getY());
         for (int i = 0; i < steps; i++) {
-            if(map.getCell(curPos).getWall() != null)
+            if (map.getCell(curPos).getWall() != null)
                 floorsCount++;
             map.getCell(curPos).setWall(null);
             randMovePos(map, curPos);

@@ -21,6 +21,15 @@ public class Printer {
     private static final int GUI_CONTROLS_HORIZONTAL_LINE_ROW = MAX_ROW - 6;
     private static final int STATS_DESCRIPTION_COLUMN_OFFSET = 20;
 
+    private static final int MAP_WIDTH = 195;
+    private static final int MAP_HEIGHT = 60;
+
+    private static final int GAME_OVER_RECTANGLE_ROW = 25;
+    private static final int GAME_OVER_RECTANGLE_COL = 77;
+    private static final int GAME_OVER_RECTANGLE_HEIGHT = 5;
+    private static final int GAME_OVER_RECTANGLE_WIDTH = 40;
+
+
     public static final int GUI_INVENTORY_WIDTH = 34;
 
     private Screen screen;
@@ -56,6 +65,11 @@ public class Printer {
         screen.refresh(Screen.RefreshType.DELTA);
     }
 
+    public void cleanInventory() throws IOException {
+        inventoryPrinter.cleanInventory();
+        screen.refresh(Screen.RefreshType.DELTA);
+    }
+
     public void refreshInventory() throws IOException {
         inventoryPrinter.refreshCells();
         screen.refresh(Screen.RefreshType.DELTA);
@@ -73,6 +87,13 @@ public class Printer {
     }
 
     public void printMap(Map map) throws IOException {
+        //Clean all map
+        for (int x  = 0; x < MAP_WIDTH; x++) {
+            for (int y = 0; y < MAP_HEIGHT; y++) {
+                screen.setCharacter(x, y, CHARACTERS.BLACK_EMPTY);
+            }
+        }
+        //Printing actual map
         for (int x  = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 var coord = new Coordinate(x, y);
@@ -137,6 +158,38 @@ public class Printer {
 
     public KeyStroke pressedKey() throws IOException {
         return screen.pollInput();
+    }
+
+    public boolean gameOver() throws IOException {
+        for (int x = GAME_OVER_RECTANGLE_COL; x < GAME_OVER_RECTANGLE_COL + GAME_OVER_RECTANGLE_WIDTH; x++) {
+            for (int y = GAME_OVER_RECTANGLE_ROW; y < GAME_OVER_RECTANGLE_ROW + GAME_OVER_RECTANGLE_HEIGHT; y++) {
+                screen.setCharacter(x, y, CHARACTERS.BLACK_EMPTY);
+            }
+        }
+
+        TextGraphics textGraphics = screen.newTextGraphics();
+        textGraphics.putString(GAME_OVER_RECTANGLE_COL + 1, GAME_OVER_RECTANGLE_ROW + 3, "Game over. Want to restart? yes \\ no ");
+
+        screen.refresh(Screen.RefreshType.DELTA);
+
+        while (true) {
+            try {
+                KeyStroke ks = pressedKey();
+                if (ks != null) {
+                    Character c = ks.getCharacter();
+                    if (c != null) {
+                        if (c == 'y' || c == 'Y') {
+                            return false;
+                        } else if (c == 'n' || c == 'N') {
+                            return true;
+                        }
+                    }
+                }
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void quitGame() {

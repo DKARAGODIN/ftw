@@ -1,14 +1,17 @@
 package pro.karagodin.game_engine;
 
+import java.io.IOException;
+import java.util.Random;
+
 import pro.karagodin.ai_system.Action;
 import pro.karagodin.game_logic.Judge;
-import pro.karagodin.generators.*;
+import pro.karagodin.generators.CaveMapGenerator;
+import pro.karagodin.generators.ComplexMobFactory;
+import pro.karagodin.generators.MapBuilder;
+import pro.karagodin.generators.WallsMapGenerator;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
-
-import java.io.IOException;
-import java.util.Random;
 
 /**
  * Game round.
@@ -20,6 +23,7 @@ public class Stage {
     private final Map map;
     private final Timeline timeline;
     private final int currentStage;
+    private final Random random = new Random();
 
     public Stage(Printer printer, Player player, int currentStage) {
         this.printer = printer;
@@ -31,7 +35,7 @@ public class Stage {
                 .setMobFactory(new ComplexMobFactory(currentStage));
         if (currentStage == 1)
             mapBuilder = mapBuilder.setLoadFromFile("/stages/ftw");
-        else if(new Random().nextInt(2) == 0)
+        else if (random.nextInt(2) == 0)
             mapBuilder = mapBuilder.setGenerating(new CaveMapGenerator());
         else
             mapBuilder = mapBuilder.setGenerating(new WallsMapGenerator());

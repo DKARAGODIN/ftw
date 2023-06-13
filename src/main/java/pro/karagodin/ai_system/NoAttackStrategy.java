@@ -1,9 +1,8 @@
 package pro.karagodin.ai_system;
 
-import com.googlecode.lanterna.TextColor;
-import pro.karagodin.models.Mob;
-
 import java.util.function.Predicate;
+
+import pro.karagodin.models.Mob;
 
 public class NoAttackStrategy extends SmartAttackAroundStrategy {
 

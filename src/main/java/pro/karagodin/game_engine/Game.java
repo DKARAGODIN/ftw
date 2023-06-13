@@ -1,10 +1,12 @@
 package pro.karagodin.game_engine;
 
+import static pro.karagodin.models.Player.BASE_MAX_HEALTH;
+import static pro.karagodin.models.Player.BASE_PACE;
+
 import java.io.IOException;
 
 import pro.karagodin.models.Player;
 import pro.karagodin.output.Printer;
-import pro.karagodin.time.TimeMoment;
 
 public class Game {
 
@@ -14,7 +16,7 @@ public class Game {
 
     public Game() {
         printer = new Printer();
-        player = new Player(100, 100, new TimeMoment(200L), printer);
+        player = new Player(BASE_MAX_HEALTH, BASE_MAX_HEALTH, BASE_PACE, printer);
     }
 
     /**
@@ -34,8 +36,15 @@ public class Game {
 
             boolean isGameOver = stage.start();
             if (isGameOver) {
-                printer.quitGame();
-                break;
+                boolean gameOver = printer.gameOver();
+                if (gameOver) {
+                    printer.quitGame();
+                    break;
+                } else {
+                    player.refresh();
+                    printer.cleanInventory();
+                    currentStage = 0;
+                }
             }
         }
     }
