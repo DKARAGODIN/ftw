@@ -41,7 +41,7 @@ public class ComplexMobFactory implements MobFactory {
                         new ProbabilisticEffect(new OneOfTwoEffect(
                                 new ConfusedEffect(new TimeMoment(1500)),
                                 new PushEffect(5)
-                        ), 0.9)
+                        ), 0.2)
                 )
         );
     }
