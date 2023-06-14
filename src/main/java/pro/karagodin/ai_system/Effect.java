@@ -6,7 +6,6 @@ public interface Effect {
 
     /**
      * Side effect of the attack
-     * @param mob
      */
-    void doEffect(Mob mob);
+    void doEffect(Mob defending, Mob attacker, Action directionOfImpact);
 }

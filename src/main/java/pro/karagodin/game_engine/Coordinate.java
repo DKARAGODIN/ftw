@@ -2,6 +2,8 @@ package pro.karagodin.game_engine;
 
 import java.util.function.UnaryOperator;
 
+import pro.karagodin.ai_system.Action;
+
 /**
  * Represents physical coordinates of the screen. X - column, Y - row. Starting from left up corner. Only positive values allowed
  */
@@ -40,5 +42,27 @@ public class Coordinate {
 
     public int getDistanceBetween(Coordinate other) {
         return Math.abs(this.getX() - other.getX()) + Math.abs(this.getY() - other.getY());
+    }
+
+    public Action getDirection(Coordinate other) {
+        if (this.getX() == other.getX()) {
+            if (this.getY() - 1 == other.getY()) {
+                return Action.MoveUp;
+            } else if (this.getY() + 1 == other.getY()) {
+                return Action.MoveDown;
+            } else {
+                return null;
+            }
+        } else if (this.getY() == other.getY()) {
+            if (this.getX() - 1 == other.getX()) {
+                return Action.MoveLeft;
+            } else if (this.getX() + 1 == other.getX()) {
+                return Action.MoveRight;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }

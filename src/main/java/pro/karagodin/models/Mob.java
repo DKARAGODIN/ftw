@@ -75,6 +75,6 @@ public class Mob implements CIDrowable {
     }
 
     public Mob cloneMob() {
-        return new Mob(hp, maxHp, attack, defence, minDamage, maxDamage, pace, strategy.cloneStrategy(), view, attackEffects);
+        return new Mob(hp, hp, attack, defence, minDamage, maxDamage, pace, strategy.cloneStrategy(), view, attackEffects);
     }
 }

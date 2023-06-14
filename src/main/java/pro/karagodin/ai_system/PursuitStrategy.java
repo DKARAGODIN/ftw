@@ -7,7 +7,7 @@ import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
-public class PursuitStrategy implements Strategy {
+public class PursuitStrategy extends PrimitiveStrategy {
     private final Random randomGenerator;
     private final double pursuitIndex;
 

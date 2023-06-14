@@ -1,6 +1,7 @@
 package pro.karagodin.generators;
 
 import pro.karagodin.ai_system.AttackOnlyPlayerStrategy;
+import pro.karagodin.ai_system.BifurcateStrategy;
 import pro.karagodin.ai_system.DistanceToPlayerSensitiveStrategy;
 import pro.karagodin.ai_system.HpOfMobSensitiveStrategy;
 import pro.karagodin.ai_system.InvisibleStrategy;
@@ -12,11 +13,11 @@ import pro.karagodin.ai_system.Strategy;
 public class ComplexStrategyFactory implements StrategyFactory {
     @Override
     public Strategy createAggressiveStrategy() {
-        return new AttackOnlyPlayerStrategy(new DistanceToPlayerSensitiveStrategy(
+        return new BifurcateStrategy(new AttackOnlyPlayerStrategy(new DistanceToPlayerSensitiveStrategy(
                 new PursuitStrategy(0.95),
                 new InvisibleStrategy(new PursuitStrategy(0.9)),
                 6
-        ));
+        )), 25);
     }
 
     @Override

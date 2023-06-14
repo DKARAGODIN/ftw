@@ -2,6 +2,7 @@ package pro.karagodin.game_logic;
 
 import java.util.Random;
 
+import pro.karagodin.ai_system.Action;
 import pro.karagodin.ai_system.Effect;
 import pro.karagodin.models.Mob;
 
@@ -16,15 +17,13 @@ public class CombatSystem {
      * Formula taken from Heroes 3.
      * Attacker does first damage and if defender still alive, he strikes back
      * HP won't take negative values
-     * @param attacker
-     * @param defending
      */
 
-    public void attack(Mob attacker, Mob defending) {
+    public void attack(Mob attacker, Mob defending, Action directionOfImpact) {
         double attackerDamage = getDamage(attacker, defending);
         defending.setHp(defending.getHp() - (int) attackerDamage);
-        for (Effect effect : defending.getAttackEffects()) {
-            effect.doEffect(defending);
+        for (Effect effect : attacker.getAttackEffects()) {
+            effect.doEffect(defending, attacker, directionOfImpact);
         }
     }
 

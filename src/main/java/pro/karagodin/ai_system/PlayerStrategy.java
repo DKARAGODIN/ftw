@@ -14,7 +14,7 @@ import pro.karagodin.output.Printer;
 /**
  * Implements interaction between Player and Character
  */
-public class PlayerStrategy implements Strategy {
+public class PlayerStrategy extends PrimitiveStrategy {
 
     private final Printer printer;
 

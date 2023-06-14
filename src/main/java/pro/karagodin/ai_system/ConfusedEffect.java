@@ -12,7 +12,7 @@ public class ConfusedEffect implements Effect {
     }
 
     @Override
-    public void doEffect(Mob mob) {
-        mob.setStrategy(new ConfusedStrategy(mob.getStrategy(), duration));
+    public void doEffect(Mob defending, Mob attacker, Action directionOfImpact) {
+        defending.setStrategy(new ConfusedStrategy(defending.getStrategy(), duration));
     }
 }

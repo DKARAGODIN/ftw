@@ -4,16 +4,14 @@ import pro.karagodin.models.Mob;
 
 public class PushEffect implements Effect {
 
-    private Action action;
-    private int durationInMoveNumber;
+    private final int durationInMoveNumber;
 
-    public PushEffect(Action action, int durationInMoveNumber) {
-        this.action = action;
+    public PushEffect(int durationInMoveNumber) {
         this.durationInMoveNumber = durationInMoveNumber;
     }
 
     @Override
-    public void doEffect(Mob mob) {
-        mob.setStrategy(new PushStrategy(mob.getStrategy(), action, durationInMoveNumber));
+    public void doEffect(Mob defending, Mob attacker, Action directionOfImpact) {
+        defending.setStrategy(new PushStrategy(defending.getStrategy(), directionOfImpact, durationInMoveNumber));
     }
 }

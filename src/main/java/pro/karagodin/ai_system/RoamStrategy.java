@@ -6,7 +6,7 @@ import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
-public class RoamStrategy implements Strategy {
+public class RoamStrategy extends PrimitiveStrategy {
     private final Random randomGenerator = new Random();
 
     @Override

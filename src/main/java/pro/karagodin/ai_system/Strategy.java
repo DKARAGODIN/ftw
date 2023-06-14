@@ -13,9 +13,7 @@ import pro.karagodin.output.CIDrowable;
 public interface Strategy extends CIDrowable {
     Action getNextAction(MobWithPosition mobAndCoord, Map map) throws IOException;
 
-    default Strategy nextStrategy() {
-        return this;
-    }
+    Strategy nextStrategy();
 
     @Override
     default char getView() {
@@ -27,7 +25,5 @@ public interface Strategy extends CIDrowable {
         return null;
     }
 
-    default Strategy cloneStrategy() {
-        return this;
-    }
+    Strategy cloneStrategy();
 }

@@ -10,7 +10,7 @@ public class PushStrategy extends EffectiveStrategy {
 
     public PushStrategy(Strategy subStrategy, Action move, int durationInMoveNumber) {
         this.subStrategy = subStrategy;
-        this.effectStrategy = new Strategy() {
+        this.effectStrategy = new PrimitiveStrategy() {
             @Override
             public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
                 return move;

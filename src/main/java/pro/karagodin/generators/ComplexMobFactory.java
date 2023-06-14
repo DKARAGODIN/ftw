@@ -3,6 +3,10 @@ package pro.karagodin.generators;
 import java.util.List;
 import java.util.Random;
 
+import pro.karagodin.ai_system.ConfusedEffect;
+import pro.karagodin.ai_system.OneOfTwoEffect;
+import pro.karagodin.ai_system.ProbabilisticEffect;
+import pro.karagodin.ai_system.PushEffect;
 import pro.karagodin.models.Mob;
 import pro.karagodin.time.TimeMoment;
 
@@ -30,10 +34,16 @@ public class ComplexMobFactory implements MobFactory {
                 stage / 3 + nextInt(stage  / 3),
                 stage * 10 + nextInt(stage * 5),
                 stage * 20 + nextInt(stage * 5),
-                new TimeMoment(stage > 10 ? 10 : 910 - stage * 100 + nextInt(200)),
+                new TimeMoment((stage > 30 ? 20 : 920 - stage * 30) + nextInt(50)),
                 strategyFactory.createAggressiveStrategy(),
                 'a',
-                List.of());
+                List.of(
+                        new ProbabilisticEffect(new OneOfTwoEffect(
+                                new ConfusedEffect(new TimeMoment(1500)),
+                                new PushEffect(5)
+                        ), 0.9)
+                )
+        );
     }
 
     @Override
@@ -44,7 +54,7 @@ public class ComplexMobFactory implements MobFactory {
                 stage / 4 + nextInt(stage / 2),
                 stage * 10 + nextInt(stage * 5),
                 stage * 20 + nextInt(stage * 5),
-                new TimeMoment(stage > 10 ? 50 : 950 - stage * 100 + nextInt(200)),
+                new TimeMoment((stage > 30 ? 40 : 940 - stage * 30) + nextInt(50)),
                 strategyFactory.createPassiveAggressiveStrategy(),
                 'r',
                 List.of()
@@ -59,7 +69,7 @@ public class ComplexMobFactory implements MobFactory {
                 stage / 4 + nextInt(stage / 2),
                 stage * 10 + nextInt(stage * 10),
                 stage * 20 + nextInt(stage * 10),
-                new TimeMoment(stage > 10 ? 50 : 950 - stage * 100 + nextInt(200)),
+                new TimeMoment((stage > 30 ? 40 : 940 - stage * 30) + nextInt(50)),
                 strategyFactory.createPassiveStrategy(),
                 'p',
                 List.of()
@@ -74,7 +84,7 @@ public class ComplexMobFactory implements MobFactory {
                 stage + nextInt(stage * 2),
                 nextInt(stage * 5),
                 stage * 5 + nextInt(stage * 10),
-                new TimeMoment(stage > 10 ? 5 : 905 - stage * 100 + nextInt(200)),
+                new TimeMoment((stage > 30 ? 10 : 910 - stage * 30) + nextInt(50)),
                 strategyFactory.createCowardStrategy(),
                 'c',
                 List.of()
