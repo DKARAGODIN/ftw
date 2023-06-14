@@ -41,7 +41,7 @@ public class Game {
                     printer.quitGame();
                     break;
                 } else {
-                    player.refresh();
+                    player.refresh(printer);
                     printer.cleanInventory();
                     currentStage = 0;
                 }

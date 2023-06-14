@@ -124,7 +124,7 @@ public class Player extends Mob {
     /**
      * Sets field values to defaults in case player wants to restart
      */
-    public void refresh() {
+    public void refresh(Printer printer) {
         this.inventory.clear();
         this.hp = BASE_MAX_HEALTH;
         this.maxHp = BASE_MAX_HEALTH;
@@ -138,5 +138,6 @@ public class Player extends Mob {
         this.attack = BASE_ATTACK;
         this.pace = BASE_PACE;
         this.wantsToContinuePlaying = true;
+        this.strategy = new PlayerStrategy(printer);
     }
 }
