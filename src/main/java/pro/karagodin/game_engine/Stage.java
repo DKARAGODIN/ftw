@@ -24,9 +24,11 @@ public class Stage {
     private final Timeline timeline;
     private final int currentStage;
     private final Random random = new Random();
+    private final int difficlulty;
 
-    public Stage(Printer printer, Player player, int currentStage) {
+    public Stage(Printer printer, Player player, int currentStage, int difficlulty) {
         this.printer = printer;
+        this.difficlulty = difficlulty;
 
         var mapBuilder = new MapBuilder()
                 .setStage(currentStage)

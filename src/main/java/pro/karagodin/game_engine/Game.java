@@ -24,12 +24,16 @@ public class Game {
      * @throws IOException
      */
     public void start() throws IOException {
-        printer.init(player); // aka menu
+        int difficulty = printer.init(player); // aka menu
+        if (difficulty == -1) {
+            printer.quitGame();
+            return;
+        }
 
         printer.printGUI();
 
         for (int currentStage = 1;; currentStage++) {
-            stage = new Stage(printer, player, currentStage); // must be generator
+            stage = new Stage(printer, player, currentStage, difficulty); // must be generator
 
             printer.refreshCurrentStageNumber(currentStage);
             printer.refreshHeroStats();

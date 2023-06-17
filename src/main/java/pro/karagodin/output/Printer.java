@@ -36,7 +36,7 @@ public class Printer {
     private InventoryPrinter inventoryPrinter;
     private PlayerStatsPrinter playerStatsPrinter;
 
-    public void init(Player player) throws IOException {
+    public int init(Player player) throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Screen screen = terminalFactory.createScreen();
         this.screen = screen;
@@ -44,7 +44,7 @@ public class Printer {
         this.playerStatsPrinter = new PlayerStatsPrinter(screen, new Coordinate(MAX_COL - GUI_INVENTORY_WIDTH, 3), player);
         screen.startScreen();
 
-        printWelcomeMessage(screen);
+        return printWelcomeMessage(screen);
     }
 
     public void updateCoordinates(Map map, MapDiff diff) throws IOException {
@@ -139,14 +139,32 @@ public class Printer {
         screen.refresh(Screen.RefreshType.DELTA);
     }
 
-    private void printWelcomeMessage(Screen screen) throws IOException {
+    private int printWelcomeMessage(Screen screen) throws IOException {
         TextGraphics textGraphics = screen.newTextGraphics();
+        int difficulty = 0;
         textGraphics.putString(15,11, "Please maximise the window to go FOR THE WIN!");
+        textGraphics.putString(15, 13, "Mobs strength - " + difficulty);
+        textGraphics.putString(15, 15, "Press q to quit");
         screen.refresh();
+
         while (true) {
             TerminalSize newTerminalSize = screen.doResizeIfNecessary();
             if (newTerminalSize != null && newTerminalSize.getColumns() >= MAX_COL && newTerminalSize.getRows() >= MAX_ROW)
                 break;
+
+            KeyStroke ks = screen.pollInput();
+            if (ks != null) {
+                Character c = ks.getCharacter();
+                if (c != null) {
+                    if (Character.isDigit(c)) {
+                        difficulty = Character.getNumericValue(c);
+                        textGraphics.putString(15, 13, "Mobs strength - " + difficulty);
+                        screen.refresh();
+                    } else if (c == 'q') {
+                        return -1;
+                    }
+                }
+            }
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
@@ -154,6 +172,8 @@ public class Printer {
             }
         }
         screen.clear();
+
+        return difficulty;
     }
 
     public KeyStroke pressedKey() throws IOException {
