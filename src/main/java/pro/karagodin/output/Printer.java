@@ -35,13 +35,14 @@ public class Printer {
     private Screen screen;
     private InventoryPrinter inventoryPrinter;
     private PlayerStatsPrinter playerStatsPrinter;
+    private int difficulty = 9;
 
     public int init(Player player) throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Screen screen = terminalFactory.createScreen();
         this.screen = screen;
         this.inventoryPrinter = new InventoryPrinter(screen, new Coordinate(MAX_COL - GUI_INVENTORY_WIDTH, 13), player.getInventory());
-        this.playerStatsPrinter = new PlayerStatsPrinter(screen, new Coordinate(MAX_COL - GUI_INVENTORY_WIDTH, 3), player);
+        this.playerStatsPrinter = new PlayerStatsPrinter(screen, new Coordinate(MAX_COL - GUI_INVENTORY_WIDTH, 4), player);
         screen.startScreen();
 
         return printWelcomeMessage(screen);
@@ -129,7 +130,9 @@ public class Printer {
         TextGraphics textGraphics = screen.newTextGraphics();
         textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, 0, "Game stats");
         textGraphics.putString(GUI_VERTICAL_LINE_COL + 1 + STATS_DESCRIPTION_COLUMN_OFFSET, 1, "Stage");
-        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, 2, "Hero Stats");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, 2, String.valueOf(difficulty));
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1 + STATS_DESCRIPTION_COLUMN_OFFSET, 2, "Difficulty");
+        textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, 3, "Hero Stats");
         textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 1, "Controls");
         textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 2, "arrows - move your hero");
         textGraphics.putString(GUI_VERTICAL_LINE_COL + 1, GUI_CONTROLS_HORIZONTAL_LINE_ROW + 3, "space - make some action");
@@ -141,7 +144,6 @@ public class Printer {
 
     private int printWelcomeMessage(Screen screen) throws IOException {
         TextGraphics textGraphics = screen.newTextGraphics();
-        int difficulty = 9;
         textGraphics.putString(15,11, "Please maximise the window to go FOR THE WIN!");
         textGraphics.putString(15, 13, "Mobs strength - " + difficulty);
         textGraphics.putString(15, 15, "Press q to quit");
