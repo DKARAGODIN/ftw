@@ -35,7 +35,7 @@ public class PlayerStatsPrinter {
         textGraphics.putString(col, row + 3, "Attack");
         textGraphics.putString(col, row + 4, "Defence");
         textGraphics.putString(col, row + 5, "Damage");
-        textGraphics.putString(col, row + 6, "Speed");
+        textGraphics.putString(col, row + 6, "Delay");
     }
 
     public void refreshHeroStats() {
@@ -44,10 +44,10 @@ public class PlayerStatsPrinter {
         int row = coordinate.getY();
         textGraphics.putString(col, row, String.valueOf(player.getLevel()));
         textGraphics.putString(col, row + 1, player.getXp() + " (" + player.getNextLevel() + ")" + "  ");
-        textGraphics.putString(col, row + 2, player.getHp() + " (" + player.getMaxHp() + ")" + "  ");
-        textGraphics.putString(col, row + 3, player.getAttack() + "  ");
-        textGraphics.putString(col, row + 4, player.getDefence() + "  ");
-        textGraphics.putString(col, row + 5, player.getMinDamage() + " - " + player.getMaxDamage() + "  ");
-        textGraphics.putString(col, row + 6, player.getPace().getTimeInMs() + "  ");
+        textGraphics.putString(col, row + 2, player.getHp() + " (" + player.getMaxHp() + ")" + "   ");
+        textGraphics.putString(col, row + 3, player.getAttack() + "   ");
+        textGraphics.putString(col, row + 4, player.getDefence() + "   ");
+        textGraphics.putString(col, row + 5, player.getMinDamage() + " - " + player.getMaxDamage() + "   ");
+        textGraphics.putString(col, row + 6, player.getPace().getTimeInMs() + "   ");
     }
 }

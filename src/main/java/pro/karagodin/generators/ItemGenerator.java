@@ -17,7 +17,7 @@ public class ItemGenerator {
     private static final int ITEMS_PER_STAGE_DIVISOR = 3;
     private static final int CONSUMABLES_PER_STAGE_DIVISOR = 2;
     private static final int MAX_MODIFIERS = LootItem.Modifier.values().length;
-    private static final int MODIFIERS_PER_STAGE_DIVISOR = 8;
+    private static final int MODIFIERS_PER_STAGE_DIVISOR = 5;
     private static final double MIN_DISPERSION = 0.9;
     private static final double MAX_DISPERSION = 1.1;
     private static final int PRIMARY_STAT_MULTIPLIER = 2;
@@ -65,12 +65,12 @@ public class ItemGenerator {
 
     private static LootItem generateItem(int stage) {
         Map<LootItem.Modifier, Integer> modifiers = new TreeMap<>();
-        int modifiersCount = Math.min(MAX_MODIFIERS, Math.max(1, stage / MODIFIERS_PER_STAGE_DIVISOR + random.nextInt(3)));
-        int itemLevel = Math.min(stage, random.nextInt(4));
+        int itemLevel = stage + random.nextInt(4);
+        int modifiersCount = Math.min(MAX_MODIFIERS, Math.max(1, 1 + (itemLevel / MODIFIERS_PER_STAGE_DIVISOR)));
         //Primary modifier
         Map.Entry<Character, LootItem.Modifier> e = ITEMS_PROJECTION[random.nextInt(MAX_MODIFIERS)]; {
-            var modifier = e.getValue();
-            var value = modifier.getStartValue() + (int) modifier.getLevelIncrease() * itemLevel;
+            var modifier = getRandomModivier();
+            var value = modifier.getStartValue() + (int) (modifier.getLevelIncrease() * itemLevel);
             value = random.nextInt((int) Math.floor(value * MIN_DISPERSION), (int) Math.ceil(value * MAX_DISPERSION));
             if (value == 0) value = 1;
             value *= PRIMARY_STAT_MULTIPLIER;
@@ -79,12 +79,15 @@ public class ItemGenerator {
         //Additional modifiers
         for (int j = 1; j < modifiersCount; j++) {
             var modifier = getRandomModivier();
-            var value = modifier.getStartValue() + (int) modifier.getLevelIncrease() * itemLevel;
+            while (modifiers.containsKey(modifier)) {
+                modifier = getRandomModivier();
+            }
+            var value = modifier.getStartValue() + (int) (modifier.getLevelIncrease() * itemLevel);
             value = random.nextInt((int) Math.floor(value * MIN_DISPERSION), (int) Math.ceil(value * MAX_DISPERSION));
             if (value == 0) value = 1;
             modifiers.put(modifier, value);
         }
-        return new LootItem(modifiers, e.getKey());
+        return new LootItem(modifiers, itemLevel, e.getKey());
     }
 
     private static LootItem.Modifier getRandomModivier() {

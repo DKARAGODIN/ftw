@@ -57,11 +57,13 @@ public class InventoryPrinter {
     private void updateItemDescription(Coordinate newPosition) {
         fillRect(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY(), Printer.GUI_INVENTORY_WIDTH, ITEM_DESCRIPTION_BLOCK_HEIGHT, BLACK_EMPTY);
         if (newPosition != null) {
-            LootItem smallThing = getItemByCoordinate(newPosition);
-            if (smallThing != null) {
+            LootItem item = getItemByCoordinate(newPosition);
+            if (item != null) {
                 TextGraphics g = this.screen.newTextGraphics();
                 int row = itemDescriptionFirstLine.getY();
-                for (Map.Entry<LootItem.Modifier, Integer> e : smallThing.getItemModifiers().entrySet()) {
+                g.putString(itemDescriptionFirstLine.getX(), row, item.getItemLevel() + " " + "LVL");
+                row++;
+                for (Map.Entry<LootItem.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
                     g.putString(itemDescriptionFirstLine.getX(), row, e.getValue() + " " + e.getKey().getDescription());
                     row++;
                 }

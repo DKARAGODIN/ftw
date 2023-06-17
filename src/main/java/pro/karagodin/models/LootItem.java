@@ -16,13 +16,15 @@ public class LootItem implements LowerItem {
 
     private final Map<Modifier, Integer> itemModifiers;
     private final char view;
+    private final int itemLevel;
 
     @Setter
     private boolean equipped;
 
-    public LootItem(Map<Modifier, Integer> itemModifiers, char view) {
+    public LootItem(Map<Modifier, Integer> itemModifiers, int itemLevel, char view) {
         this.itemModifiers = itemModifiers;
         this.view = view;
+        this.itemLevel = itemLevel;
     }
 
     @Override
@@ -46,11 +48,11 @@ public class LootItem implements LowerItem {
     public enum Modifier implements Comparable<Modifier> {
         MAX_HP("Maximum HP", 5, 10),
         //REGEN_HP("HP regeneration", 0.5, 1), -- Effect not implemented yet
-        ATTACK("Attack", 0.3, 1),
-        DEFENCE("Defence", 0.3, 1),
+        ATTACK("Attack", 1, 1),
+        DEFENCE("Defence", 1, 1),
         MIN_DAMAGE("Min damage", 2, 5),
         MAX_DAMAGE("Max damage", 2, 5),
-        //SPEED("Speed", 0.5, 1) - Effect not implemented yet
+        SPEED("Speed", 1, 1),
         ;
 
         private final String description;

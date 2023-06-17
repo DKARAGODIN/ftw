@@ -26,11 +26,16 @@ public class Player extends Mob {
     public static final int BASE_MIN_DAMAGE = 5;
     public static final int BASE_MAX_DAMAGE = 15;
     public static final TimeMoment BASE_PACE = new TimeMoment(200);
+    public static final int MIN_PACE = 75;
 
     private int level = 1;
     private int xp = 0;
     private int nextLevel = 100;
     private int nextLevelIncrease = 100;
+
+    //These values have cap. So we need to store value exceeding cap to handle loot changes
+    protected int calculatedMinDamage;
+    protected long calculatedPace;
 
 
     private Inventory inventory = new Inventory();
@@ -39,6 +44,8 @@ public class Player extends Mob {
 
     public Player(int hp, int maxHp, TimeMoment pace, Printer printer) {
         super(hp, maxHp, BASE_ATTACK, BASE_DEFENCE, BASE_MIN_DAMAGE, BASE_MAX_DAMAGE, pace, new PlayerStrategy(printer), '@', List.of());
+        this.calculatedMinDamage = BASE_MIN_DAMAGE;
+        this.calculatedPace = BASE_PACE.getTimeInMs();
     }
 
     public void quitFromGame() {
@@ -77,6 +84,7 @@ public class Player extends Mob {
             this.attack++;
             this.defence++;
             this.minDamage++;
+            this.calculatedMinDamage++;
             this.maxDamage += 2;
             this.maxHp += 10;
             this.hp += 10;
@@ -91,27 +99,45 @@ public class Player extends Mob {
     }
 
     public void applyMovedLootItem(LootItem item) {
-        for (Map.Entry<LootItem.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
-            if (item.isEquipped()) {
+        if (item.isEquipped()) {
+            for (Map.Entry<LootItem.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
                 switch (e.getKey()) {
                     case ATTACK -> attack += e.getValue();
                     case DEFENCE -> defence += e.getValue();
-                    case MIN_DAMAGE -> minDamage += e.getValue();
                     case MAX_DAMAGE -> maxDamage += e.getValue();
                     case MAX_HP -> maxHp += e.getValue();
+                    case SPEED -> {
+                        calculatedPace -= e.getValue();
+                        pace.setTimeInMs(Math.max(calculatedPace, MIN_PACE));
+                    }
                     default -> {
                     }
                 }
-            } else {
+            }
+            //MIN Damage has to be processed after MAX Damage
+            if (item.getItemModifiers().containsKey(LootItem.Modifier.MIN_DAMAGE)) {
+                calculatedMinDamage += item.getItemModifiers().get(LootItem.Modifier.MIN_DAMAGE);
+                minDamage = Math.min(calculatedMinDamage, maxDamage);
+            }
+        } else {
+            for (Map.Entry<LootItem.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
                 switch (e.getKey()) {
                     case ATTACK -> attack -= e.getValue();
                     case DEFENCE -> defence -= e.getValue();
-                    case MIN_DAMAGE -> minDamage -= e.getValue();
                     case MAX_DAMAGE -> maxDamage -= e.getValue();
                     case MAX_HP -> maxHp -= e.getValue();
+                    case SPEED -> {
+                        calculatedPace += e.getValue();
+                        pace.setTimeInMs(Math.max(calculatedPace, MIN_PACE));
+                    }
                     default -> {
                     }
                 }
+            }
+            //MIN Damage has to be processed after MAX Damage
+            if (item.getItemModifiers().containsKey(LootItem.Modifier.MIN_DAMAGE)) {
+                calculatedMinDamage -= item.getItemModifiers().get(LootItem.Modifier.MIN_DAMAGE);
+                minDamage = Math.min(calculatedMinDamage, maxDamage);
             }
         }
     }
