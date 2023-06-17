@@ -19,7 +19,7 @@ public class MapBuilder {
 
     private void checkMobFactory() {
         if (mobFactory == null)
-            mobFactory = new SimpleMobFactory(stage);
+            mobFactory = new SimpleMobFactory(stage, 4);
     }
 
     private Map buildByGenerating() {

@@ -39,7 +39,7 @@ public class ComplexStrategyFactory implements StrategyFactory {
         return new AttackOnlyPlayerStrategy(new DistanceToPlayerSensitiveStrategy(
                 new PursuitStrategy(0.9),
                 new InvisibleStrategy(new PursuitStrategy(-0.6)),
-                3
+                15
         ));
     }
 }

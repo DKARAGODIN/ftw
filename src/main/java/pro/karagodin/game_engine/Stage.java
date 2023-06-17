@@ -8,6 +8,7 @@ import pro.karagodin.game_logic.Judge;
 import pro.karagodin.generators.CaveMapGenerator;
 import pro.karagodin.generators.ComplexMobFactory;
 import pro.karagodin.generators.MapBuilder;
+import pro.karagodin.generators.SimpleMobFactory;
 import pro.karagodin.generators.WallsMapGenerator;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
@@ -22,19 +23,18 @@ public class Stage {
     private final Judge judge;
     private final Map map;
     private final Timeline timeline;
-    private final int currentStage;
     private final Random random = new Random();
-    private final int difficlulty;
 
     public Stage(Printer printer, Player player, int currentStage, int difficlulty) {
         this.printer = printer;
-        this.difficlulty = difficlulty;
 
         var mapBuilder = new MapBuilder()
                 .setStage(currentStage)
                 .setPlayer(player)
                 .setSize(50, 100)
-                .setMobFactory(new ComplexMobFactory(currentStage));
+                .setMobFactory(difficlulty < 5 ?
+                        new SimpleMobFactory(currentStage, difficlulty) :
+                        new ComplexMobFactory(currentStage, difficlulty));
         if (currentStage == 1)
             mapBuilder = mapBuilder.setLoadFromFile("/stages/ftw");
         else if (random.nextInt(2) == 0)
@@ -45,7 +45,6 @@ public class Stage {
         this.map = mapBuilder.build();
         this.timeline = new Timeline(this.map);
         this.judge = new Judge(player, this.timeline);
-        this.currentStage = currentStage;
     }
 
     public boolean start() throws IOException {

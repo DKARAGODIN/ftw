@@ -9,37 +9,39 @@ public class SimpleMobFactory implements MobFactory {
 
     private final SimpleStrategyFactory strategyFactory;
     private final int stage;
+    private final int difficulty; // 0 - 4
 
-    public SimpleMobFactory(int stage) {
+    public SimpleMobFactory(int stage, int difficulty) {
         this.strategyFactory = new SimpleStrategyFactory();
         this.stage = stage;
+        this.difficulty = difficulty;
     }
 
     @Override
     public Mob createAggressiveMob() {
         return new Mob(
-                60 + stage * 40,
+                25 + stage * 25 / (5 - difficulty),
+                stage * 3,
                 stage * 2,
-                stage,
-                stage * 20,
-                stage * 30,
-                new TimeMoment(stage > 10 ? 10 : 1010 - stage * 100),
+                stage * 10,
+                stage * 17,
+                new TimeMoment(stage > 30 ? 25 : 925 - stage * 30),
                 strategyFactory.createAggressiveStrategy(),
-                'A',
+                'a',
                 List.of());
     }
 
     @Override
     public Mob createPassiveAggressiveMob() {
         return new Mob(
-                40 + stage * 30,
+                40 + stage * 30 / (5 - difficulty),
                 stage,
-                stage / 2,
-                stage * 15,
+                stage,
+                stage * 10,
                 stage * 25,
-                new TimeMoment(stage > 10 ? 50 : 1050 - stage * 100),
+                new TimeMoment(stage > 30 ? 40 : 940 - stage * 30),
                 strategyFactory.createPassiveAggressiveStrategy(),
-                'R',
+                'r',
                 List.of()
         );
     }
@@ -47,14 +49,14 @@ public class SimpleMobFactory implements MobFactory {
     @Override
     public Mob createPassiveMob() {
         return new Mob(
-                40 + stage * 30,
+                40 + stage * 25 / (difficulty + 1),
                 stage,
-                stage / 2,
+                stage * 5,
                 stage * 15,
                 stage * 25,
                 new TimeMoment(stage > 10 ? 50 : 1050 - stage * 100),
                 strategyFactory.createPassiveStrategy(),
-                'P',
+                'p',
                 List.of()
         );
     }
@@ -62,14 +64,14 @@ public class SimpleMobFactory implements MobFactory {
     @Override
     public Mob createCowardMob() {
         return new Mob(
-                20 + stage * 20,
-                stage / 2,
-                stage * 2,
+                20 + stage * 20  / (5 - difficulty),
+                stage * 3,
+                stage * 3,
                 stage * 5,
-                stage * 10,
-                new TimeMoment(stage > 10 ? 5 : 1005 - stage * 100),
+                stage * 15,
+                new TimeMoment(stage > 10 ? 10 : 1010 - stage * 100),
                 strategyFactory.createCowardStrategy(),
-                'C',
+                'c',
                 List.of()
         );
     }

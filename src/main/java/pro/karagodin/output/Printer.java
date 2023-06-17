@@ -141,7 +141,7 @@ public class Printer {
 
     private int printWelcomeMessage(Screen screen) throws IOException {
         TextGraphics textGraphics = screen.newTextGraphics();
-        int difficulty = 0;
+        int difficulty = 9;
         textGraphics.putString(15,11, "Please maximise the window to go FOR THE WIN!");
         textGraphics.putString(15, 13, "Mobs strength - " + difficulty);
         textGraphics.putString(15, 15, "Press q to quit");

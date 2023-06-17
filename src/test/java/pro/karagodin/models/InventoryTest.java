@@ -14,7 +14,7 @@ class InventoryTest {
 
     @BeforeEach
     void setUp() {
-        smallThing = new LootItem(new HashMap<>(), '!');
+        smallThing = new LootItem(new HashMap<>(), 1,'!');
         inventory = new Inventory();
     }
 

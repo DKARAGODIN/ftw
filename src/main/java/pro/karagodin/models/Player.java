@@ -80,12 +80,12 @@ public class Player extends Mob {
     private void processIncreaseXP() {
         if (this.xp >= this.nextLevel) {
             this.nextLevel = this.nextLevel + this.nextLevelIncrease;
-            this.nextLevelIncrease = (int) (this.nextLevelIncrease * 1.1);
+            this.nextLevelIncrease = (int) (this.nextLevelIncrease * 1.2);
             this.attack++;
             this.defence++;
-            this.minDamage++;
-            this.calculatedMinDamage++;
             this.maxDamage += 2;
+            this.calculatedMinDamage++;
+            this.minDamage = Math.min(maxDamage, calculatedMinDamage);
             this.maxHp += 10;
             this.hp += 10;
             this.level++;

@@ -46,12 +46,12 @@ public class LootItem implements LowerItem {
     }
 
     public enum Modifier implements Comparable<Modifier> {
-        MAX_HP("Maximum HP", 5, 10),
+        MAX_HP("Maximum HP", 2, 10),
         //REGEN_HP("HP regeneration", 0.5, 1), -- Effect not implemented yet
-        ATTACK("Attack", 1, 1),
-        DEFENCE("Defence", 1, 1),
-        MIN_DAMAGE("Min damage", 2, 5),
-        MAX_DAMAGE("Max damage", 2, 5),
+        ATTACK("Attack", 0.7, 1),
+        DEFENCE("Defence", 0.7, 1),
+        MIN_DAMAGE("Min damage", 1.5, 5),
+        MAX_DAMAGE("Max damage", 1.5, 5),
         SPEED("Speed", 1, 1),
         ;
 
