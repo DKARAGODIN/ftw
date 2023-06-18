@@ -2,7 +2,7 @@ package pro.karagodin.game_logic;
 
 import org.jetbrains.annotations.Nullable;
 
-import pro.karagodin.ai_system.Action;
+import pro.karagodin.actions.Action;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_engine.MapDiff;

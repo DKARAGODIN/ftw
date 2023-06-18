@@ -5,9 +5,9 @@ import java.util.function.UnaryOperator;
 
 import lombok.Getter;
 import lombok.Setter;
-import pro.karagodin.ai_system.Action;
-import pro.karagodin.ai_system.Direction;
-import pro.karagodin.ai_system.MoveAction;
+import pro.karagodin.actions.Action;
+import pro.karagodin.actions.Direction;
+import pro.karagodin.actions.MoveAction;
 import pro.karagodin.game_engine.Coordinate;
 
 /**

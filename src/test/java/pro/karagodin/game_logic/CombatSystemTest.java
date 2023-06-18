@@ -1,7 +1,7 @@
 package pro.karagodin.game_logic;
 
 import org.junit.jupiter.api.Test;
-import pro.karagodin.ai_system.StatueStrategy;
+import pro.karagodin.strategies.StatueStrategy;
 import pro.karagodin.models.Mob;
 import pro.karagodin.time.TimeMoment;
 

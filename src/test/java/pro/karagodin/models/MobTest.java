@@ -3,7 +3,7 @@ package pro.karagodin.models;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import pro.karagodin.ai_system.PlayerStrategy;
+import pro.karagodin.strategies.PlayerStrategy;
 import pro.karagodin.output.Printer;
 import pro.karagodin.time.TimeMoment;
 

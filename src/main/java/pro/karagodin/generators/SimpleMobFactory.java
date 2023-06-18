@@ -3,6 +3,7 @@ package pro.karagodin.generators;
 import java.util.List;
 
 import pro.karagodin.models.Mob;
+import pro.karagodin.strategies.SimpleStrategyFactory;
 import pro.karagodin.time.TimeMoment;
 
 public class SimpleMobFactory implements MobFactory {

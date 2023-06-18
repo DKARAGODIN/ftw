@@ -2,7 +2,7 @@ package pro.karagodin.game_engine;
 
 import java.util.function.UnaryOperator;
 
-import pro.karagodin.ai_system.Direction;
+import pro.karagodin.actions.Direction;
 
 /**
  * Represents physical coordinates of the screen. X - column, Y - row. Starting from left up corner. Only positive values allowed

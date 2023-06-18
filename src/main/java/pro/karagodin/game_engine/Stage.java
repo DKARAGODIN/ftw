@@ -3,7 +3,7 @@ package pro.karagodin.game_engine;
 import java.io.IOException;
 import java.util.Random;
 
-import pro.karagodin.ai_system.Action;
+import pro.karagodin.actions.Action;
 import pro.karagodin.game_logic.Judge;
 import pro.karagodin.generators.CaveMapGenerator;
 import pro.karagodin.generators.ComplexMobFactory;

@@ -7,11 +7,10 @@ import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
-import pro.karagodin.ai_system.PlayerStrategy;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.output.Printer;
+import pro.karagodin.strategies.PlayerStrategy;
 import pro.karagodin.time.TimeMoment;
-
 
 /**
  * A game object controlled by user

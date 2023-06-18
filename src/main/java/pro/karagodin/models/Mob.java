@@ -7,11 +7,11 @@ import java.util.List;
 import com.googlecode.lanterna.TextColor;
 import lombok.Getter;
 import lombok.Setter;
-import pro.karagodin.ai_system.Action;
-import pro.karagodin.ai_system.Effect;
-import pro.karagodin.ai_system.Strategy;
+import pro.karagodin.actions.Action;
+import pro.karagodin.effects.Effect;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.output.CIDrowable;
+import pro.karagodin.strategies.Strategy;
 import pro.karagodin.time.TimeMoment;
 
 /**

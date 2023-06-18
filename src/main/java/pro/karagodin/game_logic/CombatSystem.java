@@ -2,8 +2,8 @@ package pro.karagodin.game_logic;
 
 import java.util.Random;
 
-import pro.karagodin.ai_system.Direction;
-import pro.karagodin.ai_system.Effect;
+import pro.karagodin.actions.Direction;
+import pro.karagodin.effects.Effect;
 import pro.karagodin.models.Mob;
 
 /**

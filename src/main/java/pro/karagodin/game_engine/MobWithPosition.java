@@ -2,7 +2,7 @@ package pro.karagodin.game_engine;
 
 import java.io.IOException;
 
-import pro.karagodin.ai_system.Action;
+import pro.karagodin.actions.Action;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Mob;
 

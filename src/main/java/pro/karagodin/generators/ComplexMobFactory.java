@@ -3,11 +3,12 @@ package pro.karagodin.generators;
 import java.util.List;
 import java.util.Random;
 
-import pro.karagodin.ai_system.ConfusedEffect;
-import pro.karagodin.ai_system.OneOfTwoEffect;
-import pro.karagodin.ai_system.ProbabilisticEffect;
-import pro.karagodin.ai_system.PushEffect;
+import pro.karagodin.effects.ConfusedEffect;
+import pro.karagodin.effects.OneOfTwoEffect;
+import pro.karagodin.effects.ProbabilisticEffect;
+import pro.karagodin.effects.PushEffect;
 import pro.karagodin.models.Mob;
+import pro.karagodin.strategies.ComplexStrategyFactory;
 import pro.karagodin.time.TimeMoment;
 
 public class ComplexMobFactory implements MobFactory {
