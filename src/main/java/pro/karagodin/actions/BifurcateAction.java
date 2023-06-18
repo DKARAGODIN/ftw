@@ -6,6 +6,10 @@ import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.game_logic.Judge;
 import pro.karagodin.models.Map;
 
+/**
+ * Creates copy of a mob
+ * @param direction - position where copy will be created
+ */
 public record BifurcateAction(Direction direction) implements Action {
 
     @Override

@@ -6,6 +6,9 @@ import pro.karagodin.models.Mob;
 import pro.karagodin.strategies.SimpleStrategyFactory;
 import pro.karagodin.time.TimeMoment;
 
+/**
+ * Generate mob with simple stat growth
+ */
 public class SimpleMobFactory implements MobFactory {
 
     private final SimpleStrategyFactory strategyFactory;

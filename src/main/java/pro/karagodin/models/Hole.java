@@ -4,6 +4,9 @@ import com.googlecode.lanterna.TextColor;
 import pro.karagodin.game_engine.GameDiff;
 import pro.karagodin.game_logic.Judge;
 
+/**
+ * Game object that allows moving to the next stage
+ */
 public class Hole implements LowerItem {
     @Override
     public char getView() {

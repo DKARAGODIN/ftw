@@ -6,6 +6,10 @@ import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.game_logic.Judge;
 import pro.karagodin.models.Map;
 
+/**
+ * Moves mob from one cell to another
+ * @param direction where to move
+ */
 public record MoveAction(Direction direction) implements Action {
 
     @Override

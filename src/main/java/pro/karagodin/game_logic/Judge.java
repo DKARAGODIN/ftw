@@ -49,6 +49,12 @@ public class Judge {
         return action.doAction(this, mobAndCoord, map);
     }
 
+    /**
+     *
+     * @param mobAndCoord
+     * @param map
+     * @return
+     */
     public GameDiff useItem(MobWithPosition mobAndCoord, Map map) {
         var cell = map.getCell(mobAndCoord.getPosition());
         if (cell.getItem() != null) {
@@ -59,6 +65,11 @@ public class Judge {
         return null;
     }
 
+    /**
+     * Pick lootItem from the floor and put it to stash
+     * @param lootItem
+     * @return
+     */
     public GameDiff useLootItem(LootItem lootItem) {
         var playerWithCoord = new MobWithPosition(tempMap, tempCoordinate);
         var player = (Player) playerWithCoord.getMob();
@@ -68,6 +79,11 @@ public class Judge {
         return new GameDiff(new MapDiff(tempCoordinate), playerWithCoord, true);
     }
 
+    /**
+     * Pick consumableItem from the floor and immediately use it
+     * @param consumableItem
+     * @return
+     */
     public GameDiff useConsumableItem(ConsumableItem consumableItem) {
         var playerWithCoord = new MobWithPosition(tempMap, tempCoordinate);
         var player = (Player) playerWithCoord.getMob();
@@ -77,29 +93,58 @@ public class Judge {
         return new GameDiff(new MapDiff(tempCoordinate), playerWithCoord, false, true);
     }
 
+    /**
+     * Stop current stage and move to the next one
+     * @param hole
+     * @return
+     */
     public GameDiff useHole(Hole hole) {
         this.stageCompleted = true;
         return null;
     }
 
+    /**
+     * @return true if stage is over for whatever reason
+     */
     public boolean isStageOver() {
         return !player.isWantsToContinuePlaying() || player.isKilled() || stageCompleted;
     }
 
+    /**
+     * @return true if game is over for whatever reason
+     */
     public boolean isGameOver() {
         return !player.isWantsToContinuePlaying() || player.isKilled();
     }
 
+    /**
+     * @param map
+     * @param position
+     * @return true if mob can be moved to position
+     */
     public boolean canDoMovement(Map map, Coordinate position) {
         Cell nextMobCell = map.getCell(position);
         return nextMobCell.getWall() == null && nextMobCell.getUnit() == null;
     }
 
+    /**
+     *
+     * @param map
+     * @param position
+     * @return true if mob on position can be attacked
+     */
     public boolean isAttack(Map map, Coordinate position) {
         Cell nextMobCell = map.getCell(position);
         return nextMobCell.getUnit() != null;
     }
 
+    /**
+     * Apply attack action
+     * @param map
+     * @param attackerPosition
+     * @param defenderPosition
+     * @return
+     */
     public GameDiff doAttack(Map map, Coordinate attackerPosition, Coordinate defenderPosition) {
         Mob attacker = map.getCell(attackerPosition).getUnit();
         Mob defender = map.getCell(defenderPosition).getUnit();
@@ -131,6 +176,13 @@ public class Judge {
         return gameDiff;
     }
 
+    /**
+     * Apply movement of Mob
+     * @param map
+     * @param beginPosition
+     * @param endPosition
+     * @return
+     */
     public GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {
         Mob mob = map.getCell(beginPosition).getUnit();
         map.getCell(beginPosition).setUnit(null);
@@ -141,6 +193,10 @@ public class Judge {
         return new GameDiff(diff, new MobWithPosition(map, endPosition));
     }
 
+    /**
+     * Puts mob to timeline
+     * @param mobAndCoord
+     */
     public void addNewMobAtTimeline(MobWithPosition mobAndCoord) {
         timeline.addNewMob(mobAndCoord);
     }

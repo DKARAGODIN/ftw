@@ -14,6 +14,9 @@ import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.models.Wall;
 
+/**
+ * Can be used by MapBuilder in case map is loaded from file
+ */
 public class MapLoader {
     private final String filename;
     private Coordinate playerCrd;

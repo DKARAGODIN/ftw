@@ -11,6 +11,9 @@ import pro.karagodin.models.Mob;
 import pro.karagodin.strategies.ComplexStrategyFactory;
 import pro.karagodin.time.TimeMoment;
 
+/**
+ * Generate mob with complex stats
+ */
 public class ComplexMobFactory implements MobFactory {
 
     private final ComplexStrategyFactory strategyFactory;

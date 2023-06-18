@@ -5,6 +5,12 @@ import java.util.List;
 
 import pro.karagodin.game_engine.Coordinate;
 
+/**
+ * Class modeling players inventory.
+ * There are two lists - equippedLoot and stashedLoot
+ * Items in equippedLoot affect player stats
+ * Items in stashedLoot does not affect player stats
+ */
 public class Inventory {
 
     public static final int MAX_EQUIPPED_ITEMS = 10;

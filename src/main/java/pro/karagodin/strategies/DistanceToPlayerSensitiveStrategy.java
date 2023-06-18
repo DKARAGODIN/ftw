@@ -3,6 +3,9 @@ package pro.karagodin.strategies;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
+/**
+ * Changes mob behaviour if player is closer than criticalDistance
+ */
 public class DistanceToPlayerSensitiveStrategy extends SensitiveStrategy {
 
     private final int criticalDistance;

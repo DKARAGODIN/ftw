@@ -9,6 +9,9 @@ import pro.karagodin.actions.MoveAction;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
+/**
+ * Mob moves in random direction
+ */
 public class RoamStrategy extends PrimitiveStrategy {
     private final Random randomGenerator = new Random();
 

@@ -14,16 +14,16 @@ import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.LootItem;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
-import pro.karagodin.output.Printer;
+import pro.karagodin.output.IOAdapter;
 
 /**
  * Implements interaction between Player and Character
  */
 public class PlayerStrategy extends PrimitiveStrategy {
 
-    private final Printer printer;
+    private final IOAdapter printer;
 
-    public PlayerStrategy(Printer printer) {
+    public PlayerStrategy(IOAdapter printer) {
         this.printer = printer;
     }
 

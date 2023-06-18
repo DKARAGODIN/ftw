@@ -1,5 +1,9 @@
 package pro.karagodin.strategies;
 
+/**
+ * Hides mob on the map.
+ * ToDo - invisible mobs can be detected if they step into cell with some item. Player can detect that item disappeared for a moment
+ */
 public class InvisibleStrategy extends DecoratingStrategy {
 
     public InvisibleStrategy(Strategy subStrategy) {

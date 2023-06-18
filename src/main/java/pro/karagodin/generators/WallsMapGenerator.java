@@ -15,6 +15,9 @@ import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 import pro.karagodin.models.Wall;
 
+/**
+ * Generate map with some vertical and horizontal walls
+ */
 public class WallsMapGenerator implements MapGenerator {
 
     private static final Random RANDOM = new Random();
@@ -54,8 +57,7 @@ public class WallsMapGenerator implements MapGenerator {
     }
 
     /**
-     * Default map for testing and first stage play
-     *
+     * Create Map and put player, mobs and items on it
      * @param player
      * @return
      */

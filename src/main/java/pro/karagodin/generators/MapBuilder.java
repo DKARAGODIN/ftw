@@ -3,6 +3,9 @@ package pro.karagodin.generators;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 
+/**
+ * Builds map with generator
+ */
 public class MapBuilder {
     private int height, weight;
     private MapGenerator mapGenerator = new CaveMapGenerator();
@@ -36,7 +39,6 @@ public class MapBuilder {
         var loader = new MapLoader(filename);
         return loader.loadMap(player, mobFactory, stage);
     }
-
 
     public MapBuilder setMobFactory(MobFactory mobFactory) {
         this.mobFactory = mobFactory;
@@ -76,5 +78,4 @@ public class MapBuilder {
             return buildByGenerating();
         return buildByLoadingFromFile();
     }
-
 }

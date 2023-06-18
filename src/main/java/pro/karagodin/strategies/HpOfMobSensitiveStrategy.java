@@ -3,6 +3,9 @@ package pro.karagodin.strategies;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
+/**
+ * Applies panic effect in case mobs hp drops lower than criticalHpFraction
+ */
 public class HpOfMobSensitiveStrategy extends SensitiveStrategy {
 
     private final double criticalHpFraction;

@@ -14,8 +14,12 @@ import pro.karagodin.game_engine.MapDiff;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
 
-
-public class Printer {
+/**
+ * Encapsulates all IO calls
+ * Contains methods to refresh specific pieces of the screen.
+ * That allows DELTA mode for lanterna library and do not redraw all the screen
+ */
+public class IOAdapter {
     private static final int MAX_COL = 230;
     private static final int MAX_ROW = 60;
     private static final int GUI_CONTROLS_HORIZONTAL_LINE_ROW = MAX_ROW - 6;
@@ -29,7 +33,6 @@ public class Printer {
     private static final int GAME_OVER_RECTANGLE_HEIGHT = 5;
     private static final int GAME_OVER_RECTANGLE_WIDTH = 40;
 
-
     public static final int GUI_INVENTORY_WIDTH = 34;
 
     private Screen screen;
@@ -37,6 +40,12 @@ public class Printer {
     private PlayerStatsPrinter playerStatsPrinter;
     private int difficulty = 9;
 
+    /**
+     * Initialise IO subsystem. Print welcome screen
+     * @param player
+     * @return
+     * @throws IOException
+     */
     public int init(Player player) throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Screen screen = terminalFactory.createScreen();
@@ -48,6 +57,12 @@ public class Printer {
         return printWelcomeMessage(screen);
     }
 
+    /**
+     * Refresh coordinate on the screen
+     * @param map
+     * @param diff
+     * @throws IOException
+     */
     public void updateCoordinates(Map map, MapDiff diff) throws IOException {
         for (Coordinate coord : diff.getUpdatedCoordinatesInMap()) {
             var cell = map.getCell(coord);

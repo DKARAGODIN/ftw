@@ -10,6 +10,9 @@ import pro.karagodin.models.ConsumableItem;
 import pro.karagodin.models.LootItem;
 import pro.karagodin.models.LowerItem;
 
+/**
+ * Generates new Loot and Consumable
+ */
 public class ItemGenerator {
 
     private static final Random random = new Random();
@@ -20,7 +23,6 @@ public class ItemGenerator {
     private static final double MIN_DISPERSION = 0.9;
     private static final double MAX_DISPERSION = 1.1;
     private static final double PRIMARY_STAT_MULTIPLIER = 1.5;
-
 
     private static Pair[] ITEMS_PROJECTION = new Pair[MAX_MODIFIERS];
 
@@ -36,6 +38,11 @@ public class ItemGenerator {
     private ItemGenerator() {
     }
 
+    /**
+     *
+     * @param stage
+     * @return list of Loot and Consumable items to put on the map.
+     */
     public static List<LowerItem> generateItems(int stage) {
         List<LowerItem> result = new ArrayList<>();
         int lootItemsCount = stage / ITEMS_PER_STAGE_DIVISOR + random.nextInt(1);

@@ -11,6 +11,10 @@ import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
+/**
+ * Mob pursuit Player.
+ * Mobs are not that smart. They can't bypass walls even it is possible.
+ */
 public class PursuitStrategy extends PrimitiveStrategy {
     private final Random randomGenerator;
     private final double pursuitIndex;

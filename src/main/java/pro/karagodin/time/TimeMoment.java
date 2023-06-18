@@ -16,6 +16,12 @@ public class TimeMoment implements Comparable<TimeMoment> {
         timeInMs = time;
     }
 
+    /**
+     * Sums two time moments
+     * @param interval
+     * @return
+     */
+
     public TimeMoment after(TimeMoment interval) {
         return new TimeMoment(timeInMs + interval.getTimeInMs());
     }

@@ -43,6 +43,11 @@ public class InventoryPrinter {
         this.itemDescriptionFirstLine = new Coordinate(lu.getX(), lu.getY() + 1 + equippedTableHeight + 1 + stashedTableHeight + 1);
     }
 
+    /**
+     * Controls inventory cursor
+     * @param newPosition
+     * @param oldPosition
+     */
     public void moveCellFocus(Coordinate newPosition, Coordinate oldPosition) {
         if (oldPosition != null) {
             fillCell(oldPosition.getX(), oldPosition.getY(), BLACK_EMPTY);
@@ -55,7 +60,7 @@ public class InventoryPrinter {
     }
 
     private void updateItemDescription(Coordinate newPosition) {
-        fillRect(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY(), Printer.GUI_INVENTORY_WIDTH, ITEM_DESCRIPTION_BLOCK_HEIGHT, BLACK_EMPTY);
+        fillRect(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY(), IOAdapter.GUI_INVENTORY_WIDTH, ITEM_DESCRIPTION_BLOCK_HEIGHT, BLACK_EMPTY);
         if (newPosition != null) {
             LootItem item = getItemByCoordinate(newPosition);
             if (item != null) {
@@ -81,6 +86,9 @@ public class InventoryPrinter {
         }
     }
 
+    /**
+     * Cleans all item icons on the GUI
+     */
     public void cleanInventory() {
         for (int x = 0; x < CELLS_COLS; x++) {
             for (int y = 0; y < EQUIPPED_CELL_ROWS; y++) {
@@ -92,6 +100,9 @@ public class InventoryPrinter {
         }
     }
 
+    /**
+     * Print GUI for inventory
+     */
     public void printInventoryGUI() {
         TextGraphics textGraphics = screen.newTextGraphics();
         textGraphics.putString(equippedTitle.getX(), equippedTitle.getY(), "Hero equipped items");
@@ -103,11 +114,17 @@ public class InventoryPrinter {
         textGraphics.putString(itemDescriptionFirstLine.getX(), itemDescriptionFirstLine.getY() - 1, "Selected loot description");
     }
 
+    /**
+     * Refreshes contents of inventory GUI
+     */
     public void refreshCells() {
         drawItemsInTable(equippedTable, inventory.getEquippedSmallThings());
         drawItemsInTable(stashedTable, inventory.getStashedSmallThings());
     }
 
+    /**
+     * Refreshes contents of inventory GUI cell
+     */
     public void refreshLastCellAfterMoveItem() {
         fillCell(inventory.getEquippedSmallThings().size() % CELLS_COLS, inventory.getEquippedSmallThings().size() / CELLS_COLS, BLACK_EMPTY);
         fillCell(inventory.getStashedSmallThings().size() % CELLS_COLS, 2 + inventory.getStashedSmallThings().size() / CELLS_COLS, BLACK_EMPTY);

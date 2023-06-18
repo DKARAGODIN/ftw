@@ -7,6 +7,9 @@ import pro.karagodin.actions.MoveAction;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
+/**
+ * Implements Push Effect
+ */
 public class PushStrategy extends EffectiveStrategy {
 
     private int durationInMoveNumber;

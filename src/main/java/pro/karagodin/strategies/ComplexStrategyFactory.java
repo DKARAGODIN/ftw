@@ -1,5 +1,9 @@
 package pro.karagodin.strategies;
 
+/**
+ * Generates complex mobs with linear stats growth and sum random addition and effects on attack
+ * Used on difficulty set to 5 - 9
+ */
 public class ComplexStrategyFactory implements StrategyFactory {
     @Override
     public Strategy createAggressiveStrategy() {

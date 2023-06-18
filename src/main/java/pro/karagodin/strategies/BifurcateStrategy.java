@@ -8,6 +8,9 @@ import pro.karagodin.actions.MoveAction;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
+/**
+ * Allows Mob to duplicate itself
+ */
 public class BifurcateStrategy extends DecoratingStrategy {
 
     private final int frequencyOfBifurcating;

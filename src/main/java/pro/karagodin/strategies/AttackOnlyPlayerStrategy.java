@@ -6,6 +6,9 @@ import com.googlecode.lanterna.TextColor;
 import pro.karagodin.models.Mob;
 import pro.karagodin.models.Player;
 
+/**
+ * Mobs implementing this strategy do not attack each other
+ */
 public class AttackOnlyPlayerStrategy extends SmartAttackAroundStrategy {
 
     public AttackOnlyPlayerStrategy(Strategy subStrategy) {

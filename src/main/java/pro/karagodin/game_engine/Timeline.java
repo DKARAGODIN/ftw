@@ -6,7 +6,7 @@ import pro.karagodin.models.Map;
 import pro.karagodin.time.TimeMoment;
 
 /**
- * Game time loop.
+ * Game time loop. Implements Realtime-ish experience. Allows mobs have speed
  */
 public class Timeline {
 
@@ -45,14 +45,26 @@ public class Timeline {
         return info.mobAndCoord;
     }
 
+    /**
+     * Puts new mob to the timeline
+     * @param mobAndCoord
+     */
     public void addNewMob(MobWithPosition mobAndCoord) {
         mobsWithTimes.add(new MobInfo(mobAndCoord, new TimeMoment()));
     }
 
+    /**
+     * Puts mob back to timeline
+     * @param mobAndCoord
+     */
     public void addUpdatedMob(MobWithPosition mobAndCoord) {
         mobsWithTimes.add(new MobInfo(mobAndCoord, nextTimeForLastMob));
     }
 
+    /**
+     * Calculates time before next action
+     * @return
+     */
     public long getDeltaTimeForAction() {
         return peek().actionTime.deltaWithCurrentTime();
     }

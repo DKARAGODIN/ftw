@@ -4,6 +4,9 @@ import java.util.function.Predicate;
 
 import pro.karagodin.models.Mob;
 
+/**
+ * Mob do not attack
+ */
 public class NoAttackStrategy extends SmartAttackAroundStrategy {
 
     public NoAttackStrategy(Strategy subStrategy) {

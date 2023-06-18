@@ -12,20 +12,20 @@ import pro.karagodin.generators.SimpleMobFactory;
 import pro.karagodin.generators.WallsMapGenerator;
 import pro.karagodin.models.Map;
 import pro.karagodin.models.Player;
-import pro.karagodin.output.Printer;
+import pro.karagodin.output.IOAdapter;
 
 /**
  * Game round.
  */
 public class Stage {
 
-    private final Printer printer;
+    private final IOAdapter printer;
     private final Judge judge;
     private final Map map;
     private final Timeline timeline;
     private final Random random = new Random();
 
-    public Stage(Printer printer, Player player, int currentStage, int difficlulty) {
+    public Stage(IOAdapter printer, Player player, int currentStage, int difficlulty) {
         this.printer = printer;
 
         var mapBuilder = new MapBuilder()
@@ -47,6 +47,11 @@ public class Stage {
         this.judge = new Judge(player, this.timeline);
     }
 
+    /**
+     * Starts current stage.
+     * @return true if game ended for whatever reason
+     * @throws IOException
+     */
     public boolean start() throws IOException {
         printer.printMap(map);
         while (!judge.isStageOver()) {

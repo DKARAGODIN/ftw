@@ -1,5 +1,9 @@
 package pro.karagodin.strategies;
 
+/**
+ * Generates easy mobs with linear stats growth and no effects on attacks
+ * Used on difficulty set to 0 - 4
+ */
 public class SimpleStrategyFactory implements StrategyFactory {
     @Override
     public Strategy createAggressiveStrategy() {

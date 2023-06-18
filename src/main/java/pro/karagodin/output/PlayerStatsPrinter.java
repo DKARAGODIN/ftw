@@ -24,6 +24,10 @@ public class PlayerStatsPrinter {
         this.player = player;
     }
 
+    /**
+     * Print GUI for player stats
+     * @throws IOException
+     */
     public void printGui() throws IOException {
         TextGraphics textGraphics = screen.newTextGraphics();
         int col = coordinate.getX() + STATS_DESCRIPTION_COLUMN_OFFSET;
@@ -38,6 +42,9 @@ public class PlayerStatsPrinter {
         textGraphics.putString(col, row + 6, "Delay");
     }
 
+    /**
+     * Refreshes hero stats
+     */
     public void refreshHeroStats() {
         TextGraphics textGraphics = screen.newTextGraphics();
         int col = coordinate.getX();

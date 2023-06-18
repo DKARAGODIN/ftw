@@ -6,16 +6,19 @@ import static pro.karagodin.models.Player.BASE_PACE;
 import java.io.IOException;
 
 import pro.karagodin.models.Player;
-import pro.karagodin.output.Printer;
+import pro.karagodin.output.IOAdapter;
 
+/**
+ * Main Game class. Encapsulates all needed primary game objects.
+ */
 public class Game {
 
-    private Printer printer;
+    private IOAdapter printer;
     private Stage stage;
     private Player player;
 
     public Game() {
-        printer = new Printer();
+        printer = new IOAdapter();
         player = new Player(BASE_MAX_HEALTH, BASE_MAX_HEALTH, BASE_PACE, printer);
     }
 

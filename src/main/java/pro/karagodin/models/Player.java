@@ -8,7 +8,7 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 import pro.karagodin.game_engine.Coordinate;
-import pro.karagodin.output.Printer;
+import pro.karagodin.output.IOAdapter;
 import pro.karagodin.strategies.PlayerStrategy;
 import pro.karagodin.time.TimeMoment;
 
@@ -41,16 +41,23 @@ public class Player extends Mob {
     private boolean inventoryMode = false;
     private boolean wantsToContinuePlaying = true;
 
-    public Player(int hp, int maxHp, TimeMoment pace, Printer printer) {
+    public Player(int hp, int maxHp, TimeMoment pace, IOAdapter printer) {
         super(hp, maxHp, BASE_ATTACK, BASE_DEFENCE, BASE_MIN_DAMAGE, BASE_MAX_DAMAGE, pace, new PlayerStrategy(printer), '@', List.of());
         this.calculatedMinDamage = BASE_MIN_DAMAGE;
         this.calculatedPace = BASE_PACE.getTimeInMs();
     }
 
+    /**
+     * Signals to game that player want to quit gracefully
+     */
     public void quitFromGame() {
         wantsToContinuePlaying = false;
     }
 
+    /**
+     * Player moves item from stash to equipped and vice versa
+     * @return
+     */
     public LootItem moveItem() {
         Coordinate invCoord = inventory.getCoordinate();
         if (invCoord.getY() > 1) {
@@ -74,6 +81,15 @@ public class Player extends Mob {
     }
 
     /**
+     * Increase xp by value amount
+     * @param value
+     */
+    public void increaseXP(int value) {
+        this.xp += value;
+        processIncreaseXP();
+    }
+
+    /**
      * Incremental leveling. Next level is harder to get.
      */
     private void processIncreaseXP() {
@@ -92,11 +108,10 @@ public class Player extends Mob {
         }
     }
 
-    public void increaseXP(int value) {
-        this.xp += value;
-        processIncreaseXP();
-    }
-
+    /**
+     * Change player stats after putting on some item
+     * @param item
+     */
     public void applyMovedLootItem(LootItem item) {
         if (item.isEquipped()) {
             for (Map.Entry<LootItem.Modifier, Integer> e : item.getItemModifiers().entrySet()) {
@@ -149,7 +164,7 @@ public class Player extends Mob {
     /**
      * Sets field values to defaults in case player wants to restart
      */
-    public void refresh(Printer printer) {
+    public void refresh(IOAdapter printer) {
         this.inventory.clear();
         this.hp = BASE_MAX_HEALTH;
         this.maxHp = BASE_MAX_HEALTH;

@@ -65,7 +65,6 @@ public class MapFiller {
         map.getCell(getFreeCellPosition(map)).setItem(item);
     }
 
-
     /**
      * Place borders on map
      */

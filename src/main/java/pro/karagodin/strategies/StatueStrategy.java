@@ -6,6 +6,9 @@ import pro.karagodin.actions.DoNothingAction;
 import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.models.Map;
 
+/**
+ * Mob that does not move. May be useful for testing.
+ */
 public class StatueStrategy extends PrimitiveStrategy {
     @Override
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) {

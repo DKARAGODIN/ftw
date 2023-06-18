@@ -3,6 +3,9 @@ package pro.karagodin.game_logic;
 import pro.karagodin.game_engine.Coordinate;
 import pro.karagodin.models.Map;
 
+/**
+ * Clear cell in case mob becomes dead
+ */
 public class DeathSystem {
 
     public void killMob(Coordinate mobPosition, Map map) {
