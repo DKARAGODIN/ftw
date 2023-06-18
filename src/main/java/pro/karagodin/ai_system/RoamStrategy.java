@@ -11,12 +11,13 @@ public class RoamStrategy extends PrimitiveStrategy {
 
     @Override
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
-        return switch (randomGenerator.nextInt(4)) {
-            case 0 -> Action.MoveUp;
-            case 1 -> Action.MoveDown;
-            case 2 -> Action.MoveLeft;
-            default -> Action.MoveRight;
-        };
+        return new MoveAction(
+                switch (randomGenerator.nextInt(4)) {
+                    case 0 -> Direction.Up;
+                    case 1 -> Direction.Down;
+                    case 2 -> Direction.Left;
+                    default -> Direction.Right;
+        });
     }
 
     @Override

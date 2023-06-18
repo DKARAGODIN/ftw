@@ -26,28 +26,11 @@ public class BifurcateStrategy extends DecoratingStrategy {
         if (stepCounter < frequencyOfBifurcating)
             stepCounter++;
         Action action = subStrategy.getNextAction(mobAndCoord, map);
-        if (stepCounter == frequencyOfBifurcating && isMoveAction(action)) {
+        if (stepCounter == frequencyOfBifurcating && (action instanceof MoveAction)) {
             stepCounter = 0;
-            return moveToBifurcate(action);
+            return new BifurcateAction(((MoveAction) action).getDirection());
         } else {
             return action;
         }
-    }
-
-    private boolean isMoveAction(Action action) {
-        return switch (action) {
-            case MoveUp, MoveDown, MoveLeft, MoveRight -> true;
-            default -> false;
-        };
-    }
-
-    private Action moveToBifurcate(Action action) {
-        return switch (action) {
-            case MoveUp -> Action.BifurcateUp;
-            case MoveDown -> Action.BifurcateDown;
-            case MoveLeft -> Action.BifurcateLeft;
-            case MoveRight -> Action.BifurcateRight;
-            default -> null;
-        };
     }
 }

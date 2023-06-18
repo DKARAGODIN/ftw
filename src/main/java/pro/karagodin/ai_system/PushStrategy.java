@@ -8,12 +8,12 @@ public class PushStrategy extends EffectiveStrategy {
 
     private int durationInMoveNumber;
 
-    public PushStrategy(Strategy subStrategy, Action move, int durationInMoveNumber) {
+    public PushStrategy(Strategy subStrategy, Direction direction, int durationInMoveNumber) {
         this.subStrategy = subStrategy;
         this.effectStrategy = new PrimitiveStrategy() {
             @Override
             public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
-                return move;
+                return new MoveAction(direction);
             }
 
             @Override

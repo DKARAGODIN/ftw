@@ -6,6 +6,8 @@ import java.util.function.UnaryOperator;
 import lombok.Getter;
 import lombok.Setter;
 import pro.karagodin.ai_system.Action;
+import pro.karagodin.ai_system.Direction;
+import pro.karagodin.ai_system.MoveAction;
 import pro.karagodin.game_engine.Coordinate;
 
 /**
@@ -21,11 +23,11 @@ public class Map {
         private Floor floor = new Floor();
     }
 
-    public static class Direction {
+    public static class MapDirection {
         private final UnaryOperator<Coordinate> operator;
         private final Action action;
 
-        private Direction(UnaryOperator<Coordinate> operator, Action action) {
+        private MapDirection(UnaryOperator<Coordinate> operator, Action action) {
             this.operator = operator;
             this.action = action;
         }
@@ -87,21 +89,21 @@ public class Map {
         return coordinate.getX() < getWidth() - 1 ? coordinate.withX(x -> x + 1) : null;
     }
 
-    public List<Direction> getAllDirections() {
+    public List<MapDirection> getAllDirections() {
         return List.of(
-                new Direction(this::getHigherCoordinate, Action.MoveUp),
-                new Direction(this::getLowerCoordinate, Action.MoveDown),
-                new Direction(this::getLefterCoordinate, Action.MoveLeft),
-                new Direction(this::getRighterCoordinate, Action.MoveRight)
+                new MapDirection(this::getHigherCoordinate, new MoveAction(Direction.Up)),
+                new MapDirection(this::getLowerCoordinate, new MoveAction(Direction.Down)),
+                new MapDirection(this::getLefterCoordinate, new MoveAction(Direction.Left)),
+                new MapDirection(this::getRighterCoordinate, new MoveAction(Direction.Right))
         );
     }
 
-    public Coordinate getCoordinateByAction(Coordinate coordinate, Action action) {
-        return switch (action) {
-            case MoveLeft, BifurcateLeft -> getLefterCoordinate(coordinate);
-            case MoveRight, BifurcateRight -> getRighterCoordinate(coordinate);
-            case MoveDown, BifurcateDown -> getLowerCoordinate(coordinate);
-            case MoveUp, BifurcateUp -> getHigherCoordinate(coordinate);
+    public Coordinate getCoordinateByDirection(Coordinate coordinate, Direction direction) {
+        return switch (direction) {
+            case Left -> getLefterCoordinate(coordinate);
+            case Right -> getRighterCoordinate(coordinate);
+            case Down -> getLowerCoordinate(coordinate);
+            case Up -> getHigherCoordinate(coordinate);
             default -> null;
         };
     }

@@ -2,7 +2,7 @@ package pro.karagodin.game_logic;
 
 import java.util.Random;
 
-import pro.karagodin.ai_system.Action;
+import pro.karagodin.ai_system.Direction;
 import pro.karagodin.ai_system.Effect;
 import pro.karagodin.models.Mob;
 
@@ -19,7 +19,7 @@ public class CombatSystem {
      * HP won't take negative values
      */
 
-    public void attack(Mob attacker, Mob defending, Action directionOfImpact) {
+    public void attack(Mob attacker, Mob defending, Direction directionOfImpact) {
         double attackerDamage = getDamage(attacker, defending);
         defending.setHp(defending.getHp() - (int) attackerDamage);
         for (Effect effect : attacker.getAttackEffects()) {

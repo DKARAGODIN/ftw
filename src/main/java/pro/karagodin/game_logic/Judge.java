@@ -46,40 +46,10 @@ public class Judge {
      */
     @Nullable
     public GameDiff doAction(Action action, MobWithPosition mobAndCoord, Map map) {
-        switch (action) {
-            case MoveLeft, MoveRight, MoveDown, MoveUp -> {
-                Coordinate initialPosition = mobAndCoord.getPosition();
-                Coordinate newMobCoord = map.getCoordinateByAction(initialPosition, action);
-                if (newMobCoord != null) {
-                    if (canDoMovement(map, newMobCoord)) {
-                        return doMovement(map, initialPosition, newMobCoord);
-                    } else if (isAttack(map, newMobCoord)) {
-                        return doAttack(map, initialPosition, newMobCoord);
-                    }
-                }
-                return new GameDiff(mobAndCoord);
-            }
-            case InteractWithObjectOnFloor -> {
-                return useItem(mobAndCoord, map);
-            }
-            case BifurcateLeft, BifurcateRight, BifurcateDown, BifurcateUp -> {
-                Coordinate initialPosition = mobAndCoord.getPosition();
-                Coordinate newMobCoord = map.getCoordinateByAction(initialPosition, action);
-                if (newMobCoord != null && canDoMovement(map, newMobCoord)) {
-                    GameDiff result = doMovement(map, initialPosition, newMobCoord);
-                    map.getCell(initialPosition).setUnit(mobAndCoord.getMob().cloneMob());
-                    timeline.addNewMob(new MobWithPosition(map, initialPosition));
-                    return result;
-                }
-                return new GameDiff(mobAndCoord);
-            }
-            default -> {
-                return null;
-            }
-        }
+        return action.doAction(this, mobAndCoord, map);
     }
 
-    private GameDiff useItem(MobWithPosition mobAndCoord, Map map) {
+    public GameDiff useItem(MobWithPosition mobAndCoord, Map map) {
         var cell = map.getCell(mobAndCoord.getPosition());
         if (cell.getItem() != null) {
             this.tempMap = map;
@@ -120,17 +90,17 @@ public class Judge {
         return !player.isWantsToContinuePlaying() || player.isKilled();
     }
 
-    private boolean canDoMovement(Map map, Coordinate position) {
+    public boolean canDoMovement(Map map, Coordinate position) {
         Cell nextMobCell = map.getCell(position);
         return nextMobCell.getWall() == null && nextMobCell.getUnit() == null;
     }
 
-    private boolean isAttack(Map map, Coordinate position) {
+    public boolean isAttack(Map map, Coordinate position) {
         Cell nextMobCell = map.getCell(position);
         return nextMobCell.getUnit() != null;
     }
 
-    private GameDiff doAttack(Map map, Coordinate attackerPosition, Coordinate defenderPosition) {
+    public GameDiff doAttack(Map map, Coordinate attackerPosition, Coordinate defenderPosition) {
         Mob attacker = map.getCell(attackerPosition).getUnit();
         Mob defender = map.getCell(defenderPosition).getUnit();
         int heroHealthBefore = attacker instanceof Player ? attacker.getHp() : defender.getHp();
@@ -161,7 +131,7 @@ public class Judge {
         return gameDiff;
     }
 
-    private GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {
+    public GameDiff doMovement(Map map, Coordinate beginPosition, Coordinate endPosition) {
         Mob mob = map.getCell(beginPosition).getUnit();
         map.getCell(beginPosition).setUnit(null);
         map.getCell(endPosition).setUnit(mob);
@@ -169,5 +139,9 @@ public class Judge {
         diff.addNewCoordinate(beginPosition);
         diff.addNewCoordinate(endPosition);
         return new GameDiff(diff, new MobWithPosition(map, endPosition));
+    }
+
+    public void addNewMobAtTimeline(MobWithPosition mobAndCoord) {
+        timeline.addNewMob(mobAndCoord);
     }
 }

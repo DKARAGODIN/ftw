@@ -5,7 +5,10 @@ import pro.karagodin.game_engine.MobWithPosition;
 import pro.karagodin.game_logic.Judge;
 import pro.karagodin.models.Map;
 
-public interface Action {
+public class DoNothingAction implements Action {
 
-    GameDiff doAction(Judge judge, MobWithPosition mobAndCoord, Map map);
+    @Override
+    public GameDiff doAction(Judge judge, MobWithPosition mobAndCoord, Map map) {
+        return null;
+    }
 }

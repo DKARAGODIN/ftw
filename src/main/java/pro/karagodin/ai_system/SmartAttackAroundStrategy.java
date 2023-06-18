@@ -23,7 +23,7 @@ public abstract class SmartAttackAroundStrategy extends DecoratingStrategy {
                 .parallelStream()
                 .filter(direction -> thereIsEnemy.test(direction.getOperator().apply(mobAndCoord.getPosition())))
                 .findAny()
-                .map(Map.Direction::getAction)
+                .map(Map.MapDirection::getAction)
                 .orElseGet(() -> {
                     Action action;
                     try {
@@ -31,8 +31,12 @@ public abstract class SmartAttackAroundStrategy extends DecoratingStrategy {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    Coordinate newCoord = map.getCoordinateByAction(mobAndCoord.getPosition(), action);
-                    return thereIsMob.test(newCoord) ? Action.DoNothing : action;
+                    if (action instanceof MoveAction) {
+                        Coordinate newCoord = map.getCoordinateByDirection(mobAndCoord.getPosition(), ((MoveAction) action).getDirection());
+                        return thereIsMob.test(newCoord) ? new DoNothingAction() : action;
+                    } else {
+                        return action;
+                    }
                 });
     }
 }

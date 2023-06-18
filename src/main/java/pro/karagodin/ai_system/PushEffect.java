@@ -11,7 +11,7 @@ public class PushEffect implements Effect {
     }
 
     @Override
-    public void doEffect(Mob defending, Mob attacker, Action directionOfImpact) {
+    public void doEffect(Mob defending, Mob attacker, Direction directionOfImpact) {
         defending.setStrategy(new PushStrategy(defending.getStrategy(), directionOfImpact, durationInMoveNumber));
     }
 }

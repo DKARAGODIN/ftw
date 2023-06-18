@@ -63,31 +63,31 @@ public class PlayerStrategy extends PrimitiveStrategy {
                     }
                     break;
                 default:
-                    return Action.DoNothing;
+                    return new DoNothingAction();
             }
-            return Action.DoNothing;
+            return new DoNothingAction();
         } else {
             switch (key) {
                 case '^':
-                    return Action.MoveUp;
+                    return new MoveAction(Direction.Up);
                 case 'v':
-                    return Action.MoveDown;
+                    return new MoveAction(Direction.Down);
                 case '<':
-                    return Action.MoveLeft;
+                    return new MoveAction(Direction.Left);
                 case '>':
-                    return Action.MoveRight;
+                    return new MoveAction(Direction.Right);
                 case 'i':
                     player.setInventoryMode(true);
                     printer.moveInventoryCellFocus(new Coordinate(0, 0), null);
                     player.getInventory().setCoordinates(0, 0);
-                    return Action.DoNothing;
+                    return new DoNothingAction();
                 case 'q':
                     player.quitFromGame();
-                    return Action.DoNothing;
+                    return new DoNothingAction();
                 case ' ':
-                    return Action.InteractWithObjectOnFloor;
+                    return new InteractWithItemOnFloorAction();
                 default:
-                    return Action.DoNothing;
+                    return new DoNothingAction();
             }
         }
     }

@@ -7,7 +7,7 @@ import pro.karagodin.models.Map;
 public class StatueStrategy extends PrimitiveStrategy {
     @Override
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
-        return Action.DoNothing;
+        return new DoNothingAction();
     }
 
     @Override

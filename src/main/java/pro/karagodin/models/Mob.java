@@ -65,9 +65,9 @@ public class Mob implements CIDrowable {
     }
 
     public Action getNextAction(MobWithPosition mobWithPosition, Map map) throws IOException {
-        Action action = strategy.getNextAction(mobWithPosition, map);
+        Action noAction = strategy.getNextAction(mobWithPosition, map);
         strategy = strategy.nextStrategy();
-        return action;
+        return noAction;
     }
 
     public boolean isKilled() {

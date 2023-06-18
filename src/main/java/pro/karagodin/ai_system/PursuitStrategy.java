@@ -20,71 +20,70 @@ public class PursuitStrategy extends PrimitiveStrategy {
     public Action getNextAction(MobWithPosition mobAndCoord, Map map) {
         Coordinate playerCoordinate = map.findPlayerCoordinate();
         if (playerCoordinate == null) {
-            return Action.DoNothing;
+            return new DoNothingAction();
         }
-        Action horizontalVector = getHorizontalVector(mobAndCoord.getPosition(), playerCoordinate);
-        Action verticalVector = getVerticalVector(mobAndCoord.getPosition(), playerCoordinate);
+        Direction horizontalVector = getHorizontalVector(mobAndCoord.getPosition(), playerCoordinate);
+        Direction verticalVector = getVerticalVector(mobAndCoord.getPosition(), playerCoordinate);
         double randomDouble = randomGenerator.nextDouble();
         if (horizontalVector == null) {
             if (randomDouble <= 0.25 + 0.75 * pursuitIndex) {
-                return verticalVector;
+                return new MoveAction(verticalVector);
             } else if (randomDouble > 0.25 + 0.75 * pursuitIndex && randomDouble <= 0.5 + 0.5 * pursuitIndex) {
-                return getReverseVector(verticalVector);
+                return new MoveAction(getReverseVector(verticalVector));
             } else if (randomDouble > 0.5 + 0.5 * pursuitIndex && randomDouble <= 0.75 + 0.25 * pursuitIndex) {
-                return Action.MoveLeft;
+                return new MoveAction(Direction.Left);
             } else {
-                return Action.MoveRight;
+                return new MoveAction(Direction.Right);
             }
         } else if (verticalVector == null) {
             if (randomDouble <= 0.25 + 0.75 * pursuitIndex) {
-                return horizontalVector;
+                return new MoveAction(horizontalVector);
             } else if (randomDouble > 0.25 + 0.75 * pursuitIndex && randomDouble <= 0.5 + 0.5 * pursuitIndex) {
-                return getReverseVector(horizontalVector);
+                return new MoveAction(getReverseVector(horizontalVector));
             } else if (randomDouble > 0.5 + 0.5 * pursuitIndex && randomDouble <= 0.75 + 0.25 * pursuitIndex) {
-                return Action.MoveUp;
+                return new MoveAction(Direction.Up);
             } else {
-                return Action.MoveDown;
+                return new MoveAction(Direction.Down);
             }
         } else {
             if (randomDouble <= 0.25 + 0.25 * pursuitIndex) {
-                return horizontalVector;
+                return new MoveAction(horizontalVector);
             } else if (randomDouble > 0.25 + 0.25 * pursuitIndex && randomDouble <= 0.5) {
-                return getReverseVector(horizontalVector);
+                return new MoveAction(getReverseVector(horizontalVector));
             } else if (randomDouble > 0.5 && randomDouble <= 0.75 + 0.25 * pursuitIndex) {
-                return verticalVector;
+                return new MoveAction(verticalVector);
             } else {
-                return getReverseVector(verticalVector);
+                return new MoveAction(getReverseVector(verticalVector));
             }
         }
     }
 
-    private Action getHorizontalVector(Coordinate mobCoordinate, Coordinate playerCoordinate) {
+    private Direction getHorizontalVector(Coordinate mobCoordinate, Coordinate playerCoordinate) {
         if (mobCoordinate.getX() == playerCoordinate.getX()) {
             return null;
         } else if (mobCoordinate.getX() > playerCoordinate.getX()) {
-            return Action.MoveLeft;
+            return Direction.Left;
         } else {
-            return Action.MoveRight;
+            return Direction.Right;
         }
     }
 
-    private Action getVerticalVector(Coordinate mobCoordinate, Coordinate playerCoordinate) {
+    private Direction getVerticalVector(Coordinate mobCoordinate, Coordinate playerCoordinate) {
         if (mobCoordinate.getY() == playerCoordinate.getY()) {
             return null;
         } else if (mobCoordinate.getY() > playerCoordinate.getY()) {
-            return Action.MoveUp;
+            return Direction.Up;
         } else {
-            return Action.MoveDown;
+            return Direction.Down;
         }
     }
 
-    private Action getReverseVector(Action vector) {
+    private Direction getReverseVector(Direction vector) {
         return switch (vector) {
-            case MoveUp -> Action.MoveDown;
-            case MoveDown -> Action.MoveUp;
-            case MoveLeft -> Action.MoveRight;
-            case MoveRight -> Action.MoveLeft;
-            default -> null;
+            case Up -> Direction.Down;
+            case Down -> Direction.Up;
+            case Left -> Direction.Right;
+            case Right -> Direction.Left;
         };
     }
 
