@@ -23,7 +23,7 @@ public class CombatSystem {
         double attackerDamage = getDamage(attacker, defending);
         defending.setHp(defending.getHp() - (int) attackerDamage);
         for (Effect effect : attacker.getAttackEffects()) {
-            effect.doEffect(defending, attacker, directionOfImpact);
+            effect.doEffect(defending, directionOfImpact);
         }
     }
 

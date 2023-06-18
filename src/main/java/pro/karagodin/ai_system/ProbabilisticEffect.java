@@ -17,9 +17,9 @@ public class ProbabilisticEffect implements Effect {
     }
 
     @Override
-    public void doEffect(Mob defending, Mob attacker, Direction directionOfImpact) {
+    public void doEffect(Mob defending, Direction directionOfImpact) {
         if (randomGenerator.nextDouble() < probability) {
-            subEffect.doEffect(defending, attacker, directionOfImpact);
+            subEffect.doEffect(defending, directionOfImpact);
         }
     }
 }

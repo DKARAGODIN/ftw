@@ -7,5 +7,5 @@ public interface Effect {
     /**
      * Side effect of the attack
      */
-    void doEffect(Mob defending, Mob attacker, Direction directionOfImpact);
+    void doEffect(Mob defending, Direction directionOfImpact);
 }

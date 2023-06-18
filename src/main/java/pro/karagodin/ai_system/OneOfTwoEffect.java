@@ -17,11 +17,11 @@ public class OneOfTwoEffect implements Effect {
     }
 
     @Override
-    public void doEffect(Mob defending, Mob attacker, Direction directionOfImpact) {
+    public void doEffect(Mob defending, Direction directionOfImpact) {
         if (randomGenerator.nextBoolean()) {
-            firstEffect.doEffect(defending, attacker, directionOfImpact);
+            firstEffect.doEffect(defending, directionOfImpact);
         } else {
-            secondEffect.doEffect(defending, attacker, directionOfImpact);
+            secondEffect.doEffect(defending, directionOfImpact);
         }
     }
 }
